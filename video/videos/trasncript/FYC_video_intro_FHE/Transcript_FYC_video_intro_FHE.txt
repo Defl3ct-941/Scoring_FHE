@@ -1,0 +1,33 @@
+[00:02]->[00:32]
+Avant de comprendre ce qu'est le chiffrement complètement homomorphe, il faut revenir aux bases du chiffrement classique. Ça va nous permettre de voir précisément ce que le FHE apporte de nouveau et pourquoi ce n'était pas possible avant. Il existe deux grandes familles de chiffrement. La première, c'est le chiffrement symétrique. Le principe est simple.  On utilise une seule et même clé pour chiffrer et pour déchiffrer les données. C'est un peu comme une serrure classique. La même clé physique permet de fermer la porte et de l'ouvrir.
+
+[00:33]->[01:04]
+C'est rapide, efficace et c'est ce qu'on utilise par exemple avec l'algorithme AES pour chiffrer un disque dur ou sécuriser une nouvelle connexion HTTPS. Le problème, c'est que cette clé unique doit être partagée entre les deux parties qui communiquent. Et ça pose un vrai défi. Comment échanger cette clé de façon sécurisée sans qu'elle soit interceptée en chemin par quelqu'un de malveillant ? C'est pour répondre à ce problème qu'est né le chiffrement asymétrique avec des algorithmes comme RSA.
+
+[01:06]->[01:38]
+Ici, on utilise deux clés différentes. Une clé publique que tout le monde peut connaître, qui sert à chiffrer les données, et une clé privée, gardée secrète, qui seule permet de les déchiffrer. N'importe qui peut donc envoyer un message chiffré à quelqu'un simplement en connaissance à clé publique, sans jamais avoir besoin d'échanger un secret au préalable. C'est cette approche qui sécurise par exemple la plupart de nos échanges bancaires en ligne. En pratique, le chiffrement asymétrique est plus lent que le symétrique.
+
+[01:38]->[02:13]
+Donc, on combine souvent les deux. On utilise l'asymétrique juste pour échanger une clé symétrique de façon sécurisée, puis on bascule sur du symétrique pour le reste de la communication. Mais que ce soit avec l'un ou l'autre, ces techniques ont toutes un point commun. Elles sont pensées uniquement pour protéger des données pendant leur transport ou leur stockage.  Si on veut effectuer un calcul sur ces données, il faut d'abord les déchiffrer. Et c'est précisément le problème qu'on a soulevé dans notre introduction. En réalité, cette idée de calculer sur des données chiffrées n'est pas nouvelle.
+
+[02:13]->[02:44]
+Elle a été posée dès 1978 par trois chercheurs. Ronald Rivest, Leonard Adleman, les mêmes chercheurs qui ont inventé RSA, ainsi que Michael Dertouzos. Dans un article resté célèbre, ils posent une question simple mais visionnaire. Peut-on effectuer des opérations sur des données chiffrées sans jamais les déchiffrer tout en obtenant un résultat cohérent une fois déchiffré ? Ils appellent ce concept les privacy homomorphisms.
+
+[02:45]->[03:20]
+À l'époque, ils n'ont pas une solution complète. Mais cette question va orienter des décennies de recherche en cryptographie. Sans le savoir précisément au départ, RSA possède déjà une version limitée de cette propriété.  RSA est homomorphe pour la multiplication. Si on chiffre deux nombres, puis qu'on multiplie leurs versions chiffrées entre elles, le résultat déchiffré est exactement égal au produit des deux nombres d'origine. Par exemple, chiffrer trois, chiffrer quatre, multiplier les deux versions chiffrées, puis déchiffrer donne directement douze.
+
+[03:21]->[04:01]
+Sans jamais avoir à manipuler les nombres en clair. En revanche, RSA ne permet pas de faire des additions homomorphes. Il existe un autre algorithme, le chiffrement de Pailler, qui lui est homomorphe pour l'addition. Il a d'ailleurs été utilisé dans des systèmes de vote électronique.  Chaque bulletin est chiffré individuellement, puis on additionne tous les bulletins chiffrés pour obtenir le total des voix. Sans jamais avoir à déchiffrer le choix d'un votant en particulier. RSA et Pailler restent donc chacun limités à une seule opération, ce qui reste insuffisant pour un score de crédit qui demande à la fois des additions et des multiplications.
+
+[04:03]->[04:34]
+Entre ces schémas partiels et le FHE, il existe une catégorie intermédiaire, le chiffrement somewhat homomorphe ou SHE. Ces schémas permettent de combiner additions et multiplications, mais seulement un nombre limité de fois. La raison, c'est que la plupart de ces schémas reposent sur l'ajout volontaire d'un petit bruit aléatoire dans le chiffré, nécessaire pour garantir sa sécurité. Chaque opération, en particulier la multiplication, fait grossir ce bruit.
+
+[04:34]->[05:07]
+Et au-delà d'un certain seuil, le déchiffrement devient incorrect. Un exemple historique de schéma SHE est celui de Bonnet, Goh et Nissim, proposé en 2005. Il permet un nombre illimité d'additions, mais une seule multiplication au maximum. C'est un vrai pas en avant, mais encore loin de celui qu'il faut pour établir un modèle de scoring complet qui enchaîne de nombreuses opérations. C'est précisément cette limite que le chiffrement complètement homomorphe est venu lever.
+
+[05:08]->[05:43]
+Ce tournant, c'est un chercheur, Craig Gentry, qui l'a proposé en 2009 dans sa thèse de doctorat, avec le tout premier schéma FHE fonctionnel. Son idée clé, le bootstrapping. Au lieu de laisser le bruit s'accumuler jusqu'à rendre le déchiffrement impossible, on utilise une copie chiffrée de la clé secrète pour appliquer, de façon homomorphe, la fonction de déchiffrement elle-même sur le chiffré. Ceci permet de produire un nouveau chiffré du même résultat, mais avec un niveau de bruit réduit, comme si on rafraîchissait le calcul.
+
+[05:45]->[06:08]
+En répétant cette opération autant que nécessaire, on peut, en théorie, enchaîner un nombre illimité d'opérations. Le schéma initial de Gentry était très lent et peu pratique, mais il a ouvert la voie à toute une génération de schémas plus efficaces. C'est ce qu'on va découvrir dans une prochaine vidéo avec les schémas qui en ont découlé, BFV et BGV.
+

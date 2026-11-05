@@ -1,0 +1,8 @@
+{
+  "id": "ex8_paillier_homomorphic",
+  "order": 8,
+  "module": "C. Paillier from scratch",
+  "title": "Propriétés homomorphes de Paillier",
+  "difficulty": "moyen",
+  "depends_on": ["ex7_paillier_enc_dec"]
+}

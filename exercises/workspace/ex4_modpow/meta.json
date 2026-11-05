@@ -1,0 +1,8 @@
+{
+  "id": "ex4_modpow",
+  "order": 4,
+  "module": "B. Arithmétique modulaire",
+  "title": "Exponentiation modulaire rapide",
+  "difficulty": "moyen",
+  "depends_on": []
+}

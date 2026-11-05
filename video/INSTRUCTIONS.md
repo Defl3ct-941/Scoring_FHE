@@ -1,0 +1,14 @@
+Personne 1 — Accroche & problème (45s)
+“Aujourd’hui les banques et fintechs utilisent des modèles de scoring pour évaluer si un client est solvable. Le problème, c’est que ces modèles ont besoin d’accéder à des données ultra-sensibles : revenus, historique bancaire, dettes… Ces données doivent souvent être envoyées en clair vers un serveur externe ou un cloud pour être traitées, ce qui crée un risque énorme de fuite ou de piratage. Comment faire du scoring financier fiable sans jamais exposer les données du client ? C’est la question à laquelle nous allons essayer de répondre avec le chiffrement homomorphe, ou FHE.”
+
+~ 
+Personne 2 — Qu’est-ce que le FHE (55s)
+“Le FHE, pour Fully Homomorphic Encryption, est une technologie de chiffrement qui permet de faire des calculs directement sur des données chiffrées, sans jamais les déchiffrer. Concrètement : le client chiffrera ses données chez lui, les enverra chiffrées au serveur, le serveur fera tourner le modèle de scoring sur ces données toujours chiffrées, et renverra un résultat, lui aussi chiffré, que seul le client pourra déchiffrer. À aucun moment le serveur ne verra les vraies valeurs. C’est un peu comme si on pouvait faire des calculs sur un coffre-fort fermé, sans jamais l’ouvrir.”
+
+~ 
+Personne 3 — Application au scoring financier (55s)
+“Maintenant que nous avons vu comment fonctionne le FHE, voyons comment nous l’appliquons concrètement à notre cas d’usage : le scoring de crédit. Dans notre projet, nous allons appliquer ce principe à un modèle de scoring de crédit. Nous allons partir d’un modèle simple, entraîné sur des données classiques de revenus, charges et historique de remboursement, puis nous l’adapterons pour qu’il fonctionne sur des données chiffrées avec une librairie FHE. Le défi principal, c’est que les modèles classiques utilisent des opérations comme des comparaisons ou des fonctions non-linéaires, très coûteuses voire impossibles à faire directement en FHE. Par exemple, une règle comme « refuser le crédit si le score dépasse un seuil » repose sur une simple comparaison en clair, mais devient une opération coûteuse, voire impossible, une fois les données chiffrées. Il faudra donc adapter le modèle : simplifier certaines fonctions, les remplacer par des approximations compatibles avec le chiffrement homomorphe.”
+
+~ 
+Personne 4 — Résultats attendus & conclusion (50s)
+“À terme, nous espérons obtenir un score de crédit calculé entièrement sur des données chiffrées, avec une précision proche du modèle original en clair, au prix d’un temps de calcul plus long. C’est le compromis actuel du FHE : plus de sécurité, moins de rapidité, mais les performances s’améliorent chaque année. Cette approche ouvrira la voie à des services financiers qui respectent totalement la confidentialité des utilisateurs, sans jamais compromettre la sécurité des données. Merci de votre attention, nous sommes prêts à répondre à vos questions.”

@@ -1,0 +1,8 @@
+{
+  "id": "ex9_scoring_paillier",
+  "order": 9,
+  "module": "D. Application : scoring bancaire chiffré",
+  "title": "Score bancaire chiffré de bout en bout",
+  "difficulty": "difficile",
+  "depends_on": ["ex8_paillier_homomorphic"]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "ex7_paillier_enc_dec",
+  "order": 7,
+  "module": "C. Paillier from scratch",
+  "title": "Chiffrer et déchiffrer avec Paillier",
+  "difficulty": "moyen",
+  "depends_on": ["ex6_paillier_keygen"]
+}

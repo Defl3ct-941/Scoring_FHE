@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exercices FHE : Atelier pratique</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">🧪</span>
+        <div>
+          <h1>Atelier d'exercices : du chiffrement classique au FHE</h1>
+          <p>10 exercices progressifs, corrigés automatiquement</p>
+        </div>
+      </div>
+      <div class="progress-summary">
+        <div class="progress-track"><div class="progress-fill" id="globalProgressFill"></div></div>
+        <span id="globalProgressLabel">0 / 0 exercices réussis</span>
+        <button class="btn danger-ghost" id="resetAllBtn" title="Remet tous les exercices à zéro">⚠️ Tout réinitialiser</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="exerciseList">
+      <p class="hint">Chargement des exercices…</p>
+    </aside>
+
+    <main class="content" id="content">
+      <div class="empty-state">
+        <h2>👈 Choisissez un exercice</h2>
+        <p>Ils sont classés dans l'ordre où il faut les faire : chaque module s'appuie sur le précédent, exactement comme la démo pas-à-pas.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    Atelier pratique : Scoring financier sur données chiffrées via FHE
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
