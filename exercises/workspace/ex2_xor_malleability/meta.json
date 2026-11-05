@@ -1,0 +1,8 @@
+{
+  "id": "ex2_xor_malleability",
+  "order": 2,
+  "module": "A. Chiffrement classique",
+  "title": "XOR et le danger de la malléabilité",
+  "difficulty": "facile",
+  "depends_on": []
+}

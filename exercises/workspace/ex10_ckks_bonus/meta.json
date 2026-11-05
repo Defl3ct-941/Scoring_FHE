@@ -1,0 +1,9 @@
+{
+  "id": "ex10_ckks_bonus",
+  "order": 10,
+  "module": "E. Bonus : FHE réel",
+  "title": "Votre premier calcul FHE avec CKKS (TenSEAL)",
+  "difficulty": "facile",
+  "depends_on": [],
+  "bonus": true
+}

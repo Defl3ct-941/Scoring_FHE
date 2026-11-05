@@ -1,0 +1,1939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GLOSSARY>
+  <INFO>
+    <NAME>Glossaire</NAME>
+    <INTRO>&lt;p&gt;liste des termes techniques et leur définitions &lt;/p&gt;</INTRO>
+    <INTROFORMAT>1</INTROFORMAT>
+    <ALLOWDUPLICATEDENTRIES>0</ALLOWDUPLICATEDENTRIES>
+    <DISPLAYFORMAT>dictionary</DISPLAYFORMAT>
+    <SHOWSPECIAL>1</SHOWSPECIAL>
+    <SHOWALPHABET>1</SHOWALPHABET>
+    <SHOWALL>1</SHOWALL>
+    <ALLOWCOMMENTS>0</ALLOWCOMMENTS>
+    <USEDYNALINK>1</USEDYNALINK>
+    <DEFAULTAPPROVAL>1</DEFAULTAPPROVAL>
+    <GLOBALGLOSSARY>0</GLOBALGLOSSARY>
+    <ENTBYPAGE>10</ENTBYPAGE>
+    <ENTRIES>
+      <ENTRY>
+        <CONCEPT>Chiffrement symétrique</CONCEPT>
+        <DEFINITION>&lt;p&gt;Chiffrement où la même clé sert à chiffrer et à déchiffrer. Rapide, mais la clé doit être partagée entre les deux parties à l&#039;avance.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>0</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>0</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement asymétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clé publique / clé privée (clé secrète)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Malléabilité</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement authentifié</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Nonce / IV (vecteur d&#039;initialisation)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>symétrique</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Chiffrement asymétrique</CONCEPT>
+        <DEFINITION>&lt;p&gt;Chiffrement à deux clés distinctes : une clé publique (pour chiffrer) et une clé privée (pour déchiffrer). La clé publique peut être distribuée sans risque particulier ; seule la clé privée permet de déchiffrer.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement symétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clé publique / clé privée (clé secrète)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Malléabilité</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement authentifié</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Nonce / IV (vecteur d&#039;initialisation)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>asymétrique</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Clé publique / clé privée (clé secrète)</CONCEPT>
+        <DEFINITION>&lt;p&gt;La clé publique peut être partagée sans compromettre la sécurité. La clé privée ne doit jamais quitter son détenteur : elle seule permet de déchiffrer.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement symétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement asymétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Malléabilité</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement authentifié</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Nonce / IV (vecteur d&#039;initialisation)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>Clé publique / clé privée</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Texte clair (plaintext) / texte chiffré (ciphertext)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Le texte clair est la donnée d&#039;origine, lisible. Le texte chiffré est son résultat après chiffrement, illisible sans la clé.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement symétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement asymétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clé publique / clé privée (clé secrète)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Malléabilité</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement authentifié</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Nonce / IV (vecteur d&#039;initialisation)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>ciphertext</TAG>
+          <TAG>plaintext</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Malléabilité</CONCEPT>
+        <DEFINITION>&lt;p&gt;Propriété (souvent indésirable) d&#039;un chiffrement où l&#039;on peut modifier le texte chiffré de façon prévisible pour changer le texte clair correspondant, sans connaître la clé. Dangereuse en sécurité classique, mais c&#039;est aussi le principe qui rend possible le calcul homomorphe.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>0</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>0</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement symétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement asymétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clé publique / clé privée (clé secrète)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement authentifié</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Nonce / IV (vecteur d&#039;initialisation)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>Malléabilité</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Chiffrement authentifié</CONCEPT>
+        <DEFINITION>&lt;p&gt;Chiffrement qui garantit à la fois la confidentialité (personne ne lit sans la clé) et l&#039;intégrité (toute altération du message est détectée au déchiffrement).&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Nonce / IV (vecteur d&#039;initialisation)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement symétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement asymétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clé publique / clé privée (clé secrète)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Malléabilité</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Cryptographie générale</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>Chiffrement authentifié</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Nonce / IV (vecteur d&#039;initialisation)</CONCEPT>
+        <DEFINITION>Valeur aléatoire à usage unique injectée dans un chiffrement pour que chiffrer deux fois le même message donne deux résultats différents.</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement authentifié</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement symétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chiffrement asymétrique</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clé publique / clé privée (clé secrète)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Texte clair (plaintext) / texte chiffré (ciphertext)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Malléabilité</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Cryptographie générale</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Cryptographie</TAG>
+          <TAG>Nonce / IV</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Chiffrement de César</CONCEPT>
+        <DEFINITION>&lt;p&gt;Chiffrement historique par décalage circulaire de chaque lettre de l&#039;alphabet d&#039;un nombre fixe de positions.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>XOR (ou exclusif)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>AES (Advanced Encryption Standard)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Fernet</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>HMAC</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement classique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Chiffrement classique</TAG>
+          <TAG>Chiffrement de César</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>XOR (ou exclusif)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Opération bit à bit pouvant servir de chiffrement symétrique élémentaire (clair XOR clé = chiffré, et chiffré XOR clé = clair). Exemple classique utilisé pour illustrer la malléabilité.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement de César</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>AES (Advanced Encryption Standard)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Fernet</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>HMAC</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement classique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Chiffrement classique</TAG>
+          <TAG>XOR</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>AES (Advanced Encryption Standard)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Standard de chiffrement symétrique par blocs, très largement utilisé en production.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement de César</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>XOR (ou exclusif)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Fernet</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>HMAC</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement classique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Chiffrement classique</TAG>
+          <TAG>AES</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Fernet</CONCEPT>
+        <DEFINITION>&lt;p&gt;Format de chiffrement authentifié de haut niveau (AES en mode CBC + HMAC pour l&#039;intégrité + horodatage), fourni par certaines bibliothèques cryptographiques Python courantes.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement de César</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>XOR (ou exclusif)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>AES (Advanced Encryption Standard)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>HMAC</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement classique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Chiffrement classique</TAG>
+          <TAG>Fernet</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>HMAC</CONCEPT>
+        <DEFINITION>&lt;p&gt;Code d&#039;authentification de message basé sur une fonction de hachage, utilisé pour détecter toute altération d&#039;un texte chiffré.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement de César</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>XOR (ou exclusif)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>AES (Advanced Encryption Standard)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Fernet</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement classique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Chiffrement classique</TAG>
+          <TAG>HMAC</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Modulo</CONCEPT>
+        <DEFINITION>&lt;p&gt;Reste de la division euclidienne d&#039;un nombre par un autre. Base de l&#039;arithmétique utilisée par la plupart des schémas de chiffrement à clé publique (RSA, Paillier...).&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Exponentiation modulaire rapide</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PGCD étendu (algorithme d&#039;Euclide étendu)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Inverse modulaire</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Arithmétique modulaire</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Arithmétique modulaire</TAG>
+          <TAG>Modulo</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Exponentiation modulaire rapide</CONCEPT>
+        <DEFINITION>&lt;p&gt;Calcul de a^b mod n sans jamais manipuler le nombre entier a^b (qui serait gigantesque), par élévations au carré successives.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Modulo</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PGCD étendu (algorithme d&#039;Euclide étendu)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Inverse modulaire</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Arithmétique modulaire</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Arithmétique modulaire</TAG>
+          <TAG>Exponentiation modulaire rapide</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>PGCD étendu (algorithme d&#039;Euclide étendu)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Variante de l&#039;algorithme du plus grand commun diviseur qui calcule en plus les coefficients de Bézout, permettant d&#039;obtenir un inverse modulaire.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Modulo</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Exponentiation modulaire rapide</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Inverse modulaire</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Arithmétique modulaire</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Arithmétique modulaire</TAG>
+          <TAG>PGCD étendu</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Inverse modulaire</CONCEPT>
+        <DEFINITION>&lt;p&gt;Le nombre x tel que (a * x) mod n = 1. Utilisé notamment dans le déchiffrement de certains schémas à clé publique.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Modulo</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Exponentiation modulaire rapide</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PGCD étendu (algorithme d&#039;Euclide étendu)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Arithmétique modulaire</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Arithmétique modulaire</TAG>
+          <TAG>Inverse modulaire</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Chiffrement homomorphe</CONCEPT>
+        <DEFINITION>&lt;p&gt;Famille de chiffrements qui permettent d&#039;effectuer des calculs (additions, multiplications...) directement sur des données chiffrées, sans jamais les déchiffrer, le résultat déchiffré correspondant au résultat qu&#039;on aurait obtenu en calculant sur les données en clair.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>SHE (Somewhat Homomorphic Encryption)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bruit (noise)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bootstrapping</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Expansion ratio</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+          <TAG>Chiffrement homomorphe</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Ne supporte qu&#039;une seule opération homomorphe (par exemple uniquement l&#039;addition, ou uniquement la multiplication), mais un nombre illimité de fois.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement homomorphe</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>SHE (Somewhat Homomorphic Encryption)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bruit (noise)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bootstrapping</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Expansion ratio</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+          <TAG>PHE</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>SHE (Somewhat Homomorphic Encryption)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Supporte addition et multiplication, mais seulement un nombre limité d&#039;opérations avant que le bruit accumulé ne rende le résultat inexploitable.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement homomorphe</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bruit (noise)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bootstrapping</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Expansion ratio</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+          <TAG>SHE</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Supporte un nombre illimité d&#039;additions et de multiplications, grâce au bootstrapping.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement homomorphe</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>SHE (Somewhat Homomorphic Encryption)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bruit (noise)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bootstrapping</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Expansion ratio</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Bruit (noise)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Petite perturbation aléatoire ajoutée à chaque chiffrement pour garantir la sécurité. Chaque opération homomorphe (surtout la multiplication) augmente ce bruit ; au-delà d&#039;un certain seuil, le déchiffrement devient incorrect.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement homomorphe</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>SHE (Somewhat Homomorphic Encryption)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bootstrapping</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Expansion ratio</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+          <TAG>Bruit</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Bootstrapping</CONCEPT>
+        <DEFINITION>&lt;p&gt;Opération qui « rafraîchit » un texte chiffré bruité en réduisant son bruit accumulé, sans le déchiffrer, ce qui permet de chaîner un nombre illimité d&#039;opérations. C&#039;est ce mécanisme qui transforme un schéma SHE en véritable FHE.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement homomorphe</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>SHE (Somewhat Homomorphic Encryption)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bruit (noise)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Expansion ratio</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+          <TAG>Bootstrapping</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Expansion ratio</CONCEPT>
+        <DEFINITION>&lt;p&gt;Rapport entre la taille d&#039;une donnée chiffrée et la taille de la donnée en clair d&#039;origine. Sert à illustrer concrètement le coût du chiffrement homomorphe en espace de stockage ou en bande passante réseau.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Chiffrement homomorphe</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>PHE (Partially Homomorphic Encryption / chiffrement partiellement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>SHE (Somewhat Homomorphic Encryption)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FHE (Fully Homomorphic Encryption / chiffrement totalement homomorphe)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bruit (noise)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Bootstrapping</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Chiffrement homomorphe : notions générales</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>FHE</TAG>
+          <TAG>Expansion ratio</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Cryptosystème de Paillier</CONCEPT>
+        <DEFINITION>&lt;p&gt;Schéma de chiffrement asymétrique publié par Pascal Paillier en 1999, homomorphe additif : multiplier deux textes chiffrés Paillier produit le chiffré de la somme des deux textes clairs correspondants.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>n, g, lambda (λ), mu (μ)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Addition homomorphe (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Multiplication par un scalaire en clair (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Représentation symétrique (nombres négatifs)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Mise à l&#039;échelle en entiers (scaling)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Paillier</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Paillier</TAG>
+          <TAG>Cryptosystème de Paillier</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>n, g, lambda (λ), mu (μ)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Paramètres du schéma Paillier : n est le module public (produit de deux grands nombres premiers), g un générateur, lambda et mu font partie de la clé privée utilisée pour le déchiffrement.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Cryptosystème de Paillier</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Addition homomorphe (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Multiplication par un scalaire en clair (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Représentation symétrique (nombres négatifs)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Mise à l&#039;échelle en entiers (scaling)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Paillier</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Paillier</TAG>
+          <TAG>n</TAG>
+          <TAG>g</TAG>
+          <TAG>lambda</TAG>
+          <TAG>mu</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Addition homomorphe (Paillier)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Multiplier deux textes chiffrés Paillier (modulo n²) produit le chiffré de la somme des deux textes clairs.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Cryptosystème de Paillier</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>n, g, lambda (λ), mu (μ)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Multiplication par un scalaire en clair (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Représentation symétrique (nombres négatifs)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Mise à l&#039;échelle en entiers (scaling)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Paillier</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Paillier</TAG>
+          <TAG>Addition homomorphe</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Multiplication par un scalaire en clair (Paillier)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Élever un texte chiffré Paillier à la puissance d&#039;un entier clair produit le chiffré du produit correspondant. Permet d&#039;appliquer des coefficients connus (non chiffrés) à des données chiffrées.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Cryptosystème de Paillier</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>n, g, lambda (λ), mu (μ)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Addition homomorphe (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Représentation symétrique (nombres négatifs)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Mise à l&#039;échelle en entiers (scaling)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Paillier</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Paillier</TAG>
+          <TAG>Multiplication par un scalaire en clair</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Représentation symétrique (nombres négatifs)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Paillier travaille nativement sur des entiers positifs modulo n. Pour représenter des nombres négatifs, on réinterprète les valeurs proches de n comme des nombres négatifs (valeur - n si valeur &amp;gt; n/2).&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Cryptosystème de Paillier</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>n, g, lambda (λ), mu (μ)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Addition homomorphe (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Multiplication par un scalaire en clair (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Mise à l&#039;échelle en entiers (scaling)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Paillier</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Paillier</TAG>
+          <TAG>Représentation symétrique</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Mise à l&#039;échelle en entiers (scaling)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Paillier ne travaille que sur des entiers. Des nombres décimaux doivent donc être multipliés par une constante d&#039;échelle avant chiffrement, puis divisés par cette même constante au déchiffrement.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Cryptosystème de Paillier</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>n, g, lambda (λ), mu (μ)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Addition homomorphe (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Multiplication par un scalaire en clair (Paillier)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Représentation symétrique (nombres négatifs)</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Paillier</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Paillier</TAG>
+          <TAG>Mise à l&#039;échelle en entiers</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>CKKS (Cheon-Kim-Kim-Song, 2017)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Schéma FHE conçu pour effectuer des calculs approchés sur des nombres réels (contrairement à la plupart des autres schémas FHE, limités aux entiers).&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>TenSEAL</CONCEPT>
+        <DEFINITION>&lt;p&gt;Bibliothèque Python développée par le projet OpenMined (organisation reconnue en machine learning respectueux de la vie privée). Elle n&#039;implémente pas elle-même la cryptographie : c&#039;est une surcouche Python autour de Microsoft SEAL.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>TenSEAL</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Microsoft SEAL (Simple Encrypted Arithmetic Library)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Bibliothèque C++ open source développée par Microsoft Research, une des implémentations FHE les plus utilisées et citées au monde.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Microsoft SEAL</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Contexte</CONCEPT>
+        <DEFINITION>&lt;p&gt;Objet qui regroupe tous les paramètres cryptographiques (degré du polynôme, taille des modules de coefficients, échelle globale) ainsi que les clés. Un contexte peut être « complet » (avec clé secrète, côté client) ou « public » (sans clé secrète, côté serveur).&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Contexte</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Degré du polynôme modulaire (poly_modulus_degree)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Paramètre qui fixe le degré des polynômes utilisés en interne pour encoder les données. Détermine à la fois le niveau de sécurité et le nombre de valeurs pouvant être encodées dans un seul vecteur chiffré.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Degré du polynôme modulaire</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Liste des tailles (en bits) de la chaîne de modules de coefficients. Détermine combien de multiplications successives peuvent être effectuées avant que le bruit ne devienne ingérable (« profondeur multiplicative »).&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Chaîne de modules de coefficients</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Échelle globale (global_scale)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Facteur d&#039;échelle utilisé pour convertir les nombres réels en entiers avant chiffrement, la cryptographie sous-jacente étant fondamentalement entière.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Échelle globale</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Clés de Galois (Galois keys)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Clés supplémentaires nécessaires pour effectuer certaines opérations sur des vecteurs chiffrés (comme les rotations, utilisées en interne par les produits scalaires). Générées côté client, incluses dans le contexte public transmis au serveur.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Clés de Galois</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Sérialisation sans clé secrète</CONCEPT>
+        <DEFINITION>&lt;p&gt;Mécanisme permettant d&#039;exporter un contexte sans sa clé secrète, pour le transmettre en toute sécurité à un serveur qui doit pouvoir calculer sur les données chiffrées mais jamais les déchiffrer.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Sérialisation sans clé secrète</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Vecteur chiffré</CONCEPT>
+        <DEFINITION>&lt;p&gt;Représentation d&#039;un vecteur de nombres réels chiffré, supportant addition, multiplication et produit scalaire directement entre vecteurs chiffrés ou avec des vecteurs en clair.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Erreur d&#039;approximation</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Vecteur chiffré</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Erreur d&#039;approximation</CONCEPT>
+        <DEFINITION>&lt;p&gt;Contrairement à un schéma exact comme Paillier, CKKS ne rend qu&#039;une approximation du résultat exact, à cause du bruit inhérent au schéma.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>CKKS (Cheon-Kim-Kim-Song, 2017)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>TenSEAL</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Microsoft SEAL (Simple Encrypted Arithmetic Library)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Contexte</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Degré du polynôme modulaire (poly_modulus_degree)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Chaîne de modules de coefficients (coeff_mod_bit_sizes)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Échelle globale (global_scale)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Clés de Galois (Galois keys)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Sérialisation sans clé secrète</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Vecteur chiffré</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>CKKS et le FHE réel</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>CKKS</TAG>
+          <TAG>Erreur d&#039;approximation</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Score (bancaire)</CONCEPT>
+        <DEFINITION>&lt;p&gt;Note calculée à partir de données financières d&#039;un client (revenu, taux d&#039;endettement, nombre d&#039;incidents de paiement) pour estimer un risque de crédit.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Variables du modèle</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Poids du modèle</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Biais</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Cas d&#039;usage : scoring bancaire chiffré</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Scoring bancaire</TAG>
+          <TAG>Score</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Variables du modèle</CONCEPT>
+        <DEFINITION>&lt;p&gt;Données d&#039;entrée utilisées pour calculer le score : par exemple le revenu, le taux d&#039;endettement, le nombre d&#039;incidents de paiement.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Score (bancaire)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Poids du modèle</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Biais</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Cas d&#039;usage : scoring bancaire chiffré</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Scoring bancaire</TAG>
+          <TAG>Variables du modèle</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Poids du modèle</CONCEPT>
+        <DEFINITION>&lt;p&gt;Coefficients appliqués à chaque variable pour calculer le score. Ce sont des valeurs publiques, connues du serveur ; seules les données du client doivent rester confidentielles.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Score (bancaire)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Variables du modèle</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Biais</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Cas d&#039;usage : scoring bancaire chiffré</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Scoring bancaire</TAG>
+          <TAG>Poids du modèle</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Biais</CONCEPT>
+        <DEFINITION>&lt;p&gt;Constante ajoutée au score après application des poids, équivalent de l&#039;ordonnée à l&#039;origine d&#039;un modèle linéaire.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>Score (bancaire)</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Variables du modèle</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Poids du modèle</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Cas d&#039;usage : scoring bancaire chiffré</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Scoring bancaire</TAG>
+          <TAG>Biais</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>API REST</CONCEPT>
+        <DEFINITION>&lt;p&gt;Interface de programmation permettant à une interface web (ou tout autre client) de communiquer avec un serveur applicatif via des requêtes HTTP structurées.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>FastAPI</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Docker / conteneurisation</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>pytest</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Isolation par sous-processus</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Client / serveur</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Architecture technique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Architecture technique</TAG>
+          <TAG>API REST</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>FastAPI</CONCEPT>
+        <DEFINITION>&lt;p&gt;Framework web Python permettant d&#039;exposer rapidement des API REST.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>API REST</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Docker / conteneurisation</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>pytest</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Isolation par sous-processus</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Client / serveur</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Architecture technique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Architecture technique</TAG>
+          <TAG>FastAPI</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Docker / conteneurisation</CONCEPT>
+        <DEFINITION>&lt;p&gt;Technologie permettant d&#039;empaqueter une application avec toutes ses dépendances dans un environnement isolé et reproductible, exécutable de la même façon sur n&#039;importe quelle machine.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>API REST</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FastAPI</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>pytest</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Isolation par sous-processus</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Client / serveur</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Architecture technique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Architecture technique</TAG>
+          <TAG>Docker / conteneurisation</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>pytest</CONCEPT>
+        <DEFINITION>&lt;p&gt;Framework de tests automatisés pour Python.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>API REST</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FastAPI</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Docker / conteneurisation</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Isolation par sous-processus</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Client / serveur</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Architecture technique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Architecture technique</TAG>
+          <TAG>pytest</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Isolation par sous-processus</CONCEPT>
+        <DEFINITION>&lt;p&gt;Technique consistant à exécuter un morceau de code potentiellement instable (boucle infinie, crash) dans un processus séparé avec une limite de temps, pour protéger l&#039;application principale.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>API REST</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FastAPI</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Docker / conteneurisation</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>pytest</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Client / serveur</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Architecture technique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Architecture technique</TAG>
+          <TAG>Isolation par sous-processus</TAG>
+        </TAGS>
+      </ENTRY>
+      <ENTRY>
+        <CONCEPT>Client / serveur</CONCEPT>
+        <DEFINITION>&lt;p&gt;Modèle d&#039;architecture où le client (détenteur des données et de la clé privée) envoie des données chiffrées à un serveur, qui effectue des calculs sans jamais pouvoir les déchiffrer, puis renvoie un résultat chiffré que seul le client peut lire.&lt;/p&gt;</DEFINITION>
+        <FORMAT>1</FORMAT>
+        <USEDYNALINK>1</USEDYNALINK>
+        <CASESENSITIVE>0</CASESENSITIVE>
+        <FULLMATCH>1</FULLMATCH>
+        <TEACHERENTRY>1</TEACHERENTRY>
+        <ALIASES>
+          <ALIAS>
+            <NAME>API REST</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>FastAPI</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Docker / conteneurisation</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>pytest</NAME>
+          </ALIAS>
+          <ALIAS>
+            <NAME>Isolation par sous-processus</NAME>
+          </ALIAS>
+        </ALIASES>
+        <CATEGORIES>
+          <CATEGORY>
+            <NAME>Architecture technique</NAME>
+            <USEDYNALINK>1</USEDYNALINK>
+          </CATEGORY>
+        </CATEGORIES>
+        <TAGS>
+          <TAG>Architecture technique</TAG>
+          <TAG>Client / serveur</TAG>
+        </TAGS>
+      </ENTRY>
+    </ENTRIES>
+  </INFO>
+</GLOSSARY>

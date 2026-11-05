@@ -1,0 +1,8 @@
+{
+  "id": "ex3_fernet_tamper",
+  "order": 3,
+  "module": "A. Chiffrement classique",
+  "title": "Chiffrement authentifié avec Fernet",
+  "difficulty": "facile",
+  "depends_on": []
+}

@@ -1,0 +1,39 @@
+[00:01]->[00:37]
+Bienvenue dans la première partie de ce cours. Avant d'aborder la cryptographie, posons le problème. Aujourd'hui, calculer un score de crédit suppose en pratique de traiter les données du client en clair. Le chiffrement homomorphe promet de s'en passer. Ce cours évalue ce que vaut cette promesse.  Nous verrons le contexte, puis le cadre réglementaire et nous terminerons par la problématique. Dans un premier temps, qu'est-ce qu'un score de crédit ? Un score de crédit est un nombre qui estime la probabilité qu'un emprunteur rembourse.
+
+[00:38]->[01:16]
+L'établissement va venir rassembler un ensemble d'informations sur le demandeur et va venir les soumettre à un modèle statistique qui va leur fournir une valeur. Cette valeur qui détermine dans les faits l'octroi ou le refus du crédit. Les informations relèvent toujours des mêmes catégories : les revenus et leur stabilité, leur taux d'endettement, l'historique de remboursement et en France, la consultation du FICP, le fichier des incidents de remboursement des crédits aux particuliers géré par la Banque de France.
+
+[01:17]->[01:51]
+Ret-retenez surtout la nature de ces données, car c'est ce point qui commande toute la suite. Il ne s'agit pas de statistiques, il ne s'agit pas de données anonymisées, il s'agit du dossier bancaire complet d'une personne identifiée. Voyons maintenant où ce calcul se déroule. Rarement chez le client et pas nécessairement au sein de la banque. Le scoring est fréquemment externalisé, soit vers un prestataire spécialisé, soit vers une infrastructure cloud qui héberge le modèle.
+
+[01:52]->[02:23]
+Et lorsque cette infrastructure est opérée depuis un pays tiers, la question devient aussi juridictionnelle. Quel droit s'applique à ces données et qui peut légalement y accéder ? Observez le schéma. Le client saisit son dossier, les données sont transmises, chiffrées par TLS.  Elles arrivent sur un serveur où elles sont stockées, sur un disque lui aussi chiffré. Jusqu'ici, la chaîne est protégée. Vient le moment du calcul.
+
+[02:24]->[02:54]
+Le serveur déchiffre. Il n'a pas d'autre choix. Un processeur classique ne sait pas opérer sur des octets chiffrés. Le modèle s'exécute donc sur des valeurs en clair, produit un score, et ce score repart chiffré vers la banque.  Cette séquence n'est pas un défaut d'implémentation. Elle découle du modèle de sécurité que nous utilisons aujourd'hui. Une donnée se trouve en effet dans l'un de ces trois états.
+
+[02:55]->[03:27]
+Premier état, au repos, elle est stockée, nous savons la protéger par le chiffrement du disque ou de la base. Le problème est résolu depuis longtemps. Le deuxième état, en transit, elle circule sur le réseau. Nous savons également la protéger via TLS. Troisième état, en cours d'utilisation, un programme la traite.  Et là, nous n'avons rien. La valeur figure en clair dans la mémoire du serveur. Un administrateur peut les lire. Un vidage mémoire les expose. La compromission du processus les livre.
+
+[03:29]->[04:13]
+C'est le problème du data in use. Il ne s'agit pas seulement d'un risque d'attaque, mais en supposant le serveur parfaitement sécurisé, le client a confié ses données à un tiers qui en détient les clés. L'accès légitime constitue un risque au même titre que l'accès illégitime. C'est précisément ce troisième état que le chiffrement homomorphe prétend combler, calculer sans jamais déchiffrer. Cette faille technique intervient à un moment où la pression réglementaire, elle, s'accentue.
+
+[04:14]->[04:45]
+Trois repères. Premier repère, le RGPD. Son article 5.1C pose le principe de minimisation. On ne traite que les données strictement nécessaires à la finalité poursuivie.  Son article 22 encadre les décisions individuelles automatisées. Deuxième repère, et c'est celui qu'il faut connaître. L'arrêt Schufa, décembre 2023, devant la Cour de justice de l'Union européenne.
+
+[04:45]->[05:32]
+La Cour juge que le calcul d'un score de solvabilité constitue en lui-même une décision automatisée au sein de l'article 22. Dès lors que ce score détermine l'octroi du crédit, mesurez la portée de cette décision. Le prestataire qui calcule le score en est responsable, même si ce n'est pas lui qui accorde le crédit. Troisième repère, tout récent, le 7 mai 2026, la CNIL a publié une recommandation consacrée à l'évaluation de la solvabilité qui remplace l'ancienne autorisation unique, qui classe le scoring de crédit parmi les systèmes à haut risque à l'annexe trois point cinq B.
+
+[05:36]->[06:08]
+Aucun de ces textes n'impose le chiffrement homomorphe, mais tous convergent vers la même exigence : réduire l'exposition des données et réduire le nombre d'acteurs qui les voient en clair. Ce fonctionnement actuel a un coût et ce coût se mesure. Chaque année, IBM publie un rapport sur le coût des violations des données. Dans l'édition deux mille vingt-six, les services financiers occupent la deuxième place de tous les secteurs étudiés, avec une moyenne de six virgule vingt-neuf millions de dollars par violation.
+
+[06:09]->[06:46]
+C'est vingt-six pour cent au-dessus de la moyenne mondiale qui atteint elle-même un niveau record. Second chiffre, le délai : deux cent quarante-sept jours en moyenne pour détecter et contenir une violation. Soit huit mois durant lesquels des dossiers bancaires nominatifs circulent à l'insu de tous.  Ces chiffres ne démontrent pas que le chiffrement homomorphe est la solution. Ils justifient qu'on en cherche une. Nous disposons maintenant de tous les éléments pour formuler la question qui structurera ce cours.
+
+[06:47]->[07:18]
+Peut-on réaliser un scoring de crédit ou de risque directement sur des données chiffrées sans jamais les exposer en clair ? Est-ce que c'est réellement exploitable dans un contexte bancaire ou fintech aujourd'hui ? Cette formulation contient en réalité deux questions de nature différente. La première est théorique. La chose est-elle mathématiquement possible ?  La seconde est industrielle. Le procédé tient-il la charge ? À quel coût et avec quelle précision ?
+
+[07:19]->[07:49]
+Gardez ces deux questions en tête tout au long de ce cours. Le plan est à l'écran. Cette partie, après cette introduction, la partie deux va venir poser les fondamentaux du chiffrement homomorphe. La partie trois va venir détailler les opérations qu'exige un score. La partie quatre dresse l'état de l'art.  La partie cinq présente notre prototype. La partie six en expose les limites et la partie sept va venir conclure. Bonne suite de cours.
+
