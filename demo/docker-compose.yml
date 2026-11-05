@@ -1,0 +1,7 @@
+services:
+  fhe-scoring-demo:
+    build: ./backend
+    container_name: fhe-scoring-demo
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

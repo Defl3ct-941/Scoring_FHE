@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FHE pas à pas : Scoring financier chiffré</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">🔐</span>
+        <div>
+          <h1>FHE pas à pas</h1>
+          <p>Scoring financier sur données chiffrées : prototype pédagogique</p>
+        </div>
+      </div>
+      <nav class="stepper" id="stepper">
+        <button class="step-btn active" data-step="0"><span class="step-num">0</span>Le scénario</button>
+        <button class="step-btn" data-step="1"><span class="step-num">1</span>Chiffrement classique</button>
+        <button class="step-btn" data-step="2"><span class="step-num">2</span>Paillier (PHE)</button>
+        <button class="step-btn" data-step="3"><span class="step-num">3</span>FHE complet (CKKS)</button>
+        <button class="step-btn" data-step="4"><span class="step-num">4</span>Comparatif &amp; limites</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Vos données (client)</h2>
+      <p class="hint">Ces valeurs restent les vôtres : à chaque étape, on regarde ce que le serveur peut, ou ne peut pas, en faire une fois chiffrées.</p>
+      <div id="sliders"></div>
+
+      <div class="plaintext-card">
+        <div class="plaintext-label">Score en clair (référence)</div>
+        <div class="plaintext-value" id="plaintextScore"></div>
+        <div class="plaintext-formula" id="plaintextFormula"></div>
+      </div>
+    </aside>
+
+    <main class="content">
+
+      <!-- STEP 0 -->
+      <section class="panel active" data-panel="0">
+        <h2>Le scénario : un score de crédit sans jamais montrer les données</h2>
+        <p class="lead">
+          Une banque calcule un <strong>score de risque</strong> à partir de trois informations sensibles :
+          le revenu, le taux d'endettement et le nombre d'incidents de paiement récents. Aujourd'hui, pour
+          calculer ce score, le serveur doit voir ces données <strong>en clair</strong>. Peut-on faire mieux ?
+        </p>
+
+        <div class="pipeline-diagram">
+          <div class="pipe-node">
+            <div class="pipe-icon">🧑</div>
+            <div class="pipe-title">Client</div>
+            <div class="pipe-sub">possède les données<br/>et la clé secrète</div>
+          </div>
+          <div class="pipe-arrow">
+            <span>chiffre →</span>
+          </div>
+          <div class="pipe-node">
+            <div class="pipe-icon">🔒</div>
+            <div class="pipe-title">Données chiffrées</div>
+            <div class="pipe-sub">envoyées au serveur</div>
+          </div>
+          <div class="pipe-arrow">
+            <span>calcule →</span>
+          </div>
+          <div class="pipe-node highlight">
+            <div class="pipe-icon">🖥️</div>
+            <div class="pipe-title">Serveur</div>
+            <div class="pipe-sub">calcule le score<br/><strong>sans jamais déchiffrer</strong></div>
+          </div>
+          <div class="pipe-arrow">
+            <span>renvoie →</span>
+          </div>
+          <div class="pipe-node">
+            <div class="pipe-icon">🔓</div>
+            <div class="pipe-title">Client</div>
+            <div class="pipe-sub">déchiffre le résultat<br/>avec sa clé secrète</div>
+          </div>
+        </div>
+
+        <div class="model-card">
+          <h3>Le modèle de score utilisé dans toute la démo</h3>
+          <p>C'est volontairement le modèle le plus simple possible : une <strong>somme pondérée</strong> (score linéaire), exactement celui décrit dans le plan du projet avant d'envisager une régression logistique.</p>
+          <pre class="formula-block">score = biais + w_revenu · (revenu − 2500) + w_endettement · ratio_endettement + w_incidents · incidents</pre>
+          <p class="hint">Les poids <code>w</code> sont <strong>publics</strong> (connus du serveur) : seules les données du client (revenu, ratio, incidents) doivent rester secrètes. C'est cette asymétrie qui rend le calcul homomorphe possible.</p>
+        </div>
+
+        <div class="callout info">
+          <strong>Ce qu'on va observer, étape par étape :</strong>
+          <ol>
+            <li><strong>Chiffrement classique</strong> (AES/Fernet) : sûr au repos, mais <em>aucun calcul</em> n'est possible sur le chiffré.</li>
+            <li><strong>Chiffrement homomorphe partiel</strong> (Paillier) : on peut enfin <em>additionner</em> et <em>multiplier par un nombre public</em>, ce qui suffit pour notre score linéaire !</li>
+            <li><strong>FHE complet</strong> (CKKS) : addition <em>et</em> multiplication entre deux chiffrés, sur des nombres réels, la brique qui ouvre la porte à des modèles plus riches (régression logistique, réseaux de neurones...).</li>
+            <li><strong>Comparatif</strong> : temps de calcul, taille des données chiffrées, précision, et les limites réelles du FHE aujourd'hui.</li>
+          </ol>
+        </div>
+
+        <button class="btn primary" data-goto="1">Commencer par le chiffrement classique →</button>
+      </section>
+
+      <!-- STEP 1 -->
+      <section class="panel" data-panel="1">
+        <h2>Étape 1 : Chiffrement classique (AES / Fernet)</h2>
+        <p class="lead">On chiffre chaque donnée avec un chiffrement symétrique authentifié, celui qu'on utilise tous les jours (TLS, disque chiffré...). Le serveur reçoit les chiffrés et tente de calculer avec.</p>
+
+        <button class="btn primary" id="runClassic">🔒 Chiffrer mes données et tenter le calcul</button>
+
+        <div class="result-area" id="classicResult"></div>
+
+        <div class="callout warning" id="classicConclusion" hidden></div>
+
+        <div class="nav-buttons">
+          <button class="btn ghost" data-goto="0">← Le scénario</button>
+          <button class="btn primary" data-goto="2">Étape suivante : Paillier →</button>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="panel" data-panel="2">
+        <h2>Étape 2 : Chiffrement homomorphe partiel, Paillier</h2>
+        <p class="lead">
+          Paillier (1999) autorise deux opérations magiques sur les chiffrés :
+          <code>E(a) × E(b) = E(a+b)</code> (une addition !) et <code>E(a)^k = E(k·a)</code>
+          (une multiplication par un nombre <em>public</em>). C'est exactement ce qu'il faut pour un score
+          linéaire pondéré.
+        </p>
+
+        <button class="btn primary" id="runPaillier">🔑 Chiffrer et calculer le score (Paillier)</button>
+
+        <div class="result-area" id="paillierResult"></div>
+
+        <div class="callout success" id="paillierConclusion" hidden></div>
+
+        <div class="nav-buttons">
+          <button class="btn ghost" data-goto="1">← Chiffrement classique</button>
+          <button class="btn primary" data-goto="3">Étape suivante : FHE complet →</button>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="panel" data-panel="3">
+        <h2>Étape 3 : FHE complet, CKKS (Microsoft SEAL / TenSEAL)</h2>
+        <p class="lead">
+          CKKS va plus loin que Paillier : addition <em>et</em> multiplication <strong>entre deux chiffrés</strong>,
+          sur des nombres réels approximatifs. On simule ici une vraie séparation client/serveur : le serveur ne
+          reçoit qu'un <strong>contexte public</strong> (sans clé secrète) et ne peut donc pas déchiffrer, même s'il essaie.
+        </p>
+
+        <button class="btn primary" id="runCkks">🚀 Chiffrer et calculer le score (CKKS)</button>
+
+        <div class="result-area" id="ckksResult"></div>
+
+        <div class="callout success" id="ckksConclusion" hidden></div>
+
+        <div class="callout info">
+          <strong>Et le bootstrapping ?</strong> Chaque opération homomorphe ajoute du "bruit" au chiffré.
+          Après un certain nombre d'opérations, le bruit devient trop grand pour déchiffrer correctement : il faut
+          alors "rafraîchir" le chiffré via une opération coûteuse appelée <strong>bootstrapping</strong>. Notre score
+          linéaire reste assez simple pour ne pas en avoir besoin, mais une régression logistique complète ou un
+          réseau de neurones chiffré en aurait besoin régulièrement. C'est le principal verrou de performance du FHE.
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn ghost" data-goto="2">← Paillier</button>
+          <button class="btn primary" data-goto="4">Étape suivante : Comparatif →</button>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="panel" data-panel="4">
+        <h2>Étape 4 : Comparatif &amp; limites</h2>
+        <p class="lead">On relance les trois approches sur les mêmes données pour comparer temps de calcul, taille des chiffrés et précision.</p>
+
+        <button class="btn primary" id="runCompare">📊 Lancer le comparatif complet</button>
+
+        <div class="result-area" id="compareResult"></div>
+
+        <div class="model-card">
+          <h3>Limites réelles du FHE aujourd'hui</h3>
+          <ul class="limits-list">
+            <li><strong>Surcoût computationnel</strong> : un calcul homomorphe peut être des centaines à des milliers de fois plus lent que le même calcul en clair.</li>
+            <li><strong>Expansion des données</strong> : un chiffré CKKS peut peser plusieurs dizaines de Ko pour quelques nombres, regardez le ratio d'expansion mesuré ci-dessus.</li>
+            <li><strong>Pas de comparaisons faciles</strong> : impossible de faire un simple <code>if score &gt; seuil</code> sur un chiffré sans techniques avancées (c'est pour ça que notre score n'est pas "clampé" entre 0 et 100 dans la démo).</li>
+            <li><strong>Bootstrapping coûteux</strong> : nécessaire pour les calculs profonds (régression logistique, réseaux de neurones), c'est le principal verrou de performance des schémas comme BGV/BFV/CKKS.</li>
+            <li><strong>Paramétrage complexe</strong> : le choix des tailles de clés et du niveau de bruit demande une expertise cryptographique pointue.</li>
+            <li><strong>Alternatives à connaître</strong> : MPC (calcul multi-parties), differential privacy, TEE (enclaves matérielles), chacune avec ses propres compromis sécurité/performance.</li>
+          </ul>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="btn ghost" data-goto="3">← FHE complet</button>
+          <button class="btn ghost" data-goto="0">↺ Revenir au scénario</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    Démo pédagogique : Scoring financier sur données chiffrées via FHE, prototype et limites
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

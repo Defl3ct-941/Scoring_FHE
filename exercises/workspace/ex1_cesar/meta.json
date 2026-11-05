@@ -1,0 +1,8 @@
+{
+  "id": "ex1_cesar",
+  "order": 1,
+  "module": "A. Chiffrement classique",
+  "title": "Le chiffrement de César",
+  "difficulty": "facile",
+  "depends_on": []
+}

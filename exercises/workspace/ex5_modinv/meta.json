@@ -1,0 +1,8 @@
+{
+  "id": "ex5_modinv",
+  "order": 5,
+  "module": "B. Arithmétique modulaire",
+  "title": "PGCD étendu et inverse modulaire",
+  "difficulty": "moyen",
+  "depends_on": []
+}

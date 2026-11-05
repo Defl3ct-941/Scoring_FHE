@@ -1,0 +1,8 @@
+{
+  "id": "ex6_paillier_keygen",
+  "order": 6,
+  "module": "C. Paillier from scratch",
+  "title": "Générer une paire de clés Paillier",
+  "difficulty": "moyen",
+  "depends_on": ["ex5_modinv"]
+}

@@ -1,0 +1,13 @@
+services:
+  exercises-runner:
+    build: .
+    image: fhe-exercises:latest
+    container_name: fhe-exercises-runner
+    ports:
+      - "8100:8100"
+    volumes:
+      - exercises-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  exercises-data:
