@@ -37,15 +37,11 @@ classifiers = [
 dependencies = [
     "pytest>=9.2,<10",
     "cryptography>=50.0,<51",
-]
-
-[project.optional-dependencies]
-# Bonus ex10 (CKKS) : TenSEAL n'est installé que sur demande, car c'est une
-# dépendance native lourde qui ne gère pas encore Python 3.14+. Elle n'est pas
-# embarquée dans les exécutables autonomes.
-#   pip install "fhe-cli[ckks]"
-ckks = [
-    "tenseal>=0.3.16,<0.4",
+    # Bonus ex10 (CKKS) : TenSEAL est installé automatiquement partout où il
+    # existe (Python 3.11 à 3.14 ; Windows, Linux, macOS Apple Silicon). Il n'a
+    # pas encore de version pour Python 3.15 ni pour les Mac Intel : l'ex10 y
+    # est alors ignoré, le reste de l'atelier fonctionne normalement.
+    "tenseal>=0.3.18,<0.4; python_version < '3.15' and (platform_system != 'Darwin' or platform_machine == 'arm64')",
 ]
 
 [project.urls]

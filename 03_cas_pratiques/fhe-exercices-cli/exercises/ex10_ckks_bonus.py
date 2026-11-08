@@ -8,9 +8,9 @@ bibliothèque TenSEAL (wrapper de Microsoft SEAL). CKKS chiffre des vecteurs de
 réels et sait, sur les chiffrés, additionner, multiplier et faire des produits
 scalaires. C'est le même schéma que la démo web du projet (04_demo).
 
-Ce bonus nécessite TenSEAL, non installé par défaut :
-    pip install "fhe-cli[ckks]"
-Sans lui, les tests de cet exercice sont simplement ignorés (skipped).
+TenSEAL est installé automatiquement avec fhe-cli (et embarqué dans les
+exécutables). Seule exception : il n'existe pas encore pour Python 3.15 ni
+pour les Mac Intel ; les tests de cet exercice y sont alors ignorés (skipped).
 
 make_context() est fourni (mêmes paramètres que la démo). Vous implémentez le
 produit scalaire chiffré.
@@ -33,7 +33,7 @@ Testez avec : fhecli run ex10_ckks_bonus
 
 try:
     import tenseal as ts
-except ImportError:  # bonus optionnel : pip install "fhe-cli[ckks]"
+except ImportError:  # TenSEAL indisponible (Python 3.15 ou Mac Intel) : exercice ignoré
     ts = None
 
 
@@ -63,7 +63,7 @@ import pytest
 
 
 def test_matches_plaintext_dot_product():
-    pytest.importorskip("tenseal", reason="bonus CKKS : pip install \"fhe-cli[ckks]\"")
+    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15 ou Mac Intel)")
     context = make_context()
     values = [1500.0, 30.0, 1.0]
     weights = [0.005, -0.9, -10.0]
@@ -74,7 +74,7 @@ def test_matches_plaintext_dot_product():
 
 
 def test_matches_plaintext_dot_product_other_values():
-    pytest.importorskip("tenseal", reason="bonus CKKS : pip install \"fhe-cli[ckks]\"")
+    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15 ou Mac Intel)")
     context = make_context()
     values = [-1500.0, 55.0, 4.0]
     weights = [0.005, -0.9, -10.0]

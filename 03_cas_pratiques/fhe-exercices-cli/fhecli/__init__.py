@@ -2,4 +2,4 @@
 pour apprendre le chiffrement classique et le chiffrement homomorphe (FHE).
 """
 
-__version__ = "1.3.1"
+__version__ = "1.3.2"

@@ -4,6 +4,19 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — fhecli 1.3.2 : TenSEAL (CKKS) inclus par défaut
+
+### Modifié
+
+- `pip install fhe-cli` installe tout, y compris TenSEAL pour le bonus CKKS (ex10) : l'extra
+  `[ckks]` disparaît, TenSEAL devient une dépendance de base. Marqueur d'environnement
+  `python_version < '3.15'` et exclusion des Mac Intel : TenSEAL 0.3.18 n'a pas de wheel pour
+  Python 3.15 ni pour macOS x86_64 ; l'installation y reste possible et l'ex10 y est ignoré.
+- Exécutables autonomes construits avec Python 3.14 : ils embarquent TenSEAL et numpy, l'ex10
+  y fonctionne (Windows 37,5 Mo, Linux 46,2 Mo ; « 2 passed » vérifié dans chaque binaire).
+- CI : tests sous Python 3.11, 3.14 et 3.15 ; exécutables, wheel et sdist construits en 3.14.
+- Énoncé et indice de l'ex10 mis à jour (plus d'installation séparée à faire).
+
 ## 2026-11-08 — fhecli 1.3.1 : distribution PyPI renommée en fhe-cli
 
 ### Modifié
