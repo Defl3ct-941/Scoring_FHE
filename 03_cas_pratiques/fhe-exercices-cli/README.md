@@ -146,7 +146,7 @@ de bout en bout, et enfin à un vrai calcul FHE avec CKKS.
 Le bonus **ex10 (CKKS)** s'appuie sur [TenSEAL](https://github.com/OpenMined/TenSEAL),
 installé automatiquement avec `fhe-cli` et embarqué dans les exécutables
 autonomes : rien de plus à installer. Seule exception, TenSEAL n'existe pas
-encore pour Python 3.15 ni pour les Mac Intel : l'ex10 y est alors ignoré
+encore pour Python 3.15, les Mac Intel ni macOS 13 et antérieur : l'ex10 y est alors ignoré
 (utilisez Python 3.14 ou l'exécutable autonome pour le faire).
 
 ## Développement (depuis le dépôt Scoring FHE)
