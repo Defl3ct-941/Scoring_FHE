@@ -24,6 +24,8 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 ### Modifié
 
 - Classifiers : ajout de Python 3.15.
+- CI : action tierce `pypa/gh-action-pypi-publish` épinglée sur un commit (v1.14.3), car elle reçoit
+  le droit `id-token: write` de publication sur PyPI.
 
 Tests :
 
