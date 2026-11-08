@@ -9,7 +9,7 @@ réels et sait, sur les chiffrés, additionner, multiplier et faire des produits
 scalaires. C'est le même schéma que la démo web du projet (04_demo).
 
 Ce bonus nécessite TenSEAL, non installé par défaut :
-    pip install "fhecli[ckks]"
+    pip install "fhe-cli[ckks]"
 Sans lui, les tests de cet exercice sont simplement ignorés (skipped).
 
 make_context() est fourni (mêmes paramètres que la démo). Vous implémentez le
@@ -33,7 +33,7 @@ Testez avec : fhecli run ex10_ckks_bonus
 
 try:
     import tenseal as ts
-except ImportError:  # bonus optionnel : pip install "fhecli[ckks]"
+except ImportError:  # bonus optionnel : pip install "fhe-cli[ckks]"
     ts = None
 
 
@@ -63,7 +63,7 @@ import pytest
 
 
 def test_matches_plaintext_dot_product():
-    pytest.importorskip("tenseal", reason="bonus CKKS : pip install \"fhecli[ckks]\"")
+    pytest.importorskip("tenseal", reason="bonus CKKS : pip install \"fhe-cli[ckks]\"")
     context = make_context()
     values = [1500.0, 30.0, 1.0]
     weights = [0.005, -0.9, -10.0]
@@ -74,7 +74,7 @@ def test_matches_plaintext_dot_product():
 
 
 def test_matches_plaintext_dot_product_other_values():
-    pytest.importorskip("tenseal", reason="bonus CKKS : pip install \"fhecli[ckks]\"")
+    pytest.importorskip("tenseal", reason="bonus CKKS : pip install \"fhe-cli[ckks]\"")
     context = make_context()
     values = [-1500.0, 55.0, 4.0]
     weights = [0.005, -0.9, -10.0]

@@ -26,11 +26,14 @@ python -m venv .venv
 # macOS / Linux
 source .venv/bin/activate
 
-pip install fhecli
+pip install fhe-cli
 fhecli init            # crée le dossier ./fhe-exercices avec les exercices
 cd fhe-exercices
 fhecli watch
 ```
+
+Le paquet s'installe sous le nom **`fhe-cli`** ; la commande et le module
+Python restent `fhecli`.
 
 `fhecli init [dossier]` crée un **espace de travail** : le dossier
 `exercises/` (vos fichiers), un `pytest.ini` et un fichier marqueur
@@ -144,7 +147,7 @@ une dépendance native qui n'est pas installée par défaut (et qui n'est pas
 embarquée dans les exécutables autonomes). Pour le faire :
 
 ```bash
-pip install "fhecli[ckks]"
+pip install "fhe-cli[ckks]"
 ```
 
 Sans TenSEAL, les tests de l'ex10 sont simplement ignorés (skipped).
@@ -201,7 +204,7 @@ Construire le paquet (sans le publier) :
 
 ```bash
 python -m pip install build
-python -m build                # dist/fhecli-<version>-py3-none-any.whl et .tar.gz
+python -m build                # dist/fhe_cli-<version>-py3-none-any.whl et .tar.gz
 ```
 
 ## Exécutables, CI et publication
