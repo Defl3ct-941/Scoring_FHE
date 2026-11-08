@@ -87,6 +87,10 @@ exe = EXE(
     name=NAME,
     console=True,
     upx=False,
-    strip=False,
+    # Sous Linux, retire les symboles de débogage des bibliothèques embarquées
+    # (libpython seule passe de 32 à 6 Mo) : 63 -> 46 Mo, sous la limite de 50 Mo
+    # de Moodle. Désactivé ailleurs : sans effet sous Windows, risque pour la
+    # signature sous macOS.
+    strip=sys.platform.startswith("linux"),
     runtime_tmpdir=None,
 )
