@@ -4,6 +4,23 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — Mise à jour des dépendances
+
+### Modifié
+- `cryptography` 43.0.1 → 50.0.2 (démo, atelier web, `fhecli`).
+- `pytest` 8.3.3 → 9.2.0 (atelier web, `fhecli`).
+- `fastapi` 0.115.0 → 0.162.2 et `uvicorn[standard]` 0.30.6 → 0.54.0 (démo, atelier web).
+- `tenseal` 0.3.15 → 0.3.18 et `numpy` 1.26.4 → 2.4.6 (démo, atelier web).
+  `numpy` 2.5 exige Python 3.12 : la 2.4.6 est la dernière compatible avec les images `python:3.11-slim`.
+- `pycryptodome` 3.20.0 → 4.4.0 (démo).
+- `pyproject.toml` de `fhecli` : `pytest>=9.2,<10`, `cryptography>=50.0,<51`.
+
+Tests (venvs Python 3.13 hors du dépôt) :
+- `fhecli` : `--help`, `list`, `run` ; les 3 exercices passent avec les solutions (14 tests).
+- Atelier web : les 10 exercices passent avec les solutions, y compris CKKS (37 tests) ;
+  API FastAPI (liste, détail, exécution, solution, progression) en 200.
+- Démo : `/`, `/api/model`, étapes AES, Paillier, CKKS et `/api/compare` en 200.
+
 ## 2026-11-08 — Carte mentale de l'introduction
 
 ### Modifié

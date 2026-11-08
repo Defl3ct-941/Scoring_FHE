@@ -12,8 +12,8 @@ authors = [
     { name = "Thomas GRUNDSZTEJN" },
 ]
 dependencies = [
-    "pytest>=8.3,<9",
-    "cryptography>=43.0,<44",
+    "pytest>=9.2,<10",
+    "cryptography>=50.0,<51",
 ]
 
 [project.scripts]
