@@ -76,6 +76,30 @@ a = Analysis(
     excludes=["tkinter", "test", "unittest.test"],
     noarchive=False,
 )
+
+# Sous Linux, on retire les symboles de débogage de l'interpréteur embarqué
+# (libpython et python3.x/lib-dynload : 63 -> 46 Mo, sous la limite de 50 Mo de
+# Moodle). Pas l'option « strip » de PyInstaller : elle traiterait aussi les
+# bibliothèques des wheels (numpy.libs…), déjà modifiées par auditwheel, et
+# casserait leur chargement (« ELF load command address/offset not page-aligned »).
+if SYSTEM == "linux":
+    import shutil
+    import subprocess
+    import tempfile
+
+    _strip_dir = Path(tempfile.mkdtemp(prefix="fhecli-strip-"))
+
+    def _strip_python_lib(entry):
+        dest, src, typecode = entry
+        if typecode == "BINARY" and (dest.startswith("libpython") or "/lib-dynload/" in dest):
+            copy = _strip_dir / dest.replace("/", "_")
+            shutil.copy2(src, copy)
+            subprocess.run(["strip", "--strip-unneeded", str(copy)], check=True)
+            return (dest, str(copy), typecode)
+        return entry
+
+    a.binaries = [_strip_python_lib(entry) for entry in a.binaries]
+
 pyz = PYZ(a.pure)
 
 exe = EXE(
