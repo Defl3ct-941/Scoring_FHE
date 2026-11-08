@@ -4,9 +4,49 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — fhecli 1.1.0 : publiable sur PyPI
+
+### Ajouté
+
+- `fhecli init [dossier]` (défaut : `./fhe-exercices`) : crée un espace de travail (`exercises/`,
+  `pytest.ini`, marqueur `fhecli.toml`) et refuse d'écraser un espace existant. Les autres
+  commandes retrouvent l'espace en remontant depuis le dossier courant.
+- `fhecli --version`, option `-y/--yes` pour `reset`.
+- Fichier `LICENSE` (MIT, Ravin THILAGARASA et Thomas GRUNDSZTEJN) et `MANIFEST.in`.
+- Suite de tests automatisée de l'outil (`tests/test_cli.py`, 42 tests).
+- `scripts/encode_solutions.py` : régénère les solutions encodées.
+
+### Modifié
+
+- Énoncés, `info.toml` et solutions embarqués dans le paquet (`fhecli/data/`) : la wheel
+  installée depuis PyPI fonctionne hors du dépôt, sans rien écrire dans `site-packages`.
+- Solutions verrouillées : `fhecli solution` ne les affiche qu'une fois l'exercice résolu
+  (tests OK et `# I AM NOT DONE` retiré) ; `watch` propose de la montrer après la réussite.
+  Dans le paquet, elles sont encodées (zlib + base64, simple dissuasion) ; les sources en clair
+  sont dans `solutions_src/`, exclu de la wheel et du sdist.
+- `fhecli reset` et `reset --all` demandent confirmation ; Entrée, EOF et Ctrl+C valent « non »
+  (plus de trace `EOFError`, y compris dans `watch`).
+- `fhecli run` renvoie le code 2 quand les tests passent mais que le marqueur est présent.
+- Textes de l'outil, énoncés et indices en français accentué ; sortie forcée en UTF-8
+  (consoles Windows anciennes, sortie redirigée).
+- `pyproject.toml` complet : README, licence, classifiers (Python 3.11 à 3.14), mots-clés,
+  URLs GitHub et GitLab ; version 1.1.0 lue depuis `fhecli.__version__`.
+- `watch` n'attend plus une nouvelle sauvegarde quand l'exercice est déjà résolu au moment où
+  il devient l'exercice courant.
+
+Tests :
+
+- Suite automatisée : 42/42 sous Python 3.13 et 3.15 (Windows).
+- Wheel installée hors du dépôt, sous Python 3.11 et 3.14 (Linux, Docker) : `init`, résolution
+  des 3 exercices, codes de sortie, solution verrouillée puis débloquée, `reset` avec et sans
+  confirmation, `pytest` à la main, `watch` jusqu'à la fin ; `site-packages` inchangé.
+- Windows (Python 3.13, wheel) : PowerShell et cmd, y compris page de codes 850.
+- Wheel et sdist : aucune solution en clair.
+
 ## 2026-11-08 — Passage des images Docker à Python 3.14
 
 ### Modifié
+
 - Images Docker de la démo et de l'atelier web : `python:3.11-slim` → `python:3.14-slim`.
   Python 3.14 est la version la plus récente pour laquelle toutes les dépendances publient
   des wheels Linux : `tenseal` 0.3.18 (et `pyyaml` 6.0.3, via `uvicorn[standard]`) s'arrêtent
@@ -15,6 +55,7 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 - `fhecli` garde `requires-python = ">=3.11"` : testé sous Python 3.13 et 3.15.
 
 Tests (images reconstruites, sans aucune compilation de paquet) :
+
 - Démo : `/`, `/api/model`, étapes AES, Paillier, CKKS et `/api/compare` en 200 ;
   score identique en clair, avec Paillier et avec CKKS (32,0).
 - Atelier web : les 10 exercices passent via l'API avec les solutions, puis réinitialisation (0/10).
@@ -23,6 +64,7 @@ Tests (images reconstruites, sans aucune compilation de paquet) :
 ## 2026-11-08 — Mise à jour des dépendances
 
 ### Modifié
+
 - `cryptography` 43.0.1 → 50.0.2 (démo, atelier web, `fhecli`).
 - `pytest` 8.3.3 → 9.2.0 (atelier web, `fhecli`).
 - `fastapi` 0.115.0 → 0.162.2 et `uvicorn[standard]` 0.30.6 → 0.54.0 (démo, atelier web).
@@ -32,6 +74,7 @@ Tests (images reconstruites, sans aucune compilation de paquet) :
 - `pyproject.toml` de `fhecli` : `pytest>=9.2,<10`, `cryptography>=50.0,<51`.
 
 Tests (venvs Python 3.13 hors du dépôt) :
+
 - `fhecli` : `--help`, `list`, `run` ; les 3 exercices passent avec les solutions (14 tests).
 - Atelier web : les 10 exercices passent avec les solutions, y compris CKKS (37 tests) ;
   API FastAPI (liste, détail, exécution, solution, progression) en 200.
@@ -40,12 +83,14 @@ Tests (venvs Python 3.13 hors du dépôt) :
 ## 2026-11-08 — Carte mentale de l'introduction
 
 ### Modifié
+
 - Carte mentale de l'introduction traduite en français et renommée
   `mind_map_Introduction.png` (faute « Introdution » corrigée).
 
 ## 2026-11-08 — Auteurs du projet
 
 ### Modifié
+
 - Auteurs uniformisés sur Ravin THILAGARASA et Thomas GRUNDSZTEJN : métadonnées de tous les
   documents Word, PowerPoint et PDF (y compris les PDF de `step-1.zip`), page de titre de
   l'état de l'art, diapositive finale de `PPT_CAS_PRATIQUE_FHE.pptx`, `PRESENTER_NAME` de
@@ -54,6 +99,7 @@ Tests (venvs Python 3.13 hors du dépôt) :
   sera réenregistrée.
 
 ### Ajouté
+
 - Section « Auteurs » dans le README et champ `authors` dans le `pyproject.toml` de `fhecli`.
 
 ## 2026-11-08 — Réorganisation du dépôt

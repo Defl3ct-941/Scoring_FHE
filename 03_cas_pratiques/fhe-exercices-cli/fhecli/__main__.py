@@ -1,3 +1,5 @@
+"""Permet `python -m fhecli`."""
+
 from fhecli.cli import main
 
 if __name__ == "__main__":

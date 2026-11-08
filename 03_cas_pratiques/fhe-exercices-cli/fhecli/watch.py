@@ -1,10 +1,11 @@
-"""Mode 'watch' : reexecute les tests de l'exercice courant a chaque
-sauvegarde du fichier, et avance automatiquement une fois qu'il est resolu.
+"""Mode « watch » : réexécute les tests de l'exercice courant à chaque
+sauvegarde du fichier, et avance automatiquement une fois qu'il est résolu.
 """
 
+import sys
 import time
 
-from fhecli import ui
+from fhecli import resources, ui
 from fhecli.info import Exercise
 from fhecli.runner import has_marker, run_tests
 
@@ -17,7 +18,7 @@ def _print_exercise_banner(ex: Exercise, index: int, total: int) -> None:
     print(ui.bold(f"Exercice {index}/{total} : {ex.name} - {ex.title}"))
     print(f"{ui.info(ex.category)}" + (f"  {ui.warn('[bonus]')}" if ex.bonus else ""))
     print(ui.rule("="))
-    print(f"Fichier a editer : {ex.path}")
+    print(f"Fichier à éditer : {ex.path}")
     print(ui.DIM + "En attente de modifications... (Ctrl+C pour quitter)" + ui.RESET)
 
 
@@ -27,7 +28,7 @@ def _run_and_report(ex: Exercise) -> bool:
     if passed:
         print(ui.success("Tests : OK"))
     else:
-        print(ui.failure("Tests : ECHEC"))
+        print(ui.failure("Tests : ÉCHEC"))
         print(output)
     return passed
 
@@ -40,11 +41,23 @@ def _first_pending(exercises: list[Exercise]) -> Exercise | None:
     return None
 
 
+def _offer_solution(ex: Exercise) -> None:
+    """Après une réussite, propose d'afficher la solution de référence
+    (uniquement dans un vrai terminal interactif)."""
+    # stdin ET stdout : sous Windows, le périphérique NUL se déclare « tty ».
+    if not (sys.stdin.isatty() and sys.stdout.isatty() and resources.has_solution(ex.name)):
+        return
+    if ui.confirm("Exercice résolu ! Voir la solution de référence pour comparer ?"):
+        print(ui.rule())
+        print(resources.solution_text(ex.name))
+        print(ui.rule())
+
+
 def watch(exercises: list[Exercise]) -> None:
     total = len(exercises)
     print(ui.bold("fhecli watch") + " - mode surveillance")
-    print("Resolvez les exercices dans l'ordre. Des que les tests d'un")
-    print("exercice passent, retirez le commentaire '# I AM NOT DONE' en")
+    print("Résolvez les exercices dans l'ordre. Dès que les tests d'un")
+    print("exercice passent, retirez le commentaire « # I AM NOT DONE » en")
     print("haut du fichier : l'outil passera alors au suivant.")
 
     try:
@@ -53,16 +66,22 @@ def watch(exercises: list[Exercise]) -> None:
             if current is None:
                 print()
                 print(ui.rule("*"))
-                print(ui.success(ui.bold("Felicitations, vous avez termine tous les exercices !")))
+                print(ui.success(ui.bold("Félicitations, vous avez terminé tous les exercices !")))
                 print(ui.rule("*"))
                 return
 
             index = exercises.index(current) + 1
             _print_exercise_banner(current, index, total)
             passed = _run_and_report(current)
-            if passed and has_marker(current.path):
+            if passed and not has_marker(current.path):
+                # Résolu entre-temps (fichier sauvegardé pendant l'analyse) :
+                # on avance sans attendre une nouvelle sauvegarde.
+                print(ui.success("Exercice résolu, passage au suivant..."))
+                _offer_solution(current)
+                continue
+            if passed:
                 print(ui.warn(
-                    "Tests OK ! Retirez '# I AM NOT DONE' en haut du fichier "
+                    "Tests OK ! Retirez « # I AM NOT DONE » en haut du fichier "
                     "pour passer au suivant."
                 ))
 
@@ -72,19 +91,20 @@ def watch(exercises: list[Exercise]) -> None:
                 mtime = _safe_mtime(current.path)
                 if mtime is not None and mtime != last_mtime:
                     last_mtime = mtime
-                    time.sleep(0.15)  # laisse l'editeur finir d'ecrire le fichier
+                    time.sleep(0.15)  # laisse l'éditeur finir d'écrire le fichier
                     passed = _run_and_report(current)
                     if passed and not has_marker(current.path):
-                        print(ui.success("Exercice resolu, passage au suivant..."))
+                        print(ui.success("Exercice résolu, passage au suivant..."))
+                        _offer_solution(current)
                         break
                     if passed and has_marker(current.path):
                         print(ui.warn(
-                            "Tests OK ! Retirez '# I AM NOT DONE' en haut du "
+                            "Tests OK ! Retirez « # I AM NOT DONE » en haut du "
                             "fichier pour passer au suivant."
                         ))
     except KeyboardInterrupt:
         print()
-        print(ui.info("A bientot !"))
+        print(ui.info("À bientôt !"))
 
 
 def _safe_mtime(path):

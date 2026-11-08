@@ -1,4 +1,4 @@
-"""Solution de reference pour ex2_xor_malleability. Essayez d'abord par vous-meme !"""
+"""Solution de référence pour ex2_xor_malleability. Essayez d'abord par vous-même !"""
 
 
 def xor_bytes(a: bytes, b: bytes) -> bytes:

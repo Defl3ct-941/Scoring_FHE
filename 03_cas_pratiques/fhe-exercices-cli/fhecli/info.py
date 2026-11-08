@@ -1,10 +1,11 @@
-"""Chargement de la liste des exercices depuis info.toml."""
+"""Liste des exercices (info.toml embarqué dans le paquet)."""
 
 import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+from fhecli import resources
+from fhecli.workspace import EXERCISES_DIR
 
 
 @dataclass
@@ -15,34 +16,31 @@ class Exercise:
     difficulty: str
     bonus: bool
     hint: str
-    path: Path
-    original_path: Path
-    solution_path: Path
+    path: Path  # fichier de l'étudiant, dans son espace de travail
 
 
-def load_exercises(root: Path = ROOT) -> list[Exercise]:
-    data = tomllib.loads((root / "info.toml").read_text(encoding="utf-8"))
-    exercises = []
-    for item in data["exercises"]:
-        name = item["name"]
-        exercises.append(
-            Exercise(
-                name=name,
-                category=item["category"],
-                title=item["title"],
-                difficulty=item.get("difficulty", ""),
-                bonus=item.get("bonus", False),
-                hint=item.get("hint", ""),
-                path=root / "exercises" / f"{name}.py",
-                original_path=root / "originals" / f"{name}.py",
-                solution_path=root / "solutions" / f"{name}.py",
-            )
+def exercise_names() -> list[str]:
+    return [item["name"] for item in tomllib.loads(resources.info_text())["exercises"]]
+
+
+def load_exercises(workspace: Path) -> list[Exercise]:
+    data = tomllib.loads(resources.info_text())
+    return [
+        Exercise(
+            name=item["name"],
+            category=item["category"],
+            title=item["title"],
+            difficulty=item.get("difficulty", ""),
+            bonus=item.get("bonus", False),
+            hint=item.get("hint", ""),
+            path=workspace / EXERCISES_DIR / f"{item['name']}.py",
         )
-    return exercises
+        for item in data["exercises"]
+    ]
 
 
-def find_exercise(root: Path, name: str) -> Exercise | None:
-    for ex in load_exercises(root):
+def find_exercise(workspace: Path, name: str) -> Exercise | None:
+    for ex in load_exercises(workspace):
         if ex.name == name:
             return ex
     return None

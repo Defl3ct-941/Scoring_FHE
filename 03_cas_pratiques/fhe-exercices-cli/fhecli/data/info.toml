@@ -1,0 +1,26 @@
+# Liste des exercices, dans l'ordre pédagogique suivi par `fhecli watch`.
+#
+# Version actuelle : seul le module A (chiffrement classique) est publié.
+# Les modules suivants (arithmétique modulaire, Paillier from scratch,
+# scoring chiffré, bonus CKKS) arriveront dans une prochaine mise à jour.
+
+[[exercises]]
+name = "ex1_cesar"
+category = "A. Chiffrement classique"
+title = "Le chiffrement de César"
+difficulty = "facile"
+hint = "Pour tester si `c` est une lettre, utilisez 'a' <= c <= 'z' (et 'A' <= c <= 'Z'), pas c.islower() / c.isupper() : ces méthodes renvoient aussi True pour les lettres accentuées comme « é » ou « à », qui doivent rester inchangées. La nouvelle position est (position + shift) % 26."
+
+[[exercises]]
+name = "ex2_xor_malleability"
+category = "A. Chiffrement classique"
+title = "XOR et le danger de la malléabilité"
+difficulty = "facile"
+hint = "reveal_xor_of_plaintexts ne fait qu'une seule chose : XOR de c1 et c2 entre eux (réutilisez xor_bytes). C'est le XOR qui annule la clé, pas une astuce compliquée."
+
+[[exercises]]
+name = "ex3_fernet_tamper"
+category = "A. Chiffrement classique"
+title = "Chiffrement authentifié avec Fernet"
+difficulty = "facile"
+hint = "bytearray(token) permet de modifier un octet d'un objet bytes immuable : data[0] ^= 0xFF. Attrapez cryptography.fernet.InvalidToken avec un try/except."

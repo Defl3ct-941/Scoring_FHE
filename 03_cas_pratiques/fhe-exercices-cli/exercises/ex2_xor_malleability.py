@@ -1,38 +1,38 @@
 """
-Ex2 : XOR et le danger de la malleabilite
+Ex2 : XOR et le danger de la malléabilité
 ==========================================
 
-Le XOR (^) a une propriete etonnante : si `k` est une cle et `m` un message
+Le XOR (^) a une propriété étonnante : si `k` est une clé et `m` un message
 (en octets), alors :
 
     chiffrer(m, k)   = m XOR k
-    dechiffrer(c, k) = c XOR k    (car (m XOR k) XOR k == m)
+    déchiffrer(c, k) = c XOR k    (car (m XOR k) XOR k == m)
 
-C'est un chiffrement "homomorphe" jouet... mais c'est justement ce qui le
-rend dangereux des qu'on reutilise la meme cle deux fois : c'est l'attaque
-classique du "two-time pad".
+C'est un chiffrement « homomorphe » jouet... mais c'est justement ce qui le
+rend dangereux dès qu'on réutilise la même clé deux fois : c'est l'attaque
+classique du « two-time pad ».
 
-A implementer :
+À implémenter :
     - xor_bytes(a: bytes, b: bytes) -> bytes
-      XOR octet par octet de deux suites de meme longueur.
+      XOR octet par octet de deux suites de même longueur.
     - xor_encrypt(message: bytes, key: bytes) -> bytes
-      XOR le message avec la cle repetee autant de fois que necessaire pour
-      couvrir sa longueur. (xor_decrypt est deja fourni : le XOR est son
+      XOR du message avec la clé répétée autant de fois que nécessaire pour
+      couvrir sa longueur. (xor_decrypt est déjà fourni : le XOR est son
       propre inverse.)
     - reveal_xor_of_plaintexts(c1: bytes, c2: bytes) -> bytes
-      Si c1 et c2 sont deux messages chiffres AVEC LA MEME cle, cette
+      Si c1 et c2 sont deux messages chiffrés AVEC LA MÊME clé, cette
       fonction doit renvoyer le XOR des deux messages en clair, SANS jamais
-      connaitre la cle. (Indice : une seule ligne, qui reutilise xor_bytes.)
+      connaître la clé. (Indice : une seule ligne, qui réutilise xor_bytes.)
 
-Pourquoi c'est important : ceci illustre une idee centrale du projet. Dans
-un chiffrement classique, toute malleabilite est une faille de securite.
-Ici, reutiliser la cle permet de retrouver de l'information sur les
-messages en clair sans jamais les dechiffrer. Le FHE renverse ce principe :
-il rend le chiffre delibrement et strictement malleable, mais uniquement
-pour les operations mathematiques choisies par le concepteur du schema
-(addition, multiplication...), avec des garanties de securite prouvees.
-C'est toute la difference entre une malleabilite subie (dangereuse) et une
-malleabilite concue (le FHE).
+Pourquoi c'est important : ceci illustre une idée centrale du projet. Dans
+un chiffrement classique, toute malléabilité est une faille de sécurité.
+Ici, réutiliser la clé permet de retrouver de l'information sur les
+messages en clair sans jamais les déchiffrer. Le FHE renverse ce principe :
+il rend le chiffré délibérément et strictement malléable, mais uniquement
+pour les opérations mathématiques choisies par le concepteur du schéma
+(addition, multiplication...), avec des garanties de sécurité prouvées.
+C'est toute la différence entre une malléabilité subie (dangereuse) et une
+malléabilité conçue (le FHE).
 
 Testez avec : fhecli run ex2_xor_malleability
 """
@@ -41,33 +41,33 @@ Testez avec : fhecli run ex2_xor_malleability
 
 
 def xor_bytes(a: bytes, b: bytes) -> bytes:
-    """XOR octet par octet. `a` et `b` ont la meme longueur."""
-    # TODO: implementez cette fonction
+    """XOR octet par octet. `a` et `b` ont la même longueur."""
+    # TODO: implémentez cette fonction
     raise NotImplementedError
 
 
 def xor_encrypt(message: bytes, key: bytes) -> bytes:
-    """Chiffre `message` en le XORant avec `key` repetee."""
-    # TODO: implementez cette fonction (reutilisez xor_bytes)
+    """Chiffre `message` en le XORant avec `key` répétée."""
+    # TODO: implémentez cette fonction (réutilisez xor_bytes)
     raise NotImplementedError
 
 
 def xor_decrypt(ciphertext: bytes, key: bytes) -> bytes:
-    """Le XOR est son propre inverse : dechiffrer = chiffrer a nouveau."""
+    """Le XOR est son propre inverse : déchiffrer = chiffrer à nouveau."""
     return xor_encrypt(ciphertext, key)
 
 
 def reveal_xor_of_plaintexts(c1: bytes, c2: bytes) -> bytes:
     """
-    Si c1 et c2 ont ete chiffres avec LA MEME cle (two-time pad), renvoie
-    le XOR des deux messages en clair, sans jamais connaitre la cle.
+    Si c1 et c2 ont été chiffrés avec LA MÊME clé (two-time pad), renvoie
+    le XOR des deux messages en clair, sans jamais connaître la clé.
     """
-    # TODO: implementez cette fonction
+    # TODO: implémentez cette fonction
     raise NotImplementedError
 
 
 # ---------------------------------------------------------------------------
-# Tests : ne modifiez pas cette section, elle valide votre implementation.
+# Tests : ne modifiez pas cette section, elle valide votre implémentation.
 # ---------------------------------------------------------------------------
 
 
@@ -97,6 +97,6 @@ def test_two_time_pad_attack():
     c1 = xor_encrypt(p1, key)
     c2 = xor_encrypt(p2, key)
 
-    # sans connaitre `key`, on doit retrouver p1 XOR p2
+    # sans connaître `key`, on doit retrouver p1 XOR p2
     revealed = reveal_xor_of_plaintexts(c1, c2)
     assert revealed == xor_bytes(p1, p2)

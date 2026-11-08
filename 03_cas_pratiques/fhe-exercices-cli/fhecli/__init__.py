@@ -1,5 +1,5 @@
-"""fhecli - un atelier d'exercices en ligne de commande, a la rustlings,
+"""fhecli : un atelier d'exercices en ligne de commande, à la rustlings,
 pour apprendre le chiffrement classique et le chiffrement homomorphe (FHE).
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
