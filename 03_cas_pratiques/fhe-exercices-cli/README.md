@@ -33,7 +33,8 @@ fhecli watch
 ```
 
 Le paquet s'installe sous le nom **`fhe-cli`** ; la commande et le module
-Python restent `fhecli`.
+Python restent `fhecli`. `pip install fhe-cli` installe tout, y compris
+TenSEAL pour le bonus CKKS (Python 3.11 à 3.14 ; voir l'ex10 plus bas).
 
 `fhecli init [dossier]` crée un **espace de travail** : le dossier
 `exercises/` (vos fichiers), un `pytest.ini` et un fichier marqueur
@@ -43,7 +44,7 @@ quel sous-dossier. `fhecli init` refuse d'écraser un espace existant.
 ### Sans Python : exécutable autonome
 
 Pour chaque OS, un exécutable unique embarque tout (Python, `fhecli`,
-`pytest`, `cryptography` et les exercices) : **aucune installation de Python
+`pytest`, `cryptography`, TenSEAL pour CKKS et les exercices) : **aucune installation de Python
 n'est nécessaire**. Téléchargez celui de votre système
 (`fhecli-<version>-windows-x86_64.exe`, `-linux-x86_64`, `-macos-arm64` ou
 `-macos-x86_64`), puis :
@@ -143,14 +144,10 @@ impossible) à Paillier reconstruit à la main, puis à un score bancaire chiffr
 de bout en bout, et enfin à un vrai calcul FHE avec CKKS.
 
 Le bonus **ex10 (CKKS)** s'appuie sur [TenSEAL](https://github.com/OpenMined/TenSEAL),
-une dépendance native qui n'est pas installée par défaut (et qui n'est pas
-embarquée dans les exécutables autonomes). Pour le faire :
-
-```bash
-pip install "fhe-cli[ckks]"
-```
-
-Sans TenSEAL, les tests de l'ex10 sont simplement ignorés (skipped).
+installé automatiquement avec `fhe-cli` et embarqué dans les exécutables
+autonomes : rien de plus à installer. Seule exception, TenSEAL n'existe pas
+encore pour Python 3.15 ni pour les Mac Intel : l'ex10 y est alors ignoré
+(utilisez Python 3.14 ou l'exécutable autonome pour le faire).
 
 ## Développement (depuis le dépôt Scoring FHE)
 
@@ -223,7 +220,7 @@ rejoue le parcours d'un étudiant avec le binaire seul (sans Python dans le
 en clair dans le fichier.
 
 La CI **GitHub Actions** (`.github/workflows/fhecli.yml`) fait tout cela
-automatiquement : tests sur Linux, Windows et macOS (Python 3.11 et 3.15),
+automatiquement : tests sur Linux, Windows et macOS (Python 3.11, 3.14 et 3.15),
 exécutables Windows, Linux, macOS arm64 et macOS x86_64, wheel et sdist.
 
 Pour publier une version : mettre à jour `fhecli.__version__` et le
