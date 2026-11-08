@@ -13,6 +13,11 @@ Livrables :
 - un **poster scientifique** pour présenter le cours sur un salon ;
 - une **vidéo** de présentation.
 
+## Auteurs
+
+- Ravin THILAGARASA
+- Thomas GRUNDSZTEJN
+
 ## Organisation du dépôt
 
 | Dossier | Contenu |

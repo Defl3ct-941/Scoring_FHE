@@ -4,6 +4,19 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — Auteurs du projet
+
+### Modifié
+- Auteurs uniformisés sur Ravin THILAGARASA et Thomas GRUNDSZTEJN : métadonnées de tous les
+  documents Word, PowerPoint et PDF (y compris les PDF de `step-1.zip`), page de titre de
+  l'état de l'art, diapositive finale de `PPT_CAS_PRATIQUE_FHE.pptx`, `PRESENTER_NAME` de
+  `build_pptx.py` et champs étudiants du modèle vidéo.
+- Transcriptions vidéo corrigées (noms des intervenants). La vidéo « PRESENTATION FYC »
+  sera réenregistrée.
+
+### Ajouté
+- Section « Auteurs » dans le README et champ `authors` dans le `pyproject.toml` de `fhecli`.
+
 ## 2026-11-08 — Réorganisation du dépôt
 
 ### Ajouté
