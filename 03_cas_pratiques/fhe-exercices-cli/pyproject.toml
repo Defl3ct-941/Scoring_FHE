@@ -39,6 +39,15 @@ dependencies = [
     "cryptography>=50.0,<51",
 ]
 
+[project.optional-dependencies]
+# Bonus ex10 (CKKS) : TenSEAL n'est installé que sur demande, car c'est une
+# dépendance native lourde qui ne gère pas encore Python 3.14+. Elle n'est pas
+# embarquée dans les exécutables autonomes.
+#   pip install "fhecli[ckks]"
+ckks = [
+    "tenseal>=0.3.16,<0.4",
+]
+
 [project.urls]
 Homepage = "https://github.com/Defl3ct-941/Scoring_FHE"
 Source = "https://github.com/Defl3ct-941/Scoring_FHE/tree/main/03_cas_pratiques/fhe-exercices-cli"

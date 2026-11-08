@@ -4,6 +4,26 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — fhecli 1.3.0 : atelier complet (10 exercices, de César à CKKS)
+
+### Ajouté
+
+- Modules B à E de l'atelier CLI, soit 7 nouveaux exercices après le chiffrement classique :
+  - **B. Briques mathématiques** : `ex4_modpow` (exponentiation modulaire rapide),
+    `ex5_modinv` (PGCD étendu et inverse modulaire).
+  - **C. Paillier, pas à pas** : `ex6_paillier_keygen`, `ex7_paillier_enc_dec`,
+    `ex8_paillier_homomorphic` (addition et multiplication par scalaire sur chiffrés).
+  - **D. Scoring chiffré** : `ex9_scoring_paillier` (score bancaire calculé de bout en bout
+    sans jamais déchiffrer les features).
+  - **E. Bonus** : `ex10_ckks_bonus` (premier vrai calcul FHE avec CKKS / TenSEAL).
+- Extra optionnel `fhecli[ckks]` pour le bonus (TenSEAL, dépendance native non embarquée dans
+  les exécutables). Sans lui, les tests de l'ex10 sont ignorés.
+
+### Modifié
+
+- `fhecli` propose désormais 10 exercices en 5 catégories (contre 3). Suite de tests de l'outil
+  étendue en conséquence.
+
 ## 2026-11-08 — fhecli 1.2.0 : exécutables autonomes et CI
 
 ### Ajouté

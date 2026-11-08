@@ -127,6 +127,27 @@ décoder. Le vrai garde-fou reste pédagogique.
 | 1 | ex1_cesar | A. Chiffrement classique |
 | 2 | ex2_xor_malleability | A. Chiffrement classique |
 | 3 | ex3_fernet_tamper | A. Chiffrement classique |
+| 4 | ex4_modpow | B. Briques mathématiques |
+| 5 | ex5_modinv | B. Briques mathématiques |
+| 6 | ex6_paillier_keygen | C. Paillier, pas à pas |
+| 7 | ex7_paillier_enc_dec | C. Paillier, pas à pas |
+| 8 | ex8_paillier_homomorphic | C. Paillier, pas à pas |
+| 9 | ex9_scoring_paillier | D. Scoring chiffré |
+| 10 | ex10_ckks_bonus | E. Bonus : FHE réel avec CKKS |
+
+Le parcours va du chiffrement classique (où tout calcul sur le chiffré est
+impossible) à Paillier reconstruit à la main, puis à un score bancaire chiffré
+de bout en bout, et enfin à un vrai calcul FHE avec CKKS.
+
+Le bonus **ex10 (CKKS)** s'appuie sur [TenSEAL](https://github.com/OpenMined/TenSEAL),
+une dépendance native qui n'est pas installée par défaut (et qui n'est pas
+embarquée dans les exécutables autonomes). Pour le faire :
+
+```bash
+pip install "fhecli[ckks]"
+```
+
+Sans TenSEAL, les tests de l'ex10 sont simplement ignorés (skipped).
 
 ## Développement (depuis le dépôt Scoring FHE)
 
