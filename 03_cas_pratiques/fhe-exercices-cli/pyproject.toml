@@ -1,23 +1,61 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "fhecli"
-version = "1.0.0"
-description = "Atelier d'exercices CLI (a la rustlings) : chiffrement classique et FHE"
+dynamic = ["version"]
+description = "Atelier d'exercices en ligne de commande, à la rustlings : chiffrement classique et chiffrement homomorphe (FHE)"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 authors = [
     { name = "Ravin THILAGARASA" },
     { name = "Thomas GRUNDSZTEJN" },
+]
+keywords = [
+    "fhe", "chiffrement homomorphe", "homomorphic encryption", "cryptographie",
+    "cryptography", "exercices", "rustlings", "enseignement", "scoring",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Natural Language :: French",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Education",
+    "Topic :: Security :: Cryptography",
 ]
 dependencies = [
     "pytest>=9.2,<10",
     "cryptography>=50.0,<51",
 ]
 
+[project.urls]
+Homepage = "https://github.com/Defl3ct-941/Scoring_FHE"
+Source = "https://github.com/Defl3ct-941/Scoring_FHE/tree/main/03_cas_pratiques/fhe-exercices-cli"
+Issues = "https://github.com/Defl3ct-941/Scoring_FHE/issues"
+GitLab = "https://gitlab.securechat.fr/esgi/5a/Scoring_FHE"
+Changelog = "https://github.com/Defl3ct-941/Scoring_FHE/blob/main/CHANGELOG.md"
+
 [project.scripts]
 fhecli = "fhecli.cli:main"
 
 [tool.setuptools]
 packages = ["fhecli"]
+include-package-data = false
+
+[tool.setuptools.package-data]
+# Données embarquées : liste des exercices, énoncés d'origine et solutions
+# ENCODÉES. Les solutions en clair (solutions_src/) ne sont jamais incluses.
+fhecli = ["data/info.toml", "data/originals/*.py", "data/solutions/*.sol"]
+
+[tool.setuptools.dynamic]
+version = { attr = "fhecli.__version__" }

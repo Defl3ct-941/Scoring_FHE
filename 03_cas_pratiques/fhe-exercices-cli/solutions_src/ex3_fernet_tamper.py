@@ -1,4 +1,4 @@
-"""Solution de reference pour ex3_fernet_tamper. Essayez d'abord par vous-meme !"""
+"""Solution de référence pour ex3_fernet_tamper. Essayez d'abord par vous-même !"""
 
 from cryptography.fernet import Fernet, InvalidToken
 

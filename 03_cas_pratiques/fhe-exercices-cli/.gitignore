@@ -5,3 +5,5 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+# Espace de travail créé par fhecli init lors d'un essai local
+fhe-exercices/
