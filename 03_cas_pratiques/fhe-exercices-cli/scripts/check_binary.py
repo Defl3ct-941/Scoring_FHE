@@ -1,7 +1,7 @@
 """Vérifie un exécutable autonome fhecli : parcours étudiant complet, puis
 absence de texte lisible (sources, solutions, énoncés) dans le binaire.
 
-    python scripts/check_binary.py dist/fhecli-<version>-<os>-<arch>[.exe]
+    python scripts/check_binary.py dist/fhe-cli-<version>-<os>-<arch>[.exe]
 
 Le binaire est lancé avec un PATH réduit (sans Python), pour prouver qu'il
 est autonome. Code de sortie 0 si tout est conforme.
@@ -61,7 +61,7 @@ def scenario(binary: Path) -> None:
         tmp = Path(tmp)
         print("Parcours étudiant (PATH sans Python) :")
         result = run(binary, "--version", cwd=tmp)
-        check(result.stdout.strip() == f"fhecli {__version__}", f"--version -> {result.stdout.strip()}")
+        check(result.stdout.strip() == f"fhe-cli {__version__}", f"--version -> {result.stdout.strip()}")
         check(run(binary, "list", cwd=tmp).returncode == 1, "list hors espace de travail -> 1")
         check(run(binary, "init", cwd=tmp).returncode == 0, "init")
         ws = tmp / "fhe-exercices"

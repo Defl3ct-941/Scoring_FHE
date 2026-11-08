@@ -55,6 +55,8 @@ GitLab = "https://gitlab.securechat.fr/esgi/5a/Scoring_FHE"
 Changelog = "https://github.com/Defl3ct-941/Scoring_FHE/blob/main/CHANGELOG.md"
 
 [project.scripts]
+fhe-cli = "fhecli.cli:main"
+# Ancien nom de la commande, conservé comme alias.
 fhecli = "fhecli.cli:main"
 
 [tool.setuptools]

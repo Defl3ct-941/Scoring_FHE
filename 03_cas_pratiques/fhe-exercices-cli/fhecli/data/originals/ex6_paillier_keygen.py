@@ -24,7 +24,7 @@ de clés.
           public_key  = {"n": n, "g": g, "n2": n * n}
           private_key = {"lam": lam, "mu": mu}
 
-Testez avec : fhecli run ex6_paillier_keygen
+Testez avec : fhe-cli run ex6_paillier_keygen
 """
 
 # I AM NOT DONE

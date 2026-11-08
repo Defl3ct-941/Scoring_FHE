@@ -42,7 +42,7 @@ def run_tests(path: Path) -> tuple[bool, str]:
     qu'il y trouve le pytest.ini.
     """
     if not path.exists():
-        return False, f"Fichier introuvable : {path}\nRecréez-le avec : fhecli reset {path.stem}"
+        return False, f"Fichier introuvable : {path}\nRecréez-le avec : fhe-cli reset {path.stem}"
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
     if is_frozen():
         env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"

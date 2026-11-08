@@ -29,7 +29,7 @@ Contrainte : n'utilisez pas le pow(base, exp, mod) intégré à trois arguments
 (c'est justement ce que vous reconstruisez ici). Vous pourrez l'utiliser dans
 les exercices suivants.
 
-Testez avec : fhecli run ex4_modpow
+Testez avec : fhe-cli run ex4_modpow
 """
 
 # I AM NOT DONE

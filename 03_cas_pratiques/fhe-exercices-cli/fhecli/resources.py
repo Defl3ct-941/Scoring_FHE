@@ -2,7 +2,7 @@
 
 Les énoncés d'origine, la liste des exercices et les solutions encodées sont
 livrés avec le paquet (dossier fhecli/data). Ils ne sont jamais modifiés :
-l'étudiant travaille sur une copie, dans son espace de travail (`fhecli init`).
+l'étudiant travaille sur une copie, dans son espace de travail (`fhe-cli init`).
 """
 
 from importlib.resources import files

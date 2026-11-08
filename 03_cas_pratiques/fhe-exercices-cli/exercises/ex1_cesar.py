@@ -35,7 +35,7 @@ explicite ('a' <= c <= 'z') plutôt que c.islower() / c.isupper() : ces
 méthodes renvoient aussi True pour des lettres accentuées comme « é » ou
 « à », qui doivent pourtant rester inchangées.
 
-Testez avec : fhecli run ex1_cesar
+Testez avec : fhe-cli run ex1_cesar
 """
 
 # I AM NOT DONE

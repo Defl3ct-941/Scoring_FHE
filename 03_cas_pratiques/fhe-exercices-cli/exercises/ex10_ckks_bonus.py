@@ -26,7 +26,7 @@ du client sans jamais les voir en clair. CKKS étant approximatif, le résultat
 est très proche de la valeur attendue, pas exactement égal (d'où le abs(...) <
 1e-3 dans les tests).
 
-Testez avec : fhecli run ex10_ckks_bonus
+Testez avec : fhe-cli run ex10_ckks_bonus
 """
 
 # I AM NOT DONE

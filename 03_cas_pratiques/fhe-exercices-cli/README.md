@@ -1,100 +1,106 @@
-# fhecli : atelier CLI de chiffrement classique et FHE
+# fhe-cli : atelier de chiffrement classique et homomorphe (FHE)
 
 Un atelier d'exercices en ligne de commande, inspiré de
 [rustlings](https://github.com/rust-lang/rustlings) : vous éditez les fichiers
-d'exercice dans votre propre éditeur, avec votre propre environnement Python,
-et un petit outil (`fhecli`) surveille vos fichiers et relance les tests à
-chaque sauvegarde.
+d'exercice dans votre propre éditeur, et `fhe-cli` relance les tests à chaque
+sauvegarde, puis vous fait passer à l'exercice suivant.
 
 Il accompagne le cours « Scoring financier sur données chiffrées via FHE »
-(FYC, ESGI) : c'est la même progression pédagogique que l'atelier web du
-projet, adaptée pour tourner directement dans votre terminal.
+(FYC, ESGI) : 10 exercices, du chiffrement de César à un vrai calcul FHE avec
+CKKS, en passant par Paillier reconstruit à la main et un score bancaire
+calculé sur données chiffrées.
 
-> **Version actuelle : 3 exercices.** Seul le module A (chiffrement
-> classique) est publié pour le moment. Les modules suivants (arithmétique
-> modulaire, Paillier from scratch, scoring chiffré, bonus CKKS) arriveront
-> dans une prochaine mise à jour.
-
-## Installation
-
-Python 3.11 ou plus récent est requis.
+## Démarrage rapide
 
 ```bash
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS / Linux
-source .venv/bin/activate
-
 pip install fhe-cli
-fhecli init            # crée le dossier ./fhe-exercices avec les exercices
+fhe-cli init          # crée le dossier fhe-exercices avec les exercices
 cd fhe-exercices
-fhecli watch
+fhe-cli start         # lance l'atelier guidé
 ```
 
-Le paquet s'installe sous le nom **`fhe-cli`** ; la commande et le module
-Python restent `fhecli`. `pip install fhe-cli` installe tout, y compris
-TenSEAL pour le bonus CKKS (Python 3.11 à 3.14 ; voir l'ex10 plus bas).
+`pip install fhe-cli` installe tout, y compris TenSEAL pour le bonus CKKS :
+aucune autre installation n'est nécessaire (voir les prérequis système
+ci-dessous). Pour la liste des commandes : `fhe-cli help`.
 
-`fhecli init [dossier]` crée un **espace de travail** : le dossier
-`exercises/` (vos fichiers), un `pytest.ini` et un fichier marqueur
-`fhecli.toml`. Les commandes de `fhecli` retrouvent cet espace depuis n'importe
-quel sous-dossier. `fhecli init` refuse d'écraser un espace existant.
+## Prérequis système
+
+Résumé ci-dessous ; détail dans [SYSTEM-REQUIREMENTS.md](SYSTEM-REQUIREMENTS.md).
+
+### Avec pip (`pip install fhe-cli`)
+
+| | Requis |
+|---|---|
+| Python | 3.11, 3.12, 3.13 ou 3.14 pour l'atelier complet ; 3.15 : tout sauf l'ex10 |
+| Windows | Windows 10 ou 11, 64 bits (x86_64) |
+| Linux | x86_64 ou ARM64 (aarch64), glibc 2.28+ ou musl (Alpine) |
+| macOS | macOS 14 ou plus récent sur Apple Silicon (M1 à M4) |
+| Espace disque | environ 150 Mo (TenSEAL, numpy, cryptography, pytest) |
+| Réseau | uniquement pendant l'installation |
+
+Le bonus **ex10 (CKKS)** utilise [TenSEAL](https://github.com/OpenMined/TenSEAL),
+installé automatiquement. TenSEAL n'existe pas encore pour Python 3.15, pour
+les Mac Intel, ni pour macOS 13 et antérieur : dans ces cas, `fhe-cli`
+s'installe quand même et seul l'ex10 est ignoré (utilisez Python 3.14 ou
+l'exécutable autonome pour le faire).
 
 ### Sans Python : exécutable autonome
 
-Pour chaque OS, un exécutable unique embarque tout (Python, `fhecli`,
-`pytest`, `cryptography`, TenSEAL pour CKKS et les exercices) : **aucune installation de Python
-n'est nécessaire**. Téléchargez celui de votre système
-(`fhecli-<version>-windows-x86_64.exe`, `-linux-x86_64`, `-macos-arm64` ou
-`-macos-x86_64`), puis :
+| Système | Fichier | CKKS (ex10) |
+|---|---|---|
+| Windows 10 / 11, 64 bits | `fhe-cli-<version>-windows-x86_64.exe` | oui |
+| Linux x86_64, glibc 2.35+ (Ubuntu 22.04, Debian 12 ou plus récent) | `fhe-cli-<version>-linux-x86_64` | oui |
+| macOS 14+ sur Apple Silicon | `fhe-cli-<version>-macos-arm64` | oui |
+| macOS sur Mac Intel | `fhe-cli-<version>-macos-x86_64` | non (ex10 ignoré) |
+
+Chaque exécutable (40 à 50 Mo) embarque Python, `fhe-cli`, pytest,
+cryptography, TenSEAL et les exercices : **aucune installation n'est
+nécessaire**. Téléchargez celui de votre système dans les releases GitHub du
+projet, renommez-le en `fhe-cli` (ou `fhe-cli.exe`) et placez-le dans un
+dossier du `PATH`, puis utilisez-le comme dans les exemples :
 
 ```bash
-# Windows (PowerShell)
-.hecli-1.2.0-windows-x86_64.exe init
+# Windows (PowerShell), sans le renommer
+.\fhe-cli-1.4.0-windows-x86_64.exe init
 # macOS / Linux
-chmod +x fhecli-1.2.0-linux-x86_64
-./fhecli-1.2.0-linux-x86_64 init
+chmod +x fhe-cli-1.4.0-linux-x86_64
+./fhe-cli-1.4.0-linux-x86_64 init
 ```
 
-Renommez-le en `fhecli` (ou `fhecli.exe`) et placez-le dans un dossier du
-`PATH` pour l'utiliser comme dans les exemples ci-dessous. Le code et les
-solutions y sont embarqués compressés, jamais en clair. Sous macOS, au premier
-lancement, autorisez le binaire dans Réglages système > Confidentialité et
-sécurité (il n'est pas signé).
+Sous macOS, au premier lancement, autorisez le binaire dans Réglages système >
+Confidentialité et sécurité (il n'est pas signé). Le code et les solutions y
+sont embarqués compressés, jamais en clair.
 
-## Utilisation
+## Commandes
 
-### Mode guidé (recommandé pour commencer)
+| Commande | Rôle |
+|---|---|
+| `fhe-cli init [dossier]` | Crée votre espace de travail avec tous les exercices (par défaut : `./fhe-exercices`) |
+| `fhe-cli start` | Lance l'atelier guidé : affiche l'exercice en cours, relance ses tests à chaque sauvegarde et passe au suivant une fois résolu |
+| `fhe-cli list` | Affiche tous les exercices et votre progression |
+| `fhe-cli run <exercice>` | Teste un exercice et affiche le résultat |
+| `fhe-cli hint <exercice>` | Affiche un indice pour un exercice |
+| `fhe-cli solution <exercice>` | Affiche la solution de référence (une fois l'exercice résolu) |
+| `fhe-cli reset <exercice>` | Remet un exercice à son énoncé de départ (avec confirmation) |
+| `fhe-cli reset --all` | Remet tous les exercices à leur énoncé de départ (`-y` : sans confirmation) |
+| `fhe-cli help [commande]` | Affiche la liste des commandes, ou le détail d'une commande |
+| `fhe-cli -h`, `fhe-cli --help` | Affiche la liste des commandes |
+| `fhe-cli --version` | Affiche la version |
 
-```bash
-fhecli watch
-```
+Exemples : `fhe-cli run ex1_cesar`, `fhe-cli hint ex1_cesar`,
+`fhe-cli help reset`. Lancé sans argument, `fhe-cli` affiche l'aide.
 
-Affiche l'exercice courant, relance ses tests à chaque fois que vous
-sauvegardez le fichier, et passe automatiquement au suivant une fois qu'il est
-résolu (en proposant alors d'afficher la solution de référence pour comparer).
-Ctrl+C pour quitter à tout moment : rien n'est perdu, vos fichiers restent sur
-le disque.
-
-### Autres commandes
-
-```bash
-fhecli list                  # vue d'ensemble des exercices et de leur statut
-fhecli run ex1_cesar         # lance les tests d'un seul exercice
-fhecli hint ex1_cesar        # affiche un indice ciblé
-fhecli solution ex1_cesar    # affiche la solution (une fois l'exercice résolu)
-fhecli reset ex1_cesar       # remet CET exercice à son énoncé de départ (avec confirmation)
-fhecli reset --all           # remet TOUS les exercices à leur énoncé de départ (avec confirmation)
-fhecli reset --all -y        # idem, sans confirmation
-fhecli --version
-```
-
-Codes de sortie de `fhecli run` : `0` exercice résolu, `1` tests en échec
+Codes de sortie de `fhe-cli run` : `0` exercice résolu, `1` tests en échec
 (ou erreur), `2` tests OK mais ligne `# I AM NOT DONE` encore présente.
 
-Vous pouvez aussi lancer les tests vous-même avec `python -m pytest` depuis
-l'espace de travail : le `pytest.ini` fourni collecte bien les exercices.
+`fhe-cli init` crée un **espace de travail** : le dossier `exercises/` (vos
+fichiers), un `pytest.ini` et un fichier marqueur `fhecli.toml`. Les commandes
+retrouvent cet espace depuis n'importe quel sous-dossier ; `fhe-cli init`
+refuse d'écraser un espace existant. Vous pouvez aussi lancer les tests
+vous-même avec `python -m pytest` depuis l'espace de travail.
+
+Anciens noms toujours acceptés : la commande `fhecli` et `fhe-cli watch`
+(équivalent de `start`). Le module Python s'appelle `fhecli`.
 
 ## Comment marche un exercice
 
@@ -109,13 +115,13 @@ tout :
    c'est un geste délibérément manuel, pour vous forcer à vraiment valider
    votre travail.
 3. La ou les fonctions à compléter (marquées `raise NotImplementedError`).
-4. Une section de tests en bas du fichier (à ne pas modifier), exécutée par
-   `pytest` à chaque `fhecli run` / `fhecli watch`.
+4. Une section de tests en bas du fichier (à ne pas modifier), exécutée à
+   chaque `fhe-cli run` ou pendant `fhe-cli start`.
 
 ## Solutions
 
 La solution de référence d'un exercice est **verrouillée** tant que
-l'exercice n'est pas résolu : `fhecli solution` ne l'affiche qu'une fois que
+l'exercice n'est pas résolu : `fhe-cli solution` ne l'affiche qu'une fois que
 les tests passent **et** que la ligne `# I AM NOT DONE` a été retirée.
 
 Dans le paquet, les solutions ne sont pas stockées en clair : elles sont
@@ -124,7 +130,7 @@ compressées et encodées (zlib + base64). C'est une **dissuasion**, pour
 paquet, **pas une protection** : rien n'empêche quelqu'un de déterminé de les
 décoder. Le vrai garde-fou reste pédagogique.
 
-## Progression (dans l'ordre suivi par `fhecli watch`)
+## Progression (dans l'ordre suivi par `fhe-cli start`)
 
 | # | Exercice | Catégorie |
 |---|----------|-----------|
@@ -139,16 +145,6 @@ décoder. Le vrai garde-fou reste pédagogique.
 | 9 | ex9_scoring_paillier | D. Scoring chiffré |
 | 10 | ex10_ckks_bonus | E. Bonus : FHE réel avec CKKS |
 
-Le parcours va du chiffrement classique (où tout calcul sur le chiffré est
-impossible) à Paillier reconstruit à la main, puis à un score bancaire chiffré
-de bout en bout, et enfin à un vrai calcul FHE avec CKKS.
-
-Le bonus **ex10 (CKKS)** s'appuie sur [TenSEAL](https://github.com/OpenMined/TenSEAL),
-installé automatiquement avec `fhe-cli` et embarqué dans les exécutables
-autonomes : rien de plus à installer. Seule exception, TenSEAL n'existe pas
-encore pour Python 3.15, les Mac Intel ni macOS 13 et antérieur : l'ex10 y est alors ignoré
-(utilisez Python 3.14 ou l'exécutable autonome pour le faire).
-
 ## Développement (depuis le dépôt Scoring FHE)
 
 Le dossier `03_cas_pratiques/fhe-exercices-cli` du dépôt est lui-même un
@@ -159,28 +155,28 @@ cd 03_cas_pratiques/fhe-exercices-cli
 python -m venv .venv
 .venv\Scripts\activate          # macOS / Linux : source .venv/bin/activate
 pip install -e .
-fhecli watch
+fhe-cli start
 python -m pytest tests -q       # tests de l'outil lui-même
 ```
 
-Avant de commiter : `fhecli reset --all -y`, pour ne jamais versionner de
+Avant de commiter : `fhe-cli reset --all -y`, pour ne jamais versionner de
 réponses dans `exercises/`.
 
 ```
 fhe-exercices-cli/
-├── pyproject.toml             # empaquetage (PyPI), point d'entrée `fhecli`
+├── pyproject.toml             # empaquetage (PyPI : fhe-cli), commandes fhe-cli et fhecli
 ├── LICENSE, MANIFEST.in
-├── fhecli/                    # le paquet
-│   ├── cli.py                 # commandes : init, watch, list, run, hint, solution, reset
+├── fhecli/                    # le module Python
+│   ├── cli.py                 # commandes : init, start, list, run, hint, solution, reset, help
 │   ├── workspace.py           # création et recherche de l'espace de travail
-│   ├── watch.py               # boucle de surveillance des fichiers
+│   ├── watch.py               # atelier guidé (surveillance des fichiers)
 │   ├── runner.py              # exécution de pytest en sous-processus isolé
 │   ├── info.py, resources.py  # liste des exercices, accès aux données du paquet
 │   ├── solutions.py           # encodage / décodage des solutions
 │   ├── ui.py                  # couleurs, UTF-8, confirmations
 │   └── data/                  # embarqué dans le paquet (lecture seule)
 │       ├── info.toml          # métadonnées des exercices (titre, catégorie, indice)
-│       ├── originals/         # énoncés d'origine (fhecli init / reset)
+│       ├── originals/         # énoncés d'origine (fhe-cli init / reset)
 │       └── solutions/         # solutions ENCODÉES (.sol)
 ├── solutions_src/             # solutions en clair : dans le dépôt, JAMAIS dans la wheel ni le sdist
 ├── scripts/                   # encode_solutions.py, build_binary.py, check_binary.py
@@ -207,11 +203,11 @@ python -m build                # dist/fhe_cli-<version>-py3-none-any.whl et .tar
 ## Exécutables, CI et publication
 
 Construire et vérifier l'exécutable de l'OS courant (PyInstaller ne fait pas
-de compilation croisée) :
+de compilation croisée ; Python 3.14 pour embarquer TenSEAL) :
 
 ```bash
 pip install -e . pyinstaller
-python scripts/build_binary.py   # dist/fhecli-<version>-<os>-<arch>[.exe]
+python scripts/build_binary.py   # dist/fhe-cli-<version>-<os>-<arch>[.exe]
 ```
 
 `scripts/build_binary.py` lance ensuite `scripts/check_binary.py`, qui
@@ -226,16 +222,9 @@ exécutables Windows, Linux, macOS arm64 et macOS x86_64, wheel et sdist.
 Pour publier une version : mettre à jour `fhecli.__version__` et le
 CHANGELOG, puis pousser un tag `fhecli-vX.Y.Z` (il doit correspondre à la
 version). GitHub crée alors une release avec les exécutables et publie sur
-PyPI. Une version publiée sur PyPI ne peut pas être republiée : en cas de
-problème, publier la version suivante.
-
-Configuration à faire une seule fois :
-
-- PyPI, « trusted publishing » : sur pypi.org, ajouter un *pending publisher*
-  pour le projet `fhecli` (dépôt `Defl3ct-941/Scoring_FHE`, workflow
-  `fhecli.yml`, environnement `pypi`), et créer l'environnement `pypi` dans
-  les réglages du dépôt GitHub (limité aux tags `fhecli-v*`). Aucun jeton
-  API n'est nécessaire.
+PyPI (projet `fhe-cli`, publication de confiance, sans jeton API). Une version
+publiée sur PyPI ne peut pas être republiée : en cas de problème, publier la
+version suivante.
 
 ## Licence
 

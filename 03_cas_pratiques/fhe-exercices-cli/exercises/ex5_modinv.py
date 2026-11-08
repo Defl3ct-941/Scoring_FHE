@@ -22,7 +22,7 @@ pgcd de a et b et les coefficients de Bézout x, y tels que a*x + b*y == pgcd.
       ValueError. Sinon, renvoyez x % mod (le % ramène l'inverse dans
       [0, mod) même si x est négatif).
 
-Testez avec : fhecli run ex5_modinv
+Testez avec : fhe-cli run ex5_modinv
 """
 
 # I AM NOT DONE
