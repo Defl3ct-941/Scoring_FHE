@@ -26,7 +26,7 @@ from fhecli import __version__  # noqa: E402
 SYSTEM = {"Windows": "windows", "Linux": "linux", "Darwin": "macos"}.get(platform.system(), platform.system().lower())
 MACHINE = {"amd64": "x86_64", "x86_64": "x86_64", "arm64": "arm64", "aarch64": "arm64"}.get(
     platform.machine().lower(), platform.machine().lower())
-NAME = f"fhecli-{__version__}-{SYSTEM}-{MACHINE}"
+NAME = f"fhe-cli-{__version__}-{SYSTEM}-{MACHINE}"
 
 datas, binaries, hiddenimports = [], [], []
 # pytest et cryptography sont nécessaires au code des étudiants exécuté par le

@@ -7,7 +7,7 @@ fhecli et PyInstaller :
     pip install -e . pyinstaller
     python scripts/build_binary.py
 
-Le binaire est écrit dans dist/ (fhecli-<version>-<os>-<arch>[.exe]), puis
+Le binaire est écrit dans dist/ (fhe-cli-<version>-<os>-<arch>[.exe]), puis
 vérifié par scripts/check_binary.py.
 """
 
@@ -25,7 +25,7 @@ def main() -> int:
          str(ROOT / "packaging" / "fhecli.spec")],
         check=True,
     )
-    built = sorted((ROOT / "dist").glob("fhecli-*"), key=lambda p: p.stat().st_mtime)
+    built = sorted((ROOT / "dist").glob("fhe-cli-*"), key=lambda p: p.stat().st_mtime)
     if not built:
         print("Aucun binaire produit.", file=sys.stderr)
         return 1

@@ -67,8 +67,8 @@ jobs:
       - run: python scripts/build_binary.py
       - uses: actions/upload-artifact@v7
         with:
-          name: fhecli-${{ matrix.label }}
-          path: 03_cas_pratiques/fhe-exercices-cli/dist/fhecli-*
+          name: fhe-cli-${{ matrix.label }}
+          path: 03_cas_pratiques/fhe-exercices-cli/dist/fhe-cli-*
           if-no-files-found: error
 
   package:
@@ -112,7 +112,7 @@ jobs:
       - run: |
           gh release create "${GITHUB_REF_NAME}" artifacts/* \
             --repo "${GITHUB_REPOSITORY}" \
-            --title "fhecli ${GITHUB_REF_NAME#fhecli-v}" \
+            --title "fhe-cli ${GITHUB_REF_NAME#fhecli-v}" \
             --notes "Exécutables autonomes (Windows, Linux, macOS), wheel et sdist. Voir CHANGELOG.md."
         env:
           GH_TOKEN: ${{ github.token }}

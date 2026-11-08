@@ -34,7 +34,7 @@ pour les opérations mathématiques choisies par le concepteur du schéma
 C'est toute la différence entre une malléabilité subie (dangereuse) et une
 malléabilité conçue (le FHE).
 
-Testez avec : fhecli run ex2_xor_malleability
+Testez avec : fhe-cli run ex2_xor_malleability
 """
 
 # I AM NOT DONE

@@ -1,10 +1,10 @@
-"""Tests automatisés de l'outil fhecli (et non des exercices eux-mêmes).
+"""Tests automatisés de l'outil fhe-cli (et non des exercices eux-mêmes).
 
 Lancement, depuis le dossier fhe-exercices-cli :
     python -m pytest tests -q
 
 Chaque test travaille dans un espace de travail temporaire créé par
-`fhecli init` : rien n'est modifié dans le dépôt.
+`fhe-cli init` : rien n'est modifié dans le dépôt.
 """
 
 import hashlib
@@ -63,7 +63,7 @@ def ws(tmp_path):
 def test_version():
     result = fhecli("--version", cwd=CLI_ROOT)
     assert result.returncode == 0
-    assert result.stdout.strip() == f"fhecli {__version__}"
+    assert result.stdout.strip() == f"fhe-cli {__version__}"
 
 
 def test_solutions_are_encoded_and_decode():
@@ -139,7 +139,7 @@ def test_package_data_untouched(ws):
 def test_commands_need_workspace(tmp_path, args):
     result = fhecli(*args, cwd=tmp_path)
     assert result.returncode == 1
-    assert "fhecli init" in result.stdout
+    assert "fhe-cli init" in result.stdout
 
 
 def test_workspace_found_from_subdirectory(ws):
@@ -300,7 +300,7 @@ def test_watch_advances_and_finishes(ws):
     env = {**os.environ, "PYTHONPATH": str(CLI_ROOT), "NO_COLOR": "1", "PYTHONUNBUFFERED": "1"}
     log = ws / "watch.log"
     with log.open("w", encoding="utf-8") as out:
-        proc = subprocess.Popen([sys.executable, "-m", "fhecli", "watch"], cwd=ws, env=env,
+        proc = subprocess.Popen([sys.executable, "-m", "fhecli", "start"], cwd=ws, env=env,
                                 stdin=subprocess.DEVNULL, stdout=out, stderr=subprocess.STDOUT)
         try:
             time.sleep(4)
@@ -338,3 +338,45 @@ def test_internal_pytest_subcommand(ws):
     assert result.returncode == 0, result.stdout
     assert "7 passed" in result.stdout
     assert "_run-pytest" not in fhecli("--help", cwd=ws).stdout
+
+
+# --- Aide et noms de commandes ----------------------------------------------
+
+COMMAND_NAMES = ["init", "start", "list", "run", "hint", "solution", "reset", "help"]
+
+
+@pytest.mark.parametrize("args", [[], ["help"], ["-h"], ["--help"]])
+def test_general_help_lists_all_commands(tmp_path, args):
+    result = fhecli(*args, cwd=tmp_path)
+    assert result.returncode == 0
+    for name in COMMAND_NAMES:
+        assert f"  {name}" in result.stdout, name
+    assert "fhe-cli init" in result.stdout and "fhe-cli start" in result.stdout
+    assert "usage:" not in result.stdout  # aide en français, pas celle d'argparse
+
+
+@pytest.mark.parametrize("args", [["help", "run"], ["run", "--help"], ["reset", "-h"], ["help", "watch"]])
+def test_command_help(tmp_path, args):
+    result = fhecli(*args, cwd=tmp_path)
+    assert result.returncode == 0
+    assert result.stdout.startswith("fhe-cli ")
+    assert "usage:" not in result.stdout
+
+
+def test_help_unknown_topic(tmp_path):
+    result = fhecli("help", "foo", cwd=tmp_path)
+    assert result.returncode == 2 and "Commande inconnue" in result.stdout
+
+
+def test_missing_argument_error_in_french(ws):
+    result = fhecli("run", cwd=ws)
+    assert result.returncode == 2
+    assert "argument manquant" in result.stderr and "fhe-cli help" in result.stderr
+
+
+def test_watch_is_an_alias_of_start(ws):
+    for name in NAMES:
+        solve(ws, name)
+    for command in ("start", "watch"):
+        result = fhecli(command, cwd=ws)
+        assert result.returncode == 0 and "Félicitations" in result.stdout

@@ -35,7 +35,7 @@ détectée. C'est une excellente propriété de sécurité... mais c'est aussi
 précisément ce qui rend tout calcul sur le chiffré impossible avec ce type
 de schéma.
 
-Testez avec : fhecli run ex3_fernet_tamper
+Testez avec : fhe-cli run ex3_fernet_tamper
 """
 
 from cryptography.fernet import Fernet, InvalidToken

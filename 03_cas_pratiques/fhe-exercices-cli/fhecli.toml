@@ -1,4 +1,4 @@
-# Espace de travail fhecli : ce fichier permet à `fhecli` de retrouver vos
+# Espace de travail fhe-cli : ce fichier permet à `fhe-cli` de retrouver vos
 # exercices depuis n'importe quel sous-dossier. Ne le supprimez pas.
 [workspace]
-created_with = "1.1.0"
+created_with = "1.4.0"

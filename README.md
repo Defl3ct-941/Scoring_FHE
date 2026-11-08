@@ -37,19 +37,16 @@ Livrables :
 
 ## Démarrage rapide
 
-**Atelier CLI** (Python 3.11 ou plus) :
+**Atelier CLI** `fhe-cli` (Python 3.11 ou plus, ou exécutable autonome sans Python) :
 
 ```bash
-cd 03_cas_pratiques/fhe-exercices-cli
-python -m venv .venv
-.venv\Scripts\activate        # Windows  (macOS / Linux : source .venv/bin/activate)
-pip install -e .
-fhecli watch                  # le dossier du dépôt est déjà un espace de travail
+pip install fhe-cli
+fhe-cli init          # crée le dossier fhe-exercices avec les 10 exercices
+cd fhe-exercices
+fhe-cli start         # lance l'atelier guidé ; fhe-cli help pour toutes les commandes
 ```
 
-Une fois publié sur PyPI, un étudiant n'aura besoin que de :
-`pip install fhe-cli`, puis `fhecli init` et `cd fhe-exercices`.
-Sans Python, un exécutable autonome par OS (Windows, Linux, macOS) est aussi construit par la CI.
+Prérequis système : [03_cas_pratiques/fhe-exercices-cli/SYSTEM-REQUIREMENTS.md](03_cas_pratiques/fhe-exercices-cli/SYSTEM-REQUIREMENTS.md).
 
 **Démo web** et **atelier web** (Docker) :
 

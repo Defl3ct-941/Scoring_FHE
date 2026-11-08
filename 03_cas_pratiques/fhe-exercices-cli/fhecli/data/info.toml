@@ -1,4 +1,4 @@
-# Liste des exercices, dans l'ordre pédagogique suivi par `fhecli watch`.
+# Liste des exercices, dans l'ordre pédagogique suivi par `fhe-cli start`.
 #
 # Parcours : du chiffrement classique (où tout calcul sur le chiffré est
 # impossible) jusqu'au chiffrement homomorphe, en reconstruisant Paillier à la
