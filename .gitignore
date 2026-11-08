@@ -1,2 +1,4 @@
 # all hidden directory
 .*/
+__pycache__/
+*.pyc
