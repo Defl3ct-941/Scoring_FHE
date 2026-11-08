@@ -1,0 +1,133 @@
+# CI de l'outil fhecli (03_cas_pratiques/fhe-exercices-cli).
+#
+# - À chaque push sur main / pull request touchant fhecli : tests sur Linux,
+#   Windows et macOS (Python 3.11 et 3.15), puis construction et vérification
+#   des exécutables autonomes PyInstaller pour chaque OS (artefacts).
+# - Sur un tag « fhecli-vX.Y.Z » : en plus, release GitHub avec les
+#   exécutables et publication sur PyPI (trusted publishing, voir le README).
+name: fhecli
+
+on:
+  # Pas de filtre « paths » sur push : il empêcherait le déclenchement sur les tags.
+  push:
+    branches: [main]
+    tags: ["fhecli-v*"]
+  pull_request:
+    paths:
+      - "03_cas_pratiques/fhe-exercices-cli/**"
+      - ".github/workflows/fhecli.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: 03_cas_pratiques/fhe-exercices-cli
+
+jobs:
+  tests:
+    name: Tests ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.11", "3.15"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e .
+      - run: python -m pytest tests -q
+
+  binaries:
+    name: Exécutable ${{ matrix.label }}
+    needs: tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux construit sur une base ancienne (glibc 2.35) pour tourner
+          # sur un maximum de distributions.
+          - { os: ubuntu-22.04, label: linux-x86_64 }
+          - { os: windows-latest, label: windows-x86_64 }
+          - { os: macos-latest, label: macos-arm64 }
+          - { os: macos-15-intel, label: macos-x86_64 }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.15"
+      - run: python -m pip install -e . pyinstaller
+      # Construit le binaire puis le vérifie (parcours étudiant complet sans
+      # Python dans le PATH, absence de texte lisible dans le binaire).
+      - run: python scripts/build_binary.py
+      - uses: actions/upload-artifact@v5
+        with:
+          name: fhecli-${{ matrix.label }}
+          path: 03_cas_pratiques/fhe-exercices-cli/dist/fhecli-*
+          if-no-files-found: error
+
+  package:
+    name: Wheel et sdist
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.15"
+      - run: python -m pip install build twine
+      - name: Vérifie que le tag correspond à la version
+        if: startsWith(github.ref, 'refs/tags/fhecli-v')
+        run: |
+          version=$(python -c "import fhecli; print(fhecli.__version__)")
+          test "${GITHUB_REF_NAME}" = "fhecli-v${version}" || { echo "Tag ${GITHUB_REF_NAME} != fhecli-v${version}"; exit 1; }
+      - run: python -m build
+      - run: python -m twine check --strict dist/*
+      - uses: actions/upload-artifact@v5
+        with:
+          name: fhecli-pypi
+          path: 03_cas_pratiques/fhe-exercices-cli/dist/*
+          if-no-files-found: error
+
+  release:
+    name: Release GitHub
+    if: startsWith(github.ref, 'refs/tags/fhecli-v')
+    needs: [binaries, package]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          path: artifacts
+          merge-multiple: true
+      - run: |
+          gh release create "${GITHUB_REF_NAME}" artifacts/* \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "fhecli ${GITHUB_REF_NAME#fhecli-v}" \
+            --notes "Exécutables autonomes (Windows, Linux, macOS), wheel et sdist. Voir CHANGELOG.md."
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  pypi:
+    name: Publication PyPI
+    if: startsWith(github.ref, 'refs/tags/fhecli-v')
+    needs: [package, binaries]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: fhecli-pypi
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1

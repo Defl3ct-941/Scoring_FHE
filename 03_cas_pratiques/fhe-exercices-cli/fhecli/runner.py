@@ -8,6 +8,23 @@ from pathlib import Path
 MARKER = "I AM NOT DONE"
 TIMEOUT_SECONDS = 20
 
+# Sous-commande interne : dans un exécutable PyInstaller, sys.executable est
+# le binaire fhecli lui-même (il n'y a pas forcément de Python installé sur la
+# machine). Le binaire se relance donc avec cette sous-commande, qui exécute le
+# pytest embarqué.
+PYTEST_SUBCOMMAND = "_run-pytest"
+
+
+def is_frozen() -> bool:
+    return bool(getattr(sys, "frozen", False))
+
+
+def pytest_command(path: Path) -> list[str]:
+    args = [str(path), "-q", "--tb=short", "--color=no"]
+    if is_frozen():
+        return [sys.executable, PYTEST_SUBCOMMAND, *args]
+    return [sys.executable, "-m", "pytest", *args]
+
 
 def has_marker(path: Path) -> bool:
     try:
@@ -27,9 +44,11 @@ def run_tests(path: Path) -> tuple[bool, str]:
     if not path.exists():
         return False, f"Fichier introuvable : {path}\nRecréez-le avec : fhecli reset {path.stem}"
     env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+    if is_frozen():
+        env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
     try:
         result = subprocess.run(
-            [sys.executable, "-m", "pytest", str(path), "-q", "--tb=short", "--color=no"],
+            pytest_command(path),
             cwd=path.parent.parent,
             capture_output=True,
             text=True,
