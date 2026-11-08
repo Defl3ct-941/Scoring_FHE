@@ -12,7 +12,7 @@ authors = [
     { name = "Thomas GRUNDSZTEJN" },
 ]
 dependencies = [
-    "pytest>=8.3,<9",
+    "pytest>=8.3,<10",
     "cryptography>=43.0,<44",
 ]
 
