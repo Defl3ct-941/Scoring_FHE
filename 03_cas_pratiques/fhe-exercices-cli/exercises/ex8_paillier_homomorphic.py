@@ -21,7 +21,7 @@ Les propriétés (tout est modulo n2 = n*n) :
 Les fonctions des exercices précédents (clés, chiffrement, déchiffrement) sont
 fournies ci-dessous. Vous n'implémentez que add_encrypted et mul_by_scalar.
 
-Testez avec : fhecli run ex8_paillier_homomorphic
+Testez avec : fhe-cli run ex8_paillier_homomorphic
 """
 
 # I AM NOT DONE

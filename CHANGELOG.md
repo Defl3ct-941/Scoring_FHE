@@ -4,16 +4,27 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
-## 2026-11-08 — fhecli 1.3.3 : garde-fou macOS 13 pour TenSEAL
+## 2026-11-08 — fhecli 1.4.0 : commande fhe-cli, aide et prérequis système
+
+### Ajouté
+
+- Commande `fhe-cli help [commande]`, et aide en français pour `fhe-cli -h` / `--help` (liste
+  des commandes et de leur rôle) ; `fhe-cli` lancé sans argument affiche l'aide ; erreurs
+  d'utilisation en français avec renvoi vers l'aide.
+- Prérequis système documentés : section du README (page PyPI) et `SYSTEM-REQUIREMENTS.md`.
 
 ### Modifié
 
+- La commande s'appelle `fhe-cli`, comme le paquet PyPI ; `fhecli` reste un alias. Le module
+  Python reste `fhecli`.
+- `fhe-cli watch` devient `fhe-cli start` (« lance l'atelier guidé ») ; `watch` reste un alias.
+- Tous les messages, énoncés (« Testez avec : fhe-cli run … ») et la documentation utilisent
+  `fhe-cli`. Les exécutables s'appellent `fhe-cli-<version>-<os>-<arch>`.
 - TenSEAL n'est plus demandé sur macOS 11 à 13 (Apple Silicon) : ses wheels exigent macOS 14,
-  pip y aurait tenté une compilation depuis les sources et fait échouer toute l'installation.
-  L'ex10 y est ignoré, comme sur Python 3.15 et les Mac Intel.
-- Détection par un test de chaîne sur `platform_version` (Darwin 20 à 22) plutôt qu'une
-  comparaison de `platform_release`, qui fait planter pip 23-24 sous Linux. Marqueur vérifié avec
-  `packaging` 21.3 à 26.3 sur Linux, Windows, macOS 11/13/14/26 arm64 et macOS Intel.
+  pip y aurait tenté une compilation et fait échouer toute l'installation ; l'ex10 y est
+  ignoré. Détection par test de chaîne sur `platform_version` (Darwin 20 à 22) plutôt qu'une
+  comparaison de `platform_release`, qui fait planter pip 23-24 sous Linux. Marqueur vérifié
+  avec `packaging` 21.3 à 26.3 et pip 24.0 sous Linux.
 
 ## 2026-11-08 — fhecli 1.3.2 : TenSEAL (CKKS) inclus par défaut
 

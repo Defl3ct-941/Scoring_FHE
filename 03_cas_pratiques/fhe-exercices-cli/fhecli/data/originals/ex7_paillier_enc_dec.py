@@ -25,7 +25,7 @@ m -= n.
 
 Vous pouvez utiliser le pow(base, exp, mod) intégré ici.
 
-Testez avec : fhecli run ex7_paillier_enc_dec
+Testez avec : fhe-cli run ex7_paillier_enc_dec
 """
 
 # I AM NOT DONE

@@ -24,7 +24,7 @@ encrypted_score.
         4. Additionner tous les termes à total avec add_encrypted.
         5. Déchiffrer total à la toute fin et le renvoyer.
 
-Testez avec : fhecli run ex9_scoring_paillier
+Testez avec : fhe-cli run ex9_scoring_paillier
 """
 
 import math

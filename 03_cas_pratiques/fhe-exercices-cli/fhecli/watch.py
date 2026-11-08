@@ -55,7 +55,7 @@ def _offer_solution(ex: Exercise) -> None:
 
 def watch(exercises: list[Exercise]) -> None:
     total = len(exercises)
-    print(ui.bold("fhecli watch") + " - mode surveillance")
+    print(ui.bold("fhe-cli start") + " - atelier guidé")
     print("Résolvez les exercices dans l'ordre. Dès que les tests d'un")
     print("exercice passent, retirez le commentaire « # I AM NOT DONE » en")
     print("haut du fichier : l'outil passera alors au suivant.")

@@ -1,5 +1,5 @@
 # Contenu du sdist : code du paquet, données embarquées, tests de l'outil.
-include README.md LICENSE
+include README.md LICENSE SYSTEM-REQUIREMENTS.md
 graft fhecli/data
 graft tests
 # Jamais dans les archives publiées : solutions en clair, espace de travail

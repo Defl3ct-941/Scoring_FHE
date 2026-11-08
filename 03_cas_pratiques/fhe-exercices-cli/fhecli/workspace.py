@@ -2,7 +2,7 @@
 
 Un espace de travail est un dossier qui contient le fichier marqueur
 `fhecli.toml`, un `pytest.ini` et le dossier `exercises/` où l'étudiant écrit
-son code. Il est créé par `fhecli init` ; toutes les autres commandes le
+son code. Il est créé par `fhe-cli init` ; toutes les autres commandes le
 retrouvent en remontant depuis le dossier courant jusqu'au marqueur.
 """
 
@@ -15,7 +15,7 @@ EXERCISES_DIR = "exercises"
 DEFAULT_DIR = "fhe-exercices"
 
 MARKER_CONTENT = f"""\
-# Espace de travail fhecli : ce fichier permet à `fhecli` de retrouver vos
+# Espace de travail fhe-cli : ce fichier permet à `fhe-cli` de retrouver vos
 # exercices depuis n'importe quel sous-dossier. Ne le supprimez pas.
 [workspace]
 created_with = "{__version__}"
