@@ -1,2 +1,28 @@
-# all hidden directory
+# --- Python ---
+__pycache__/
+*.py[cod]
+venv/
+*.egg-info/
+build/
+dist/
+
+# --- Dossiers cachés (IDE, outils locaux...) : jamais versionnés ---
 .*/
+# Exceptions : configuration CI (GitHub Actions, GitLab CI). .gitlab-ci.yml est un fichier, donc non concerné.
+!.github/
+!.gitlab/
+
+# --- Systèmes ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Fichiers temporaires Office (Word/PowerPoint ouverts) ---
+~$*
+
+# --- Secrets ---
+.env
+*.pypirc
+
+# --- Archives régénérables ---
+03_cas_pratiques/fhe-exercices-cli.zip
