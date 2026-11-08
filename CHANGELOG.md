@@ -12,6 +12,8 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
   des commandes et de leur rôle) ; `fhe-cli` lancé sans argument affiche l'aide ; erreurs
   d'utilisation en français avec renvoi vers l'aide.
 - Prérequis système documentés : section du README (page PyPI) et `SYSTEM-REQUIREMENTS.md`.
+- Commandes `fhe-cli next` (passe au premier exercice non résolu et lance ses tests) et
+  `fhe-cli previous` (revient à l'exercice qui le précède et lance ses tests).
 
 ### Modifié
 
