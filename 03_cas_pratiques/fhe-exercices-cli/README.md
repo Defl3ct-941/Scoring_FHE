@@ -37,6 +37,28 @@ fhecli watch
 `fhecli.toml`. Les commandes de `fhecli` retrouvent cet espace depuis n'importe
 quel sous-dossier. `fhecli init` refuse d'écraser un espace existant.
 
+### Sans Python : exécutable autonome
+
+Pour chaque OS, un exécutable unique embarque tout (Python, `fhecli`,
+`pytest`, `cryptography` et les exercices) : **aucune installation de Python
+n'est nécessaire**. Téléchargez celui de votre système
+(`fhecli-<version>-windows-x86_64.exe`, `-linux-x86_64`, `-macos-arm64` ou
+`-macos-x86_64`), puis :
+
+```bash
+# Windows (PowerShell)
+.hecli-1.2.0-windows-x86_64.exe init
+# macOS / Linux
+chmod +x fhecli-1.2.0-linux-x86_64
+./fhecli-1.2.0-linux-x86_64 init
+```
+
+Renommez-le en `fhecli` (ou `fhecli.exe`) et placez-le dans un dossier du
+`PATH` pour l'utiliser comme dans les exemples ci-dessous. Le code et les
+solutions y sont embarqués compressés, jamais en clair. Sous macOS, au premier
+lancement, autorisez le binaire dans Réglages système > Confidentialité et
+sécurité (il n'est pas signé).
+
 ## Utilisation
 
 ### Mode guidé (recommandé pour commencer)
@@ -140,7 +162,8 @@ fhe-exercices-cli/
 │       ├── originals/         # énoncés d'origine (fhecli init / reset)
 │       └── solutions/         # solutions ENCODÉES (.sol)
 ├── solutions_src/             # solutions en clair : dans le dépôt, JAMAIS dans la wheel ni le sdist
-├── scripts/encode_solutions.py  # régénère data/solutions/ depuis solutions_src/
+├── scripts/                   # encode_solutions.py, build_binary.py, check_binary.py
+├── packaging/                 # spécification PyInstaller (exécutables autonomes)
 ├── tests/                     # tests automatisés de l'outil
 ├── exercises/                 # espace de travail de développement
 ├── fhecli.toml, pytest.ini    # marqueur et configuration de cet espace
@@ -159,6 +182,43 @@ Construire le paquet (sans le publier) :
 python -m pip install build
 python -m build                # dist/fhecli-<version>-py3-none-any.whl et .tar.gz
 ```
+
+## Exécutables, CI et publication
+
+Construire et vérifier l'exécutable de l'OS courant (PyInstaller ne fait pas
+de compilation croisée) :
+
+```bash
+pip install -e . pyinstaller
+python scripts/build_binary.py   # dist/fhecli-<version>-<os>-<arch>[.exe]
+```
+
+`scripts/build_binary.py` lance ensuite `scripts/check_binary.py`, qui
+rejoue le parcours d'un étudiant avec le binaire seul (sans Python dans le
+`PATH`) et vérifie qu'aucun source, aucune solution ni aucun énoncé n'apparaît
+en clair dans le fichier.
+
+La CI fait tout cela automatiquement :
+
+- **GitHub Actions** (`.github/workflows/fhecli.yml`) : tests sur Linux,
+  Windows et macOS (Python 3.11 et 3.15), exécutables Windows, Linux,
+  macOS arm64 et macOS x86_64, wheel et sdist.
+- **GitLab CI** (`.gitlab-ci.yml`) : tests, exécutable Linux, wheel et sdist
+  (Windows et macOS demanderaient des runners dédiés).
+
+Pour publier une version : mettre à jour `fhecli.__version__` et le
+CHANGELOG, puis pousser un tag `fhecli-vX.Y.Z` (il doit correspondre à la
+version). GitHub crée alors une release avec les exécutables et publie sur
+PyPI ; sur GitLab, le job `pypi` est manuel.
+
+Configuration à faire une seule fois :
+
+- PyPI, « trusted publishing » : sur pypi.org, ajouter un *pending publisher*
+  pour le projet `fhecli` (dépôt `Defl3ct-941/Scoring_FHE`, workflow
+  `fhecli.yml`, environnement `pypi`), et créer l'environnement `pypi` dans
+  les réglages du dépôt GitHub.
+- GitLab : variable CI/CD protégée et masquée `PYPI_API_TOKEN`, ne servant
+  que si l'on publie depuis GitLab.
 
 ## Licence
 

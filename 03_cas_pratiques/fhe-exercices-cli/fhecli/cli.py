@@ -6,7 +6,7 @@ from pathlib import Path
 
 from fhecli import __version__, resources, ui
 from fhecli.info import exercise_names, find_exercise, load_exercises
-from fhecli.runner import has_marker, run_tests, status
+from fhecli.runner import PYTEST_SUBCOMMAND, has_marker, run_tests, status
 from fhecli.watch import watch as watch_loop
 from fhecli.workspace import DEFAULT_DIR, WorkspaceNotFound, find_workspace, init_workspace
 
@@ -204,6 +204,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     ui.setup_console()
+    argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == PYTEST_SUBCOMMAND:
+        # Usage interne (exécutable autonome) : `fhecli _run-pytest <args>`
+        # exécute le pytest embarqué. Absent de l'aide.
+        import pytest
+
+        return int(pytest.main(argv[1:]))
     parser = build_parser()
     args = parser.parse_args(argv)
     return args.func(args)

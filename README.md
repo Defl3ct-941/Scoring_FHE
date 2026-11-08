@@ -49,6 +49,7 @@ fhecli watch                  # le dossier du dépôt est déjà un espace de tr
 
 Une fois publié sur PyPI, un étudiant n'aura besoin que de :
 `pip install fhecli`, puis `fhecli init` et `cd fhe-exercices`.
+Sans Python, un exécutable autonome par OS (Windows, Linux, macOS) est aussi construit par la CI.
 
 **Démo web** et **atelier web** (Docker) :
 
