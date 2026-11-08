@@ -77,6 +77,8 @@ sont embarqués compressés, jamais en clair.
 |---|---|
 | `fhe-cli init [dossier]` | Crée votre espace de travail avec tous les exercices (par défaut : `./fhe-exercices`) |
 | `fhe-cli start` | Lance l'atelier guidé : affiche l'exercice en cours, relance ses tests à chaque sauvegarde et passe au suivant une fois résolu |
+| `fhe-cli next` | Passe au prochain exercice à résoudre (le premier non résolu) et lance ses tests |
+| `fhe-cli previous` | Revient à l'exercice qui précède le prochain à résoudre et lance ses tests |
 | `fhe-cli list` | Affiche tous les exercices et votre progression |
 | `fhe-cli run <exercice>` | Teste un exercice et affiche le résultat |
 | `fhe-cli hint <exercice>` | Affiche un indice pour un exercice |
