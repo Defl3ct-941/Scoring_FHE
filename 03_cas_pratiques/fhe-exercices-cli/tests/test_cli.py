@@ -312,7 +312,9 @@ def test_watch_advances_and_finishes(ws):
             if proc.poll() is None:
                 proc.kill()
     text = log.read_text(encoding="utf-8")
-    assert "Exercice 1/10" in text and "Exercice 10/10" in text
+    # Les exercices déjà résolus quand watch y arrive sont sautés (comportement
+    # voulu) : on vérifie seulement le départ et l'arrivée.
+    assert f"Exercice 1/{len(NAMES)}" in text
     assert "Félicitations" in text
     assert proc.returncode == 0
 
