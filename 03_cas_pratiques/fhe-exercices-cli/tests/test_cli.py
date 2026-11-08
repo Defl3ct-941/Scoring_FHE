@@ -342,7 +342,7 @@ def test_internal_pytest_subcommand(ws):
 
 # --- Aide et noms de commandes ----------------------------------------------
 
-COMMAND_NAMES = ["init", "start", "list", "run", "hint", "solution", "reset", "help"]
+COMMAND_NAMES = ["init", "start", "next", "previous", "list", "run", "hint", "solution", "reset", "help"]
 
 
 @pytest.mark.parametrize("args", [[], ["help"], ["-h"], ["--help"]])
@@ -380,3 +380,40 @@ def test_watch_is_an_alias_of_start(ws):
     for command in ("start", "watch"):
         result = fhecli(command, cwd=ws)
         assert result.returncode == 0 and "Félicitations" in result.stdout
+
+
+# --- next / previous ----------------------------------------------------------
+
+def test_next_picks_first_unsolved(ws):
+    result = fhecli("next", cwd=ws)
+    assert result.returncode == 1  # énoncé non résolu : les tests échouent
+    assert f"{NAMES[0]} - " in result.stdout and "(1/10)" in result.stdout
+    solve(ws, NAMES[0])
+    solve(ws, NAMES[1])
+    result = fhecli("next", cwd=ws)
+    assert f"{NAMES[2]} - " in result.stdout and "(3/10)" in result.stdout
+
+
+def test_next_when_everything_is_solved(ws):
+    for name in NAMES:
+        solve(ws, name)
+    result = fhecli("next", cwd=ws)
+    assert result.returncode == 0 and "Félicitations" in result.stdout
+
+
+def test_previous(ws):
+    result = fhecli("previous", cwd=ws)
+    assert result.returncode == 0 and "Pas d'exercice précédent." in result.stdout
+    solve(ws, NAMES[0])
+    solve(ws, NAMES[1])
+    result = fhecli("previous", cwd=ws)
+    assert result.returncode == 0
+    assert f"{NAMES[1]} - " in result.stdout and "Tous les tests passent." in result.stdout
+
+
+def test_help_lists_next_and_previous(tmp_path):
+    out = fhecli("help", cwd=tmp_path).stdout
+    assert out.index("  start") < out.index("  next") < out.index("  previous") < out.index("  list")
+    for topic in ("next", "previous"):
+        detail = fhecli("help", topic, cwd=tmp_path)
+        assert detail.returncode == 0 and detail.stdout.startswith(f"fhe-cli {topic}")

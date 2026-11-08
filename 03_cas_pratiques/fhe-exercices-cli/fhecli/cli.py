@@ -41,6 +41,19 @@ COMMANDS = {
         "fichier et passe au suivant dès qu'il est résolu (tests OK et ligne\n"
         "« # I AM NOT DONE » retirée). Ctrl+C pour quitter.",
     ),
+    "next": (
+        "next",
+        "Passe au prochain exercice à résoudre et le teste",
+        "Choisit automatiquement le premier exercice pas encore résolu (dans\n"
+        "l'ordre de la liste), affiche son nom et son fichier, puis lance ses tests.\n"
+        "Si tout est résolu, affiche un message de félicitations.",
+    ),
+    "previous": (
+        "previous",
+        "Revient à l'exercice précédent et le teste",
+        "Choisit l'exercice qui précède le prochain à résoudre, affiche son nom et\n"
+        "son fichier, puis lance ses tests. Utile pour revoir ce que vous venez de faire.",
+    ),
     "list": (
         "list",
         "Affiche tous les exercices et votre progression",
@@ -197,7 +210,10 @@ def cmd_list(args) -> int:
 
 
 def cmd_run(args) -> int:
-    ex = _exercise_or_exit(args.name)
+    return _run_exercise(_exercise_or_exit(args.name))
+
+
+def _run_exercise(ex) -> int:
     print(ui.bold(f"{ex.name} - {ex.title}"))
     print(f"Fichier : {ex.path}")
     print()
@@ -216,6 +232,36 @@ def cmd_run(args) -> int:
     print(ui.failure("Des tests échouent encore."))
     print(f"Besoin d'un coup de pouce ? {ui.bold(PROG + ' hint ' + ex.name)}")
     return EXIT_ERROR
+
+
+def _first_pending_index(exercises) -> int | None:
+    """Index du premier exercice pas encore résolu (None si tout est résolu)."""
+    for index, ex in enumerate(exercises):
+        if status(ex.path) != "done":
+            return index
+    return None
+
+
+def cmd_next(args) -> int:
+    exercises = load_exercises(_workspace())
+    index = _first_pending_index(exercises)
+    if index is None:
+        print(ui.success(ui.bold("Félicitations, vous avez terminé tous les exercices !")))
+        return EXIT_OK
+    print(ui.info(f"Prochain exercice à résoudre ({index + 1}/{len(exercises)}) :"))
+    return _run_exercise(exercises[index])
+
+
+def cmd_previous(args) -> int:
+    exercises = load_exercises(_workspace())
+    index = _first_pending_index(exercises)
+    if index is None:
+        index = len(exercises)  # tout est résolu : le précédent est le dernier
+    if index == 0:
+        print("Pas d'exercice précédent.")
+        return EXIT_OK
+    print(ui.info(f"Exercice précédent ({index}/{len(exercises)}) :"))
+    return _run_exercise(exercises[index - 1])
 
 
 def cmd_hint(args) -> int:
@@ -305,6 +351,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     add("init", cmd_init).add_argument("directory", nargs="?", default=DEFAULT_DIR)
     add("start", cmd_start, aliases=ALIASES_FOR["start"])
+    add("next", cmd_next)
+    add("previous", cmd_previous)
     add("list", cmd_list)
     add("run", cmd_run).add_argument("name", metavar="exercice")
     add("hint", cmd_hint).add_argument("name", metavar="exercice")
