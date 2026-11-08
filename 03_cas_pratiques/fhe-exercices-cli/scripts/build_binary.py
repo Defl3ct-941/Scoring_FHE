@@ -1,8 +1,8 @@
-"""Construit l'exécutable autonome fhecli pour l'OS courant (PyInstaller).
+"""Construit l'exécutable autonome fhe-cli pour l'OS courant (PyInstaller).
 
 PyInstaller ne fait pas de compilation croisée : lancez ce script sur chaque
 OS (c'est ce que fait la CI GitHub Actions), avec un venv où sont installés
-fhecli et PyInstaller :
+le paquet (pip install -e .) et PyInstaller :
 
     pip install -e . pyinstaller
     python scripts/build_binary.py

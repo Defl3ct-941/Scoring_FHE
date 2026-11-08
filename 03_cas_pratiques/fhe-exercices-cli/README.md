@@ -101,8 +101,8 @@ retrouvent cet espace depuis n'importe quel sous-dossier ; `fhe-cli init`
 refuse d'écraser un espace existant. Vous pouvez aussi lancer les tests
 vous-même avec `python -m pytest` depuis l'espace de travail.
 
-Anciens noms toujours acceptés : la commande `fhecli` et `fhe-cli watch`
-(équivalent de `start`). Le module Python s'appelle `fhecli`.
+Note : `fhecli` reste accepté comme alias de `fhe-cli`, et `watch` comme alias de
+`start` (le module Python s'appelle `fhecli`).
 
 ## Comment marche un exercice
 
@@ -166,7 +166,7 @@ réponses dans `exercises/`.
 
 ```
 fhe-exercices-cli/
-├── pyproject.toml             # empaquetage (PyPI : fhe-cli), commandes fhe-cli et fhecli
+├── pyproject.toml             # empaquetage (PyPI : fhe-cli), commande fhe-cli
 ├── LICENSE, MANIFEST.in
 ├── fhecli/                    # le module Python
 │   ├── cli.py                 # commandes : init, start, list, run, hint, solution, reset, help

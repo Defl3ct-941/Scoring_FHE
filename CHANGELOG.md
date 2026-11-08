@@ -17,8 +17,9 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 
 ### Modifié
 
-- La commande s'appelle `fhe-cli`, comme le paquet PyPI ; `fhecli` reste un alias. Le module
-  Python reste `fhecli`.
+- La commande s'appelle `fhe-cli`, comme le paquet PyPI ; `fhecli` reste un alias. Toutes les
+  commandes proposées et affichées (aide, messages, énoncés, documentation) utilisent `fhe-cli`,
+  même via l'alias ; l'aide mentionne seulement les alias disponibles. Le module Python reste `fhecli`.
 - `fhe-cli watch` devient `fhe-cli start` (« lance l'atelier guidé ») ; `watch` reste un alias.
 - Tous les messages, énoncés (« Testez avec : fhe-cli run … ») et la documentation utilisent
   `fhe-cli`. Les exécutables s'appellent `fhe-cli-<version>-<os>-<arch>`.

@@ -332,7 +332,7 @@ def test_pytest_command_normal_and_frozen(monkeypatch, tmp_path):
 
 
 def test_internal_pytest_subcommand(ws):
-    """`fhecli _run-pytest` exécute pytest : c'est ce qu'utilise le binaire."""
+    """`fhe-cli _run-pytest` exécute pytest : c'est ce qu'utilise le binaire."""
     solve(ws, NAMES[0])
     result = fhecli("_run-pytest", f"exercises/{NAMES[0]}.py", "-q", cwd=ws)
     assert result.returncode == 0, result.stdout
@@ -417,3 +417,14 @@ def test_help_lists_next_and_previous(tmp_path):
     for topic in ("next", "previous"):
         detail = fhecli("help", topic, cwd=tmp_path)
         assert detail.returncode == 0 and detail.stdout.startswith(f"fhe-cli {topic}")
+
+
+def test_messages_always_use_fhe_cli(ws, tmp_path):
+    """Même lancée via l'alias, l'aide et les messages proposent `fhe-cli`."""
+    out = fhecli("help", cwd=tmp_path).stdout
+    assert "Alias disponibles : fhecli" in out
+    commands_part = out.split("Alias disponibles")[0]
+    assert "fhecli " not in commands_part
+    for args in (["run", NAMES[0]], ["solution", NAMES[0]], ["init", "ws"]):
+        text = fhecli(*args, cwd=ws if args[0] != "init" else ws.parent).stdout
+        assert "fhecli " not in text and "fhe-cli " in text, args

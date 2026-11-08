@@ -117,6 +117,8 @@ def general_help() -> str:
         f"  {'--version':<{width}}Affiche la version",
         "",
         f"Détail d'une commande : {PROG} help <commande>   (ou {PROG} <commande> --help)",
+        "",
+        ui.DIM + f"Alias disponibles : fhecli (ancien nom de {PROG}), {PROG} watch (= {PROG} start)." + ui.RESET,
     ]
     return "\n".join(lines)
 
