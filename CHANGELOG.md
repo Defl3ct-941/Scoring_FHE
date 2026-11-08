@@ -4,6 +4,22 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — Passage des images Docker à Python 3.14
+
+### Modifié
+- Images Docker de la démo et de l'atelier web : `python:3.11-slim` → `python:3.14-slim`.
+  Python 3.14 est la version la plus récente pour laquelle toutes les dépendances publient
+  des wheels Linux : `tenseal` 0.3.18 (et `pyyaml` 6.0.3, via `uvicorn[standard]`) s'arrêtent
+  à 3.14, il n'existe pas encore de wheel pour Python 3.15.
+- `numpy` 2.4.6 → 2.5.4 (démo, atelier web), possible grâce à Python ≥ 3.12.
+- `fhecli` garde `requires-python = ">=3.11"` : testé sous Python 3.13 et 3.15.
+
+Tests (images reconstruites, sans aucune compilation de paquet) :
+- Démo : `/`, `/api/model`, étapes AES, Paillier, CKKS et `/api/compare` en 200 ;
+  score identique en clair, avec Paillier et avec CKKS (32,0).
+- Atelier web : les 10 exercices passent via l'API avec les solutions, puis réinitialisation (0/10).
+- `fhecli` : 3/3 exercices résolus sous Python 3.15.
+
 ## 2026-11-08 — Mise à jour des dépendances
 
 ### Modifié
