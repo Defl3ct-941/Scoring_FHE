@@ -2,7 +2,7 @@
 
 try:
     import tenseal as ts
-except ImportError:  # TenSEAL indisponible (Python 3.15 ou Mac Intel) : exercice ignoré
+except ImportError:  # TenSEAL indisponible (Python 3.15, Mac Intel ou macOS < 14) : exercice ignoré
     ts = None
 
 

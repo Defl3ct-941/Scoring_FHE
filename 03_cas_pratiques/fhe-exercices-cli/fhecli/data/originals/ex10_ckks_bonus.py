@@ -9,8 +9,8 @@ réels et sait, sur les chiffrés, additionner, multiplier et faire des produits
 scalaires. C'est le même schéma que la démo web du projet (04_demo).
 
 TenSEAL est installé automatiquement avec fhe-cli (et embarqué dans les
-exécutables). Seule exception : il n'existe pas encore pour Python 3.15 ni
-pour les Mac Intel ; les tests de cet exercice y sont alors ignorés (skipped).
+exécutables). Seule exception : il n'existe pas encore pour Python 3.15, les Mac Intel
+ni macOS 13 et antérieur ; les tests de cet exercice y sont alors ignorés.
 
 make_context() est fourni (mêmes paramètres que la démo). Vous implémentez le
 produit scalaire chiffré.
@@ -33,7 +33,7 @@ Testez avec : fhecli run ex10_ckks_bonus
 
 try:
     import tenseal as ts
-except ImportError:  # TenSEAL indisponible (Python 3.15 ou Mac Intel) : exercice ignoré
+except ImportError:  # TenSEAL indisponible (Python 3.15, Mac Intel ou macOS < 14) : exercice ignoré
     ts = None
 
 
@@ -63,7 +63,7 @@ import pytest
 
 
 def test_matches_plaintext_dot_product():
-    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15 ou Mac Intel)")
+    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15, Mac Intel ou macOS < 14)")
     context = make_context()
     values = [1500.0, 30.0, 1.0]
     weights = [0.005, -0.9, -10.0]
@@ -74,7 +74,7 @@ def test_matches_plaintext_dot_product():
 
 
 def test_matches_plaintext_dot_product_other_values():
-    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15 ou Mac Intel)")
+    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15, Mac Intel ou macOS < 14)")
     context = make_context()
     values = [-1500.0, 55.0, 4.0]
     weights = [0.005, -0.9, -10.0]
