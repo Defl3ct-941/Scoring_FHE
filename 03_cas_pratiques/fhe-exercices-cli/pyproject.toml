@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fhecli"
+name = "fhe-cli"
 dynamic = ["version"]
 description = "Atelier d'exercices en ligne de commande, à la rustlings : chiffrement classique et chiffrement homomorphe (FHE)"
 readme = "README.md"
@@ -43,7 +43,7 @@ dependencies = [
 # Bonus ex10 (CKKS) : TenSEAL n'est installé que sur demande, car c'est une
 # dépendance native lourde qui ne gère pas encore Python 3.14+. Elle n'est pas
 # embarquée dans les exécutables autonomes.
-#   pip install "fhecli[ckks]"
+#   pip install "fhe-cli[ckks]"
 ckks = [
     "tenseal>=0.3.16,<0.4",
 ]
