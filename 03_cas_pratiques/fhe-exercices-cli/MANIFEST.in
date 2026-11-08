@@ -1,0 +1,11 @@
+# Contenu du sdist : code du paquet, données embarquées, tests de l'outil.
+include README.md LICENSE
+graft fhecli/data
+graft tests
+# Jamais dans les archives publiées : solutions en clair, espace de travail
+# de développement, script d'encodage (inutile sans les solutions en clair).
+prune solutions_src
+prune exercises
+prune scripts
+exclude fhecli.toml pytest.ini requirements.txt
+global-exclude *.py[cod] __pycache__

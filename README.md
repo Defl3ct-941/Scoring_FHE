@@ -44,8 +44,11 @@ cd 03_cas_pratiques/fhe-exercices-cli
 python -m venv .venv
 .venv\Scripts\activate        # Windows  (macOS / Linux : source .venv/bin/activate)
 pip install -e .
-fhecli
+fhecli watch                  # le dossier du dépôt est déjà un espace de travail
 ```
+
+Une fois publié sur PyPI, un étudiant n'aura besoin que de :
+`pip install fhecli`, puis `fhecli init` et `cd fhe-exercices`.
 
 **Démo web** et **atelier web** (Docker) :
 

@@ -1,4 +1,4 @@
-"""Solution de reference pour ex1_cesar. Essayez d'abord par vous-meme !"""
+"""Solution de référence pour ex1_cesar. Essayez d'abord par vous-même !"""
 
 
 def _shift_char(c: str, shift: int) -> str:
