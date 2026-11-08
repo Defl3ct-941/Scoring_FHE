@@ -312,3 +312,24 @@ def test_watch_advances_and_finishes(ws):
     assert "Exercice 1/3" in text and "Exercice 3/3" in text
     assert "Félicitations" in text
     assert proc.returncode == 0
+
+
+# --- Exécutable autonome (PyInstaller) -------------------------------------
+
+def test_pytest_command_normal_and_frozen(monkeypatch, tmp_path):
+    from fhecli import runner
+
+    target = tmp_path / "ex.py"
+    monkeypatch.delattr(sys, "frozen", raising=False)
+    assert runner.pytest_command(target)[:3] == [sys.executable, "-m", "pytest"]
+    monkeypatch.setattr(sys, "frozen", True, raising=False)
+    assert runner.pytest_command(target)[:2] == [sys.executable, runner.PYTEST_SUBCOMMAND]
+
+
+def test_internal_pytest_subcommand(ws):
+    """`fhecli _run-pytest` exécute pytest : c'est ce qu'utilise le binaire."""
+    solve(ws, NAMES[0])
+    result = fhecli("_run-pytest", f"exercises/{NAMES[0]}.py", "-q", cwd=ws)
+    assert result.returncode == 0, result.stdout
+    assert "7 passed" in result.stdout
+    assert "_run-pytest" not in fhecli("--help", cwd=ws).stdout

@@ -4,6 +4,34 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — fhecli 1.2.0 : exécutables autonomes et CI
+
+### Ajouté
+
+- Exécutables autonomes PyInstaller, un fichier par OS (`fhecli-<version>-<os>-<arch>[.exe]`) :
+  ils embarquent Python 3.15, `fhecli`, `pytest`, `cryptography` et les exercices ; aucune
+  installation de Python n'est nécessaire. Code embarqué compressé (bytecode, jamais de source)
+  et solutions encodées : rien n'est lisible en clair dans le binaire.
+- `packaging/fhecli.spec`, `scripts/build_binary.py` (construction) et `scripts/check_binary.py`
+  (parcours étudiant complet avec un PATH sans Python + recherche de texte lisible).
+- CI GitHub Actions (`.github/workflows/fhecli.yml`) : tests Linux, Windows et macOS (Python 3.11
+  et 3.15), exécutables Windows, Linux, macOS arm64 et x86_64, wheel et sdist ; sur un tag
+  `fhecli-vX.Y.Z`, release GitHub et publication PyPI (trusted publishing).
+- CI GitLab (`.gitlab-ci.yml`) : tests, exécutable Linux (Debian bookworm), wheel et sdist ;
+  publication PyPI manuelle sur tag.
+- Sous-commande interne `fhecli _run-pytest` : l'exécutable lance le pytest embarqué.
+
+### Modifié
+
+- Classifiers : ajout de Python 3.15.
+
+Tests :
+
+- Suite automatisée : 44/44.
+- Exécutable Windows (21,8 Mo) et Linux (22,7 Mo) : 50/50 vérifications chacun ; `watch` testé
+  jusqu'au bout avec le binaire Windows ; binaire Linux lancé dans un conteneur Debian sans Python.
+- `.gitlab-ci.yml` validé par l'API GitLab, workflow GitHub validé par actionlint 1.7.12.
+
 ## 2026-11-08 — fhecli 1.1.0 : publiable sur PyPI
 
 ### Ajouté
