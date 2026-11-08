@@ -3,4 +3,4 @@ uvicorn[standard]==0.54.0
 pytest==9.2.0
 cryptography==50.0.2
 tenseal==0.3.18
-numpy==2.4.6
+numpy==2.5.4
