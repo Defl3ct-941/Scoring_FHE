@@ -4,6 +4,14 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — Exécutable Linux allégé
+
+### Modifié
+
+- L'exécutable Linux est construit avec `strip` (symboles de débogage retirés des bibliothèques
+  embarquées) : 63 Mo -> 46 Mo, ce qui permet de le déposer sur Moodle (limite de 50 Mo).
+  L'asset Linux de la release 1.4.0 a été remplacé par cette version, sans changement de code.
+
 ## 2026-11-08 — fhe-cli 1.4.0 : commande fhe-cli, aide et prérequis système
 
 ### Ajouté
