@@ -72,6 +72,9 @@ def watch(exercises: list[Exercise]) -> None:
 
             index = exercises.index(current) + 1
             _print_exercise_banner(current, index, total)
+            # Date relevée AVANT de lancer les tests : une sauvegarde faite
+            # pendant leur exécution sera bien détectée au prochain passage.
+            last_mtime = _safe_mtime(current.path)
             passed = _run_and_report(current)
             if passed and not has_marker(current.path):
                 # Résolu entre-temps (fichier sauvegardé pendant l'analyse) :
@@ -85,7 +88,6 @@ def watch(exercises: list[Exercise]) -> None:
                     "pour passer au suivant."
                 ))
 
-            last_mtime = _safe_mtime(current.path)
             while True:
                 time.sleep(POLL_INTERVAL)
                 mtime = _safe_mtime(current.path)
