@@ -4,7 +4,7 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
-## 2026-11-08 — fhecli 1.4.0 : commande fhe-cli, aide et prérequis système
+## 2026-11-08 — fhe-cli 1.4.0 : commande fhe-cli, aide et prérequis système
 
 ### Ajouté
 
@@ -29,7 +29,7 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
   comparaison de `platform_release`, qui fait planter pip 23-24 sous Linux. Marqueur vérifié
   avec `packaging` 21.3 à 26.3 et pip 24.0 sous Linux.
 
-## 2026-11-08 — fhecli 1.3.2 : TenSEAL (CKKS) inclus par défaut
+## 2026-11-08 — fhe-cli 1.3.2 : TenSEAL (CKKS) inclus par défaut
 
 ### Modifié
 
@@ -42,7 +42,7 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 - CI : tests sous Python 3.11, 3.14 et 3.15 ; exécutables, wheel et sdist construits en 3.14.
 - Énoncé et indice de l'ex10 mis à jour (plus d'installation séparée à faire).
 
-## 2026-11-08 — fhecli 1.3.1 : distribution PyPI renommée en fhe-cli
+## 2026-11-08 — fhe-cli 1.3.1 : distribution PyPI renommée en fhe-cli
 
 ### Modifié
 
@@ -52,7 +52,7 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 - Les versions 1.2.0 et 1.3.0 n'ont pas été publiées sur PyPI : le nom de distribution `fhecli`
   ne correspondait pas au projet configuré pour la publication de confiance (`fhe-cli`).
 
-## 2026-11-08 — fhecli 1.3.0 : atelier complet (10 exercices, de César à CKKS)
+## 2026-11-08 — fhe-cli 1.3.0 : atelier complet (10 exercices, de César à CKKS)
 
 ### Ajouté
 
@@ -64,24 +64,24 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
   - **D. Scoring chiffré** : `ex9_scoring_paillier` (score bancaire calculé de bout en bout
     sans jamais déchiffrer les features).
   - **E. Bonus** : `ex10_ckks_bonus` (premier vrai calcul FHE avec CKKS / TenSEAL).
-- Extra optionnel `fhecli[ckks]` pour le bonus (TenSEAL, dépendance native non embarquée dans
+- Extra optionnel `fhe-cli[ckks]` pour le bonus (TenSEAL, dépendance native non embarquée dans
   les exécutables). Sans lui, les tests de l'ex10 sont ignorés.
 
 ### Modifié
 
-- `fhecli` propose désormais 10 exercices en 5 catégories (contre 3). Suite de tests de l'outil
+- `fhe-cli` propose désormais 10 exercices en 5 catégories (contre 3). Suite de tests de l'outil
   étendue en conséquence.
 - CI : actions GitHub passées sur Node.js 24 (`checkout` v7, `setup-python` v7, `upload-artifact` v7,
   `download-artifact` v8) ; supprime l'avertissement de dépréciation de Node.js 20.
-- `watch` : une sauvegarde faite pendant l'exécution des tests n'était pas détectée et bloquait
+- `start` : une sauvegarde faite pendant l'exécution des tests n'était pas détectée et bloquait
   la progression ; la date du fichier est maintenant relevée avant de lancer les tests.
 
-## 2026-11-08 — fhecli 1.2.0 : exécutables autonomes et CI
+## 2026-11-08 — fhe-cli 1.2.0 : exécutables autonomes et CI
 
 ### Ajouté
 
-- Exécutables autonomes PyInstaller, un fichier par OS (`fhecli-<version>-<os>-<arch>[.exe]`) :
-  ils embarquent Python 3.15, `fhecli`, `pytest`, `cryptography` et les exercices ; aucune
+- Exécutables autonomes PyInstaller, un fichier par OS (`fhe-cli-<version>-<os>-<arch>[.exe]`) :
+  ils embarquent Python 3.15, `fhe-cli`, `pytest`, `cryptography` et les exercices ; aucune
   installation de Python n'est nécessaire. Code embarqué compressé (bytecode, jamais de source)
   et solutions encodées : rien n'est lisible en clair dans le binaire.
 - `packaging/fhecli.spec`, `scripts/build_binary.py` (construction) et `scripts/check_binary.py`
@@ -89,7 +89,7 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 - CI GitHub Actions (`.github/workflows/fhecli.yml`) : tests Linux, Windows et macOS (Python 3.11
   et 3.15), exécutables Windows, Linux, macOS arm64 et x86_64, wheel et sdist ; sur un tag
   `fhecli-vX.Y.Z`, release GitHub et publication PyPI (trusted publishing).
-- Sous-commande interne `fhecli _run-pytest` : l'exécutable lance le pytest embarqué.
+- Sous-commande interne `fhe-cli _run-pytest` : l'exécutable lance le pytest embarqué.
 
 ### Modifié
 
@@ -102,18 +102,18 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 Tests :
 
 - Suite automatisée : 44/44.
-- Exécutable Windows (21,8 Mo) et Linux (22,7 Mo) : 50/50 vérifications chacun ; `watch` testé
+- Exécutable Windows (21,8 Mo) et Linux (22,7 Mo) : 50/50 vérifications chacun ; `start` testé
   jusqu'au bout avec le binaire Windows ; binaire Linux lancé dans un conteneur Debian sans Python.
 - Workflow GitHub validé par actionlint 1.7.12.
 
-## 2026-11-08 — fhecli 1.1.0 : publiable sur PyPI
+## 2026-11-08 — fhe-cli 1.1.0 : publiable sur PyPI
 
 ### Ajouté
 
-- `fhecli init [dossier]` (défaut : `./fhe-exercices`) : crée un espace de travail (`exercises/`,
+- `fhe-cli init [dossier]` (défaut : `./fhe-exercices`) : crée un espace de travail (`exercises/`,
   `pytest.ini`, marqueur `fhecli.toml`) et refuse d'écraser un espace existant. Les autres
   commandes retrouvent l'espace en remontant depuis le dossier courant.
-- `fhecli --version`, option `-y/--yes` pour `reset`.
+- `fhe-cli --version`, option `-y/--yes` pour `reset`.
 - Fichier `LICENSE` (MIT, Ravin THILAGARASA et Thomas GRUNDSZTEJN) et `MANIFEST.in`.
 - Suite de tests automatisée de l'outil (`tests/test_cli.py`, 42 tests).
 - `scripts/encode_solutions.py` : régénère les solutions encodées.
@@ -122,18 +122,18 @@ Tests :
 
 - Énoncés, `info.toml` et solutions embarqués dans le paquet (`fhecli/data/`) : la wheel
   installée depuis PyPI fonctionne hors du dépôt, sans rien écrire dans `site-packages`.
-- Solutions verrouillées : `fhecli solution` ne les affiche qu'une fois l'exercice résolu
-  (tests OK et `# I AM NOT DONE` retiré) ; `watch` propose de la montrer après la réussite.
+- Solutions verrouillées : `fhe-cli solution` ne les affiche qu'une fois l'exercice résolu
+  (tests OK et `# I AM NOT DONE` retiré) ; `start` propose de la montrer après la réussite.
   Dans le paquet, elles sont encodées (zlib + base64, simple dissuasion) ; les sources en clair
   sont dans `solutions_src/`, exclu de la wheel et du sdist.
-- `fhecli reset` et `reset --all` demandent confirmation ; Entrée, EOF et Ctrl+C valent « non »
-  (plus de trace `EOFError`, y compris dans `watch`).
-- `fhecli run` renvoie le code 2 quand les tests passent mais que le marqueur est présent.
+- `fhe-cli reset` et `reset --all` demandent confirmation ; Entrée, EOF et Ctrl+C valent « non »
+  (plus de trace `EOFError`, y compris dans `start`).
+- `fhe-cli run` renvoie le code 2 quand les tests passent mais que le marqueur est présent.
 - Textes de l'outil, énoncés et indices en français accentué ; sortie forcée en UTF-8
   (consoles Windows anciennes, sortie redirigée).
 - `pyproject.toml` complet : README, licence, classifiers (Python 3.11 à 3.14), mots-clés,
   URLs GitHub et GitLab ; version 1.1.0 lue depuis `fhecli.__version__`.
-- `watch` n'attend plus une nouvelle sauvegarde quand l'exercice est déjà résolu au moment où
+- `start` n'attend plus une nouvelle sauvegarde quand l'exercice est déjà résolu au moment où
   il devient l'exercice courant.
 
 Tests :
@@ -141,7 +141,7 @@ Tests :
 - Suite automatisée : 42/42 sous Python 3.13 et 3.15 (Windows).
 - Wheel installée hors du dépôt, sous Python 3.11 et 3.14 (Linux, Docker) : `init`, résolution
   des 3 exercices, codes de sortie, solution verrouillée puis débloquée, `reset` avec et sans
-  confirmation, `pytest` à la main, `watch` jusqu'à la fin ; `site-packages` inchangé.
+  confirmation, `pytest` à la main, `start` jusqu'à la fin ; `site-packages` inchangé.
 - Windows (Python 3.13, wheel) : PowerShell et cmd, y compris page de codes 850.
 - Wheel et sdist : aucune solution en clair.
 
@@ -154,30 +154,30 @@ Tests :
   des wheels Linux : `tenseal` 0.3.18 (et `pyyaml` 6.0.3, via `uvicorn[standard]`) s'arrêtent
   à 3.14, il n'existe pas encore de wheel pour Python 3.15.
 - `numpy` 2.4.6 → 2.5.4 (démo, atelier web), possible grâce à Python ≥ 3.12.
-- `fhecli` garde `requires-python = ">=3.11"` : testé sous Python 3.13 et 3.15.
+- `fhe-cli` garde `requires-python = ">=3.11"` : testé sous Python 3.13 et 3.15.
 
 Tests (images reconstruites, sans aucune compilation de paquet) :
 
 - Démo : `/`, `/api/model`, étapes AES, Paillier, CKKS et `/api/compare` en 200 ;
   score identique en clair, avec Paillier et avec CKKS (32,0).
 - Atelier web : les 10 exercices passent via l'API avec les solutions, puis réinitialisation (0/10).
-- `fhecli` : 3/3 exercices résolus sous Python 3.15.
+- `fhe-cli` : 3/3 exercices résolus sous Python 3.15.
 
 ## 2026-11-08 — Mise à jour des dépendances
 
 ### Modifié
 
-- `cryptography` 43.0.1 → 50.0.2 (démo, atelier web, `fhecli`).
-- `pytest` 8.3.3 → 9.2.0 (atelier web, `fhecli`).
+- `cryptography` 43.0.1 → 50.0.2 (démo, atelier web, `fhe-cli`).
+- `pytest` 8.3.3 → 9.2.0 (atelier web, `fhe-cli`).
 - `fastapi` 0.115.0 → 0.162.2 et `uvicorn[standard]` 0.30.6 → 0.54.0 (démo, atelier web).
 - `tenseal` 0.3.15 → 0.3.18 et `numpy` 1.26.4 → 2.4.6 (démo, atelier web).
   `numpy` 2.5 exige Python 3.12 : la 2.4.6 est la dernière compatible avec les images `python:3.11-slim`.
 - `pycryptodome` 3.20.0 → 4.4.0 (démo).
-- `pyproject.toml` de `fhecli` : `pytest>=9.2,<10`, `cryptography>=50.0,<51`.
+- `pyproject.toml` de `fhe-cli` : `pytest>=9.2,<10`, `cryptography>=50.0,<51`.
 
 Tests (venvs Python 3.13 hors du dépôt) :
 
-- `fhecli` : `--help`, `list`, `run` ; les 3 exercices passent avec les solutions (14 tests).
+- `fhe-cli` : `--help`, `list`, `run` ; les 3 exercices passent avec les solutions (14 tests).
 - Atelier web : les 10 exercices passent avec les solutions, y compris CKKS (37 tests) ;
   API FastAPI (liste, détail, exécution, solution, progression) en 200.
 - Démo : `/`, `/api/model`, étapes AES, Paillier, CKKS et `/api/compare` en 200.
@@ -202,7 +202,7 @@ Tests (venvs Python 3.13 hors du dépôt) :
 
 ### Ajouté
 
-- Section « Auteurs » dans le README et champ `authors` dans le `pyproject.toml` de `fhecli`.
+- Section « Auteurs » dans le README et champ `authors` dans le `pyproject.toml` de `fhe-cli`.
 
 ## 2026-11-08 — Réorganisation du dépôt
 
