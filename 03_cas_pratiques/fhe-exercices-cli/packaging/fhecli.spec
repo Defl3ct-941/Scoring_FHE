@@ -36,6 +36,18 @@ for package in ("pytest", "_pytest", "pluggy", "iniconfig", "packaging", "pygmen
     datas += pkg_datas
     binaries += pkg_binaries
     hiddenimports += pkg_hidden
+# Bonus CKKS (ex10) : TenSEAL et numpy, embarqués quand ils sont installés
+# (Python 3.11 à 3.14 ; absents sur Mac Intel, où l'ex10 est alors ignoré).
+for package in ("tenseal", "numpy"):
+    try:
+        __import__(package)
+    except ImportError:
+        print(f"[fhecli.spec] {package} absent : non embarqué")
+        continue
+    pkg_datas, pkg_binaries, pkg_hidden = collect_all(package)
+    datas += pkg_datas
+    binaries += pkg_binaries
+    hiddenimports += pkg_hidden
 if SYSTEM == "windows":
     hiddenimports += collect_submodules("colorama")
     # Les extensions à ABI stable (dont celle de cryptography) dépendent de

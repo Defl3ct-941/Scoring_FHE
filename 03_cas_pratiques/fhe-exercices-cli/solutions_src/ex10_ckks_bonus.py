@@ -2,7 +2,7 @@
 
 try:
     import tenseal as ts
-except ImportError:  # bonus optionnel : pip install "fhe-cli[ckks]"
+except ImportError:  # TenSEAL indisponible (Python 3.15 ou Mac Intel) : exercice ignoré
     ts = None
 
 
