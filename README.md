@@ -9,7 +9,7 @@ est-ce exploitable aujourd'hui dans un contexte bancaire ?
 Livrables :
 
 - un **cours** déposé sur le Moodle de fyc.esgi.fr ;
-- des **cas pratiques** sous forme d'outil Python façon rustlings (`fhecli`, publié sur PyPI) ;
+- des **cas pratiques** sous forme d'outil Python façon rustlings (`fhe-cli`, publié sur PyPI) ;
 - un **poster scientifique** pour présenter le cours sur un salon ;
 - une **vidéo** de présentation.
 

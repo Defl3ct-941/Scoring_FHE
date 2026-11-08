@@ -1,4 +1,4 @@
-"""Vérifie un exécutable autonome fhecli : parcours étudiant complet, puis
+"""Vérifie un exécutable autonome fhe-cli : parcours étudiant complet, puis
 absence de texte lisible (sources, solutions, énoncés) dans le binaire.
 
     python scripts/check_binary.py dist/fhe-cli-<version>-<os>-<arch>[.exe]
