@@ -8,8 +8,9 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 
 ### Modifié
 
-- L'exécutable Linux est construit avec `strip` (symboles de débogage retirés des bibliothèques
-  embarquées) : 63 Mo -> 46 Mo, ce qui permet de le déposer sur Moodle (limite de 50 Mo).
+- Sous Linux, les symboles de débogage de l'interpréteur embarqué (libpython, lib-dynload) sont
+  retirés : l'exécutable passe sous la limite de 50 Mo de Moodle. Les bibliothèques des wheels
+  (numpy.libs…) ne sont pas touchées : l'option `strip` de PyInstaller cassait leur chargement.
   L'asset Linux de la release 1.4.0 a été remplacé par cette version, sans changement de code.
 
 ## 2026-11-08 — fhe-cli 1.4.0 : commande fhe-cli, aide et prérequis système
