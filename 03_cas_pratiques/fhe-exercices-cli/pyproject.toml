@@ -37,11 +37,14 @@ classifiers = [
 dependencies = [
     "pytest>=9.2,<10",
     "cryptography>=50.0,<51",
-    # Bonus ex10 (CKKS) : TenSEAL est installé automatiquement partout où il
-    # existe (Python 3.11 à 3.14 ; Windows, Linux, macOS Apple Silicon). Il n'a
-    # pas encore de version pour Python 3.15 ni pour les Mac Intel : l'ex10 y
-    # est alors ignoré, le reste de l'atelier fonctionne normalement.
-    "tenseal>=0.3.18,<0.4; python_version < '3.15' and (platform_system != 'Darwin' or platform_machine == 'arm64')",
+    # Bonus ex10 (CKKS) : TenSEAL est installé automatiquement partout où une
+    # wheel existe (Python 3.11 à 3.14 ; Windows, Linux, macOS 14+ Apple
+    # Silicon). Ailleurs (Python 3.15, Mac Intel, macOS 11 à 13), il est exclu
+    # pour que pip ne tente jamais de le compiler : l'ex10 y est ignoré.
+    # macOS < 14 est détecté par un test de chaîne sur platform_version
+    # (Darwin 20 à 22) : comparer platform_release ferait planter pip 23-24
+    # sous Linux (version de noyau invalide).
+    "tenseal>=0.3.18,<0.4; python_version < '3.15' and (sys_platform != 'darwin' or (platform_machine == 'arm64' and 'Darwin Kernel Version 20.' not in platform_version and 'Darwin Kernel Version 21.' not in platform_version and 'Darwin Kernel Version 22.' not in platform_version))",
 ]
 
 [project.urls]
