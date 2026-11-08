@@ -1,8 +1,9 @@
 # Liste des exercices, dans l'ordre pédagogique suivi par `fhecli watch`.
 #
-# Version actuelle : seul le module A (chiffrement classique) est publié.
-# Les modules suivants (arithmétique modulaire, Paillier from scratch,
-# scoring chiffré, bonus CKKS) arriveront dans une prochaine mise à jour.
+# Parcours : du chiffrement classique (où tout calcul sur le chiffré est
+# impossible) jusqu'au chiffrement homomorphe, en reconstruisant Paillier à la
+# main, puis un score bancaire chiffré de bout en bout, et enfin un vrai calcul
+# FHE avec CKKS (bonus).
 
 [[exercises]]
 name = "ex1_cesar"
@@ -24,3 +25,53 @@ category = "A. Chiffrement classique"
 title = "Chiffrement authentifié avec Fernet"
 difficulty = "facile"
 hint = "bytearray(token) permet de modifier un octet d'un objet bytes immuable : data[0] ^= 0xFF. Attrapez cryptography.fernet.InvalidToken avec un try/except."
+
+[[exercises]]
+name = "ex4_modpow"
+category = "B. Briques mathématiques"
+title = "Exponentiation modulaire rapide"
+difficulty = "facile"
+hint = "À chaque tour : si le bit de poids faible de exp vaut 1 (exp & 1), multipliez result par base modulo mod ; puis élevez base au carré modulo mod et faites exp //= 2. Ne calculez jamais base ** exp directement."
+
+[[exercises]]
+name = "ex5_modinv"
+category = "B. Briques mathématiques"
+title = "PGCD étendu et inverse modulaire"
+difficulty = "moyen"
+hint = "extended_gcd est récursif : cas de base b == 0 -> (a, 1, 0) ; sinon g, x1, y1 = extended_gcd(b, a % b) puis renvoyez (g, y1, x1 - (a // b) * y1). Dans mod_inverse, si g != 1 levez ValueError, sinon renvoyez x % mod (le % gère les x négatifs)."
+
+[[exercises]]
+name = "ex6_paillier_keygen"
+category = "C. Paillier, pas à pas"
+title = "Générer une paire de clés Paillier"
+difficulty = "moyen"
+hint = "n = p*q, g = n+1, lam = (p-1)*(q-1), et mu = _mod_inverse(lam, n) (la fonction est déjà fournie). Renvoyez public_key = {\"n\": n, \"g\": g, \"n2\": n*n} et private_key = {\"lam\": lam, \"mu\": mu}."
+
+[[exercises]]
+name = "ex7_paillier_enc_dec"
+category = "C. Paillier, pas à pas"
+title = "Chiffrer et déchiffrer avec Paillier"
+difficulty = "moyen"
+hint = "encrypt : ((1 + m*n) % n2) * pow(r, n, n2) % n2 (pensez à m = m % n). decrypt : u = pow(c, lam, n2), puis m = (_l(u, n) * mu) % n, et enfin si m > n // 2 : m -= n (représentation symétrique pour les négatifs)."
+
+[[exercises]]
+name = "ex8_paillier_homomorphic"
+category = "C. Paillier, pas à pas"
+title = "Les propriétés homomorphes de Paillier"
+difficulty = "moyen"
+hint = "add_encrypted : (c1 * c2) % n2 (multiplier les chiffrés = additionner les clairs). mul_by_scalar : pow(c, k, n2) si k >= 0 ; si k < 0, pow(_mod_inverse(c, n2), -k, n2)."
+
+[[exercises]]
+name = "ex9_scoring_paillier"
+category = "D. Scoring chiffré"
+title = "Un score bancaire chiffré de bout en bout"
+difficulty = "difficile"
+hint = "Chiffrez chaque feature avec encrypt(pub, x, _random_r(pub[\"n\"])), multipliez chaque chiffré par son poids avec mul_by_scalar, partez de total = encrypt(pub, bias, 1), additionnez tous les termes avec add_encrypted, et ne déchiffrez qu'à la toute fin."
+
+[[exercises]]
+name = "ex10_ckks_bonus"
+category = "E. Bonus : FHE réel avec CKKS"
+title = "Votre premier calcul FHE avec CKKS (TenSEAL)"
+difficulty = "bonus"
+bonus = true
+hint = "Trois lignes : enc_vector = ts.ckks_vector(context, values) ; enc_result = enc_vector.dot(weights) ; return enc_result.decrypt()[0]. Ce bonus nécessite TenSEAL : pip install \"fhecli[ckks]\"."

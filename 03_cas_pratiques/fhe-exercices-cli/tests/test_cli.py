@@ -145,7 +145,7 @@ def test_commands_need_workspace(tmp_path, args):
 def test_workspace_found_from_subdirectory(ws):
     result = fhecli("list", cwd=ws / "exercises")
     assert result.returncode == 0
-    assert "Progression : 0/3" in result.stdout
+    assert "Progression : 0/10" in result.stdout
 
 
 # --- list / run / marqueur -------------------------------------------------
@@ -153,7 +153,7 @@ def test_workspace_found_from_subdirectory(ws):
 def test_list_initial(ws):
     result = fhecli("list", cwd=ws)
     assert result.returncode == 0
-    assert "Progression : 0/3 exercices résolus." in result.stdout
+    assert "Progression : 0/10 exercices résolus." in result.stdout
     assert "César" in result.stdout
 
 
@@ -180,7 +180,7 @@ def test_marker_then_done(ws, name):
 def test_all_solved(ws):
     for name in NAMES:
         solve(ws, name)
-    assert "Progression : 3/3 exercices résolus." in fhecli("list", cwd=ws).stdout
+    assert "Progression : 10/10 exercices résolus." in fhecli("list", cwd=ws).stdout
 
 
 def test_syntax_error_and_missing_file(ws):
@@ -239,7 +239,7 @@ def test_reset_all_needs_confirmation_or_yes_flag(ws):
     for name in NAMES:
         solve(ws, name)
     assert fhecli("reset", "--all", cwd=ws, input="").returncode == 0  # EOF : annulé
-    assert "3/3" in fhecli("list", cwd=ws).stdout
+    assert "10/10" in fhecli("list", cwd=ws).stdout
     result = fhecli("reset", "--all", "-y", cwd=ws)
     assert result.returncode == 0
     for name in NAMES:
@@ -290,7 +290,10 @@ def test_manual_pytest_collects_exercises(ws):
     result = subprocess.run([sys.executable, "-m", "pytest", "-q"], cwd=ws,
                             capture_output=True, text=True, encoding="utf-8", errors="replace")
     assert result.returncode == 0, result.stdout
-    assert "14 passed" in result.stdout
+    # 38 tests au total : 36 passent toujours, les 2 du bonus CKKS passent avec
+    # TenSEAL installé, ou sont ignorés (skipped) sans lui.
+    assert "failed" not in result.stdout
+    assert "36 passed" in result.stdout or "38 passed" in result.stdout
 
 
 def test_watch_advances_and_finishes(ws):
@@ -309,7 +312,7 @@ def test_watch_advances_and_finishes(ws):
             if proc.poll() is None:
                 proc.kill()
     text = log.read_text(encoding="utf-8")
-    assert "Exercice 1/3" in text and "Exercice 3/3" in text
+    assert "Exercice 1/10" in text and "Exercice 10/10" in text
     assert "Félicitations" in text
     assert proc.returncode == 0
 
