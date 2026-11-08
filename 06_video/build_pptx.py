@@ -39,7 +39,7 @@ DARK_TEXT = NAVY
 TITLE_FONT = "Cambria"
 BODY_FONT = "Calibri"
 
-PRESENTER_NAME = "Clément Ruault"
+PRESENTER_NAME = "Ravin THILAGARASA · Thomas GRUNDSZTEJN"
 SESSION_LABEL = "Cas pratique : support de présentation"
 
 ICON_LOCK = str(MEDIA_DIR / "icon_lock.png")
