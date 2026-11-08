@@ -37,13 +37,13 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 - CI GitHub Actions (`.github/workflows/fhecli.yml`) : tests Linux, Windows et macOS (Python 3.11
   et 3.15), exécutables Windows, Linux, macOS arm64 et x86_64, wheel et sdist ; sur un tag
   `fhecli-vX.Y.Z`, release GitHub et publication PyPI (trusted publishing).
-- CI GitLab (`.gitlab-ci.yml`) : tests, exécutable Linux (Debian bookworm), wheel et sdist ;
-  publication PyPI manuelle sur tag.
 - Sous-commande interne `fhecli _run-pytest` : l'exécutable lance le pytest embarqué.
 
 ### Modifié
 
 - Classifiers : ajout de Python 3.15.
+- CI GitLab retirée : toute la CI et la publication PyPI passent par GitHub Actions
+  (trusted publishing, sans jeton API). Le dépôt reste poussé sur GitHub et GitLab.
 - CI : action tierce `pypa/gh-action-pypi-publish` épinglée sur un commit (v1.14.3), car elle reçoit
   le droit `id-token: write` de publication sur PyPI.
 
@@ -52,7 +52,7 @@ Tests :
 - Suite automatisée : 44/44.
 - Exécutable Windows (21,8 Mo) et Linux (22,7 Mo) : 50/50 vérifications chacun ; `watch` testé
   jusqu'au bout avec le binaire Windows ; binaire Linux lancé dans un conteneur Debian sans Python.
-- `.gitlab-ci.yml` validé par l'API GitLab, workflow GitHub validé par actionlint 1.7.12.
+- Workflow GitHub validé par actionlint 1.7.12.
 
 ## 2026-11-08 — fhecli 1.1.0 : publiable sur PyPI
 

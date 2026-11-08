@@ -219,27 +219,23 @@ rejoue le parcours d'un étudiant avec le binaire seul (sans Python dans le
 `PATH`) et vérifie qu'aucun source, aucune solution ni aucun énoncé n'apparaît
 en clair dans le fichier.
 
-La CI fait tout cela automatiquement :
-
-- **GitHub Actions** (`.github/workflows/fhecli.yml`) : tests sur Linux,
-  Windows et macOS (Python 3.11 et 3.15), exécutables Windows, Linux,
-  macOS arm64 et macOS x86_64, wheel et sdist.
-- **GitLab CI** (`.gitlab-ci.yml`) : tests, exécutable Linux, wheel et sdist
-  (Windows et macOS demanderaient des runners dédiés).
+La CI **GitHub Actions** (`.github/workflows/fhecli.yml`) fait tout cela
+automatiquement : tests sur Linux, Windows et macOS (Python 3.11 et 3.15),
+exécutables Windows, Linux, macOS arm64 et macOS x86_64, wheel et sdist.
 
 Pour publier une version : mettre à jour `fhecli.__version__` et le
 CHANGELOG, puis pousser un tag `fhecli-vX.Y.Z` (il doit correspondre à la
 version). GitHub crée alors une release avec les exécutables et publie sur
-PyPI ; sur GitLab, le job `pypi` est manuel.
+PyPI. Une version publiée sur PyPI ne peut pas être republiée : en cas de
+problème, publier la version suivante.
 
 Configuration à faire une seule fois :
 
 - PyPI, « trusted publishing » : sur pypi.org, ajouter un *pending publisher*
   pour le projet `fhecli` (dépôt `Defl3ct-941/Scoring_FHE`, workflow
   `fhecli.yml`, environnement `pypi`), et créer l'environnement `pypi` dans
-  les réglages du dépôt GitHub.
-- GitLab : variable CI/CD protégée et masquée `PYPI_API_TOKEN`, ne servant
-  que si l'on publie depuis GitLab.
+  les réglages du dépôt GitHub (limité aux tags `fhecli-v*`). Aucun jeton
+  API n'est nécessaire.
 
 ## Licence
 
