@@ -66,7 +66,7 @@ def scenario(binary: Path) -> None:
         check(run(binary, "init", cwd=tmp).returncode == 0, "init")
         ws = tmp / "fhe-exercices"
         check(run(binary, "init", cwd=tmp).returncode == 1, "init refuse un espace existant")
-        check("0/3" in run(binary, "list", cwd=ws).stdout, "list initial 0/3")
+        check("0/10" in run(binary, "list", cwd=ws).stdout, "list initial 0/10")
         check(run(binary, "run", names[0], cwd=ws).returncode == 1, "run sur l'énoncé -> 1")
         check(run(binary, "solution", names[0], cwd=ws).returncode == 1, "solution verrouillée -> 1")
         for name in names:
@@ -78,13 +78,13 @@ def scenario(binary: Path) -> None:
             check(result.returncode == 0, f"{name} : résolu -> 0")
             if result.returncode != 0:
                 print(result.stdout[-2000:], result.stderr[-2000:])
-        check("3/3" in run(binary, "list", cwd=ws / "exercises").stdout, "list 3/3 (depuis un sous-dossier)")
+        check("10/10" in run(binary, "list", cwd=ws / "exercises").stdout, "list 10/10 (depuis un sous-dossier)")
         result = run(binary, "solution", names[0], cwd=ws)
         check(result.returncode == 0 and "def " in result.stdout, "solution débloquée")
         check(run(binary, "reset", "--all", cwd=ws, stdin="").returncode == 0
-              and "3/3" in run(binary, "list", cwd=ws).stdout, "reset --all + EOF : annulé")
+              and "10/10" in run(binary, "list", cwd=ws).stdout, "reset --all + EOF : annulé")
         check(run(binary, "reset", "--all", "-y", cwd=ws).returncode == 0
-              and "0/3" in run(binary, "list", cwd=ws).stdout, "reset --all -y")
+              and "0/10" in run(binary, "list", cwd=ws).stdout, "reset --all -y")
 
 
 def plaintext_scan(binary: Path) -> None:
