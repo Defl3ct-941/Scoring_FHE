@@ -23,6 +23,10 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 
 - `fhecli` propose désormais 10 exercices en 5 catégories (contre 3). Suite de tests de l'outil
   étendue en conséquence.
+- CI : actions GitHub passées sur Node.js 24 (`checkout` v7, `setup-python` v7, `upload-artifact` v7,
+  `download-artifact` v8) ; supprime l'avertissement de dépréciation de Node.js 20.
+- `watch` : une sauvegarde faite pendant l'exécution des tests n'était pas détectée et bloquait
+  la progression ; la date du fichier est maintenant relevée avant de lancer les tests.
 
 ## 2026-11-08 — fhecli 1.2.0 : exécutables autonomes et CI
 
