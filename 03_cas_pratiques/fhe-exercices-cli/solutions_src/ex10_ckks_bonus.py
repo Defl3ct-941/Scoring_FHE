@@ -2,7 +2,7 @@
 
 try:
     import tenseal as ts
-except ImportError:  # bonus optionnel : pip install "fhecli[ckks]"
+except ImportError:  # bonus optionnel : pip install "fhe-cli[ckks]"
     ts = None
 
 

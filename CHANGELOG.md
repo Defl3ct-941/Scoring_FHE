@@ -4,6 +4,16 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — fhecli 1.3.1 : distribution PyPI renommée en fhe-cli
+
+### Modifié
+
+- Le paquet se publie désormais sous le nom **`fhe-cli`** (`pip install fhe-cli`, extra
+  `fhe-cli[ckks]` pour le bonus CKKS) : c'est le nom du projet réservé sur PyPI. La commande
+  `fhecli`, le module d'import `fhecli`, les exécutables et le dépôt gardent le nom `fhecli`.
+- Les versions 1.2.0 et 1.3.0 n'ont pas été publiées sur PyPI : le nom de distribution `fhecli`
+  ne correspondait pas au projet configuré pour la publication de confiance (`fhe-cli`).
+
 ## 2026-11-08 — fhecli 1.3.0 : atelier complet (10 exercices, de César à CKKS)
 
 ### Ajouté
