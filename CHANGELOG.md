@@ -4,6 +4,12 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-08 — Carte mentale de l'introduction
+
+### Modifié
+- Carte mentale de l'introduction traduite en français et renommée
+  `mind_map_Introduction.png` (faute « Introdution » corrigée).
+
 ## 2026-11-08 — Auteurs du projet
 
 ### Modifié
