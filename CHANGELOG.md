@@ -4,6 +4,18 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-10 — Brouillon du résumé personnel
+
+### Ajouté
+
+- Dossier `07_resume/` : brouillon de travail v0 du résumé personnel (source `resume_brouillon.md`,
+  `Resume_personnel_BROUILLON_v0.docx` et `.pdf`), marqué comme brouillon sur chaque page. Il suit
+  le plan du cours et reprend les mesures du prototype ; les passages personnels sont signalés
+  « [À COMPLÉTER] » et les références à confirmer « [à vérifier] ». Le texte doit être réécrit par
+  les auteurs avant le dépôt sur Compilatio (règlement FYC).
+- Script `07_resume/scripts/build_resume.py` qui régénère le docx (Roboto, bleu nuit ESGI) et le
+  PDF à partir de la source Markdown.
+
 ## 2026-11-10 — Poster scientifique
 
 ### Ajouté

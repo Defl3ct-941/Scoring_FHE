@@ -11,7 +11,8 @@ Livrables :
 - un **cours** déposé sur le Moodle de fyc.esgi.fr ;
 - des **cas pratiques** sous forme d'outil Python façon rustlings (`fhe-cli`, publié sur PyPI) ;
 - un **poster scientifique** pour présenter le cours sur un salon ;
-- une **vidéo** de présentation.
+- une **vidéo** de présentation ;
+- un **résumé personnel** de 5 pages (30 000 signes), déposé sur Compilatio.
 
 ## Auteurs
 
@@ -34,6 +35,7 @@ Livrables :
 | `04_demo/` | Application web pédagogique : AES, Paillier, CKKS |
 | `05_poster/` | Poster scientifique (exemples de référence dans `exemples/`) |
 | `06_video/` | Script, support PPT, vidéos et transcriptions |
+| `07_resume/` | Résumé personnel : brouillon de travail v0 (`.md`, `.docx`, `.pdf`) à réécrire par les auteurs |
 
 ## Démarrage rapide
 
