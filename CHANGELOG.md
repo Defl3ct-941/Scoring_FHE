@@ -4,6 +4,16 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-10 — Poster scientifique
+
+### Ajouté
+
+- Poster scientifique A0 (`05_poster/`) : PDF vectoriel prêt à imprimer, source éditable
+  `poster.html`, aperçu PNG. Charte ESGI (Roboto, bleu nuit, cyan, jaune), auteurs Ravin
+  THILAGARASA et Thomas GRUNDSZTEJN, QR codes vers le cours Moodle et la page PyPI de fhe-cli.
+- Mesures du prototype affichées sur le poster (`05_poster/data/mesures.json`) et scripts pour
+  les refaire (`benchmark.py`) et régénérer le poster (`build_poster.py`).
+
 ## 2026-11-08 — Exécutable Linux allégé
 
 ### Modifié
