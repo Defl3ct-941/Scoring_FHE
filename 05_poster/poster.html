@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Poster FYC : scoring financier sur données chiffrées (FHE)</title>
+<meta name="author" content="Ravin THILAGARASA, Thomas GRUNDSZTEJN">
+<!--
+  Poster scientifique A0 portrait (841 × 1189 mm), projet FYC ESGI 2026-2027.
+  Source éditable : modifier ce fichier, puis régénérer le PDF avec
+      python 05_poster/scripts/build_poster.py
+  Charte : police Roboto (assets/fonts, embarquée), couleurs ESGI
+  (bleu nuit #001B40, cyan #00EAFF, jaune #FFDE00).
+  Les graphiques « Résultats » sont dessinés à partir du bloc JSON
+  id="mesures" (copie de data/mesures.json, mise à jour par build_poster.py).
+-->
+<style>
+@font-face { font-family: "Roboto"; font-weight: 300; src: url("assets/fonts/Roboto-300.ttf"); }
+@font-face { font-family: "Roboto"; font-weight: 400; src: url("assets/fonts/Roboto-400.ttf"); }
+@font-face { font-family: "Roboto"; font-weight: 500; src: url("assets/fonts/Roboto-500.ttf"); }
+@font-face { font-family: "Roboto"; font-weight: 700; src: url("assets/fonts/Roboto-700.ttf"); }
+@font-face { font-family: "Roboto"; font-weight: 900; src: url("assets/fonts/Roboto-900.ttf"); }
+@font-face { font-family: "Roboto Mono"; font-weight: 400; src: url("assets/fonts/RobotoMono-400.ttf"); }
+@font-face { font-family: "Roboto Mono"; font-weight: 500; src: url("assets/fonts/RobotoMono-500.ttf"); }
+@font-face { font-family: "Roboto Mono"; font-weight: 700; src: url("assets/fonts/RobotoMono-700.ttf"); }
+
+:root {
+  --navy: #001B40;      /* bleu ESGI */
+  --navy-2: #0A2D5E;    /* bleu ESGI éclairci (fonds secondaires) */
+  --cyan: #00EAFF;      /* cyan ESGI */
+  --cyan-ink: #007E8C;  /* cyan assombri pour du texte sur fond clair */
+  --yellow: #FFDE00;    /* jaune ESGI */
+  --paper: #FFFFFF;
+  --mist: #EEF3F9;
+  --line: #C9D5E4;
+  --ink: #0B1B33;
+  --muted: #44546E;
+  --ok: #0F8A5F;
+  --ko: #C22A3F;
+}
+@page { size: 841mm 1189mm; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 841mm; height: 1189mm; }
+body {
+  font-family: "Roboto", sans-serif; font-weight: 400;
+  color: var(--ink); background: var(--paper);
+  font-size: 26pt; line-height: 1.38;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.poster { position: relative; width: 841mm; height: 1189mm; overflow: hidden; display: flex; flex-direction: column; }
+
+/* ---------- En-tête ---------- */
+header {
+  background: var(--navy); color: #fff; padding: 20mm 24mm 16mm; position: relative; overflow: hidden;
+}
+header::after { /* motif de « chiffrés » discret */
+  content: ""; position: absolute; right: -10mm; top: 0; bottom: 0; width: 330mm;
+  background-image: radial-gradient(circle, rgba(0,234,255,.22) 1.1mm, transparent 1.3mm);
+  background-size: 9mm 9mm;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 70%);
+          mask-image: linear-gradient(90deg, transparent, #000 70%);
+}
+.head-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 120mm; gap: 14mm; align-items: start; }
+.kicker { font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); font-size: 22pt; }
+h1 { font-weight: 900; font-size: 104pt; line-height: 1.02; letter-spacing: -.01em; margin: 5mm 0 6mm; }
+h1 .hl { color: var(--cyan); }
+.subtitle { font-weight: 300; font-size: 37pt; line-height: 1.22; max-width: 640mm; }
+.authors { margin-top: 9mm; display: flex; gap: 10mm; align-items: center; font-size: 29pt; font-weight: 500; }
+.authors .sep { width: 3mm; height: 3mm; background: var(--yellow); border-radius: 50%; }
+.authors .aff { font-weight: 300; color: #B9C7DA; }
+.logo { width: 120mm; margin-top: 2mm; }
+.logo img { width: 100%; display: block; }
+.logo .tag { margin-top: 5mm; font-size: 18pt; color: #B9C7DA; text-align: right; line-height: 1.3; }
+
+/* ---------- Bandeau résumé ---------- */
+.abstract {
+  display: grid; grid-template-columns: 1fr 236mm; gap: 14mm;
+  padding: 11mm 24mm; background: var(--mist); border-bottom: 2.2mm solid var(--cyan);
+}
+.abstract p { font-size: 24.5pt; }
+.abstract .label { font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .08em; font-size: 19pt; display: block; margin-bottom: 2mm; }
+.question {
+  background: var(--navy); color: #fff; border-radius: 4mm; padding: 8mm 9mm; position: relative;
+  border-left: 3.5mm solid var(--yellow);
+}
+.question .label { color: var(--yellow); }
+.question p { font-size: 26pt; font-weight: 500; line-height: 1.3; }
+
+/* ---------- Corps : 3 colonnes ---------- */
+main { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 13mm; padding: 12mm 24mm 0; min-height: 0; }
+.col { display: flex; flex-direction: column; gap: 12mm; min-height: 0; }
+section { break-inside: avoid; }
+h2 {
+  display: flex; align-items: center; gap: 4mm; font-size: 33pt; font-weight: 700; color: var(--navy);
+  line-height: 1.1; margin-bottom: 4mm; padding-bottom: 2.5mm; border-bottom: 1mm solid var(--navy);
+}
+h2 .n {
+  flex: none; display: inline-grid; place-items: center; width: 13mm; height: 13mm; border-radius: 2.5mm;
+  background: var(--navy); color: var(--cyan); font-size: 25pt; font-weight: 900;
+}
+p + p { margin-top: 3mm; }
+strong { font-weight: 700; color: var(--navy); }
+em { font-style: normal; color: var(--cyan-ink); font-weight: 500; }
+code, .mono { font-family: "Roboto Mono", monospace; font-size: .86em; }
+ul.dots { list-style: none; margin-top: 3mm; }
+ul.dots li { position: relative; padding-left: 7mm; margin-top: 1.8mm; }
+ul.dots li::before { content: ""; position: absolute; left: 0; top: .52em; width: 3mm; height: 3mm; background: var(--cyan); border-radius: .6mm; }
+figure { margin-top: 4mm; }
+figcaption { font-size: 17pt; color: var(--muted); margin-top: 2mm; line-height: 1.3; }
+figcaption b { color: var(--navy); }
+svg text { font-family: "Roboto", sans-serif; }
+
+/* tableaux */
+table { width: 100%; border-collapse: collapse; font-size: 19.5pt; line-height: 1.25; margin-top: 3mm; }
+th { background: var(--navy); color: #fff; font-weight: 500; text-align: left; padding: 2.2mm 2.5mm; }
+td { padding: 2.2mm 2.5mm; border-bottom: .4mm solid var(--line); vertical-align: top; }
+tr:nth-child(even) td { background: #F6F9FC; }
+td.c, th.c { text-align: center; }
+.y { color: var(--ok); font-weight: 700; }
+.n0 { color: var(--ko); font-weight: 700; }
+.m { color: #A86A00; font-weight: 700; }
+
+/* formule */
+.formula {
+  margin-top: 4mm; background: var(--navy); color: #fff; border-radius: 3mm; padding: 6mm 7mm;
+  font-size: 29pt; font-weight: 500; text-align: center; letter-spacing: .01em;
+}
+.formula .w { color: var(--yellow); }
+.formula .x { color: var(--cyan); }
+.legend-line { font-size: 18.5pt; color: var(--muted); margin-top: 2.5mm; }
+
+.eq { margin-top: 4mm; padding: 4.5mm 6mm; background: var(--mist); border-left: 2mm solid var(--cyan); border-radius: 1.5mm; font-size: 25pt; text-align: center; }
+.eq b { color: var(--navy); }
+
+/* tuiles de chiffres clés */
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 4mm; }
+.tile { background: var(--navy); color: #fff; border-radius: 3mm; padding: 4.5mm 5mm; }
+.tile .big { font-size: 44pt; font-weight: 900; color: var(--cyan); line-height: 1; }
+.tile .big.yl { color: var(--yellow); }
+.tile .lbl { font-size: 17pt; line-height: 1.25; margin-top: 1.5mm; color: #DCE6F2; }
+
+/* terminal fhe-cli */
+.term { margin-top: 4mm; background: #071226; border-radius: 3mm; overflow: hidden; font-family: "Roboto Mono", monospace; font-size: 18.5pt; line-height: 1.45; }
+.term .bar { background: #12264A; padding: 2mm 4mm; display: flex; gap: 2mm; align-items: center; }
+.term .bar i { width: 3.2mm; height: 3.2mm; border-radius: 50%; background: #3B5379; display: inline-block; }
+.term .bar span { margin-left: 3mm; color: #9FB3D1; font-size: 15pt; }
+.term pre { padding: 4mm 5mm; color: #DDE7F5; white-space: pre; font-family: inherit; }
+.term .p { color: var(--cyan); }
+.term .ok { color: #5BE39B; }
+.term .ko { color: #FF7A8A; }
+.term .dim { color: #7F93B3; }
+.term .yl { color: var(--yellow); }
+
+/* parcours d'exercices */
+.track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5mm; margin-top: 4mm; }
+.mod { border-radius: 2.5mm; padding: 3mm 3mm; color: #fff; background: var(--navy-2); font-size: 15.5pt; line-height: 1.22; min-height: 33mm; }
+.mod b { display: block; font-size: 22pt; color: var(--cyan); font-weight: 900; }
+.mod.last { background: var(--cyan); color: var(--navy); }
+.mod.last b { color: var(--navy); }
+
+.course-list { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 4mm; }
+.ci { background: var(--mist); border-radius: 2.5mm; padding: 3.5mm 4mm; font-size: 18.5pt; line-height: 1.25; border-top: 1.4mm solid var(--cyan); }
+.ci b { display: block; color: var(--navy); font-size: 21pt; }
+
+.callout { margin-top: 4mm; background: #FFF8C2; border-left: 2mm solid var(--yellow); padding: 4mm 5mm; border-radius: 1.5mm; font-size: 21pt; line-height: 1.3; }
+.callout b { color: var(--navy); }
+
+/* ---------- Pied de page ---------- */
+footer { margin-top: 10mm; background: var(--navy); color: #DCE6F2; padding: 9mm 24mm 10mm; display: grid; grid-template-columns: 1fr 140mm; gap: 14mm; align-items: center; }
+footer h3 { color: var(--cyan); font-size: 20pt; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin-bottom: 2.5mm; }
+.refs { columns: 2; column-gap: 12mm; font-size: 15.5pt; line-height: 1.3; list-style: none; counter-reset: r; }
+.refs li { counter-increment: r; padding-left: 10mm; position: relative; margin-bottom: 1.2mm; break-inside: avoid; }
+.refs li::before { content: "[" counter(r) "]"; position: absolute; left: 0; color: var(--cyan); font-weight: 700; }
+.refs i { font-style: italic; color: #fff; }
+.qrs { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.qr { background: #fff; border-radius: 3mm; padding: 3.5mm; text-align: center; color: var(--navy); }
+.qr img { width: 100%; display: block; }
+.qr b { display: block; font-size: 17pt; margin-top: 2mm; line-height: 1.15; }
+.qr span { font-size: 12.5pt; color: var(--muted); font-family: "Roboto Mono", monospace; }
+</style>
+</head>
+<body>
+<div class="poster">
+
+<!-- =================================================== EN-TÊTE -->
+<header>
+  <div class="head-grid">
+    <div>
+      <div class="kicker">Projet FYC · Cours en ligne · Cryptographie appliquée à la finance</div>
+      <h1>Scoring financier sur<br><span class="hl">données chiffrées</span></h1>
+      <p class="subtitle">Calculer un score de crédit sans jamais voir les données du client : prototype et limites du chiffrement totalement homomorphe (FHE)</p>
+      <div class="authors">
+        <span>Ravin THILAGARASA</span><span class="sep"></span><span>Thomas GRUNDSZTEJN</span>
+        <span class="aff">ESGI Paris · 2026-2027</span>
+      </div>
+    </div>
+    <div class="logo">
+      <img src="assets/esgi-logo.svg" alt="ESGI">
+      <div class="tag">École Supérieure de<br>Génie Informatique</div>
+    </div>
+  </div>
+</header>
+
+<!-- =================================================== RÉSUMÉ -->
+<div class="abstract">
+  <p><span class="label">Résumé</span>
+  Pour calculer un score de crédit, une banque manipule aujourd'hui en clair le revenu, l'endettement et
+  l'historique de paiement de ses clients. Le <strong>chiffrement homomorphe</strong> permet au contraire de
+  calculer <strong>directement sur des données chiffrées</strong> : le serveur produit un score qu'il est
+  incapable de lire. Ce cours part des bases (Paillier, LWE), présente les schémas modernes (BGV/BFV, CKKS,
+  TFHE) et le bootstrapping, puis les applique à un modèle de scoring. Un prototype mesure le prix réel
+  de la confidentialité, comparé aux alternatives (MPC, enclaves, confidentialité différentielle).
+  Le cours est accompagné d'un atelier en ligne de commande, <code>fhe-cli</code>, publié sur PyPI.</p>
+  <div class="question">
+    <span class="label">Problématique</span>
+    <p>Peut-on calculer un score de crédit sur des données qui restent chiffrées de bout en bout, et est-ce
+    exploitable aujourd'hui dans une banque ou une fintech&nbsp;?</p>
+  </div>
+</div>
+
+<main>
+<!-- =================================================== COLONNE 1 -->
+<div class="col">
+
+  <section>
+    <h2><span class="n">1</span>Le maillon manquant</h2>
+    <p>Les données sont chiffrées <strong>au repos</strong> (disque) et <strong>en transit</strong> (TLS), mais
+    elles doivent être <strong>déchiffrées pour être traitées</strong>. Dans le cloud, l'hébergeur, un
+    administrateur malveillant ou une fuite mémoire suffisent alors à les exposer, alors que le RGPD
+    (art.&nbsp;5 et 32) impose minimisation et sécurité du traitement.</p>
+    <figure>
+      <svg viewBox="0 0 760 250" width="100%">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#001B40"/></marker>
+        </defs>
+        <!-- 3 états -->
+        <g font-size="25" font-weight="700" text-anchor="middle">
+          <rect x="0" y="20" width="220" height="130" rx="14" fill="#EEF3F9" stroke="#001B40" stroke-width="3"/>
+          <text x="110" y="62" fill="#001B40">Au repos</text>
+          <text x="110" y="96" font-size="20" font-weight="400" fill="#44546E">AES-256 (disque)</text>
+          <circle cx="110" cy="128" r="15" fill="#0F8A5F"/><path d="M102,128l6,6l11,-12" stroke="#fff" stroke-width="4" fill="none"/>
+
+          <rect x="270" y="20" width="220" height="130" rx="14" fill="#EEF3F9" stroke="#001B40" stroke-width="3"/>
+          <text x="380" y="62" fill="#001B40">En transit</text>
+          <text x="380" y="96" font-size="20" font-weight="400" fill="#44546E">TLS 1.3 (réseau)</text>
+          <circle cx="380" cy="128" r="15" fill="#0F8A5F"/><path d="M372,128l6,6l11,-12" stroke="#fff" stroke-width="4" fill="none"/>
+
+          <rect x="540" y="20" width="220" height="130" rx="14" fill="#001B40"/>
+          <text x="650" y="62" fill="#FFFFFF">En traitement</text>
+          <text x="650" y="96" font-size="20" font-weight="400" fill="#B9C7DA">en clair en mémoire</text>
+          <circle cx="650" cy="128" r="15" fill="#C22A3F"/><path d="M643,121l14,14M657,121l-14,14" stroke="#fff" stroke-width="4"/>
+        </g>
+        <line x1="225" y1="85" x2="262" y2="85" stroke="#001B40" stroke-width="4" marker-end="url(#ar)"/>
+        <line x1="495" y1="85" x2="532" y2="85" stroke="#001B40" stroke-width="4" marker-end="url(#ar)"/>
+        <!-- FHE comble -->
+        <path d="M650,160 v30 h-0" stroke="#00B8CC" stroke-width="4" fill="none"/>
+        <rect x="430" y="186" width="330" height="58" rx="29" fill="#00EAFF"/>
+        <text x="595" y="224" text-anchor="middle" font-size="24" font-weight="700" fill="#001B40">FHE : reste chiffré</text>
+      </svg>
+      <figcaption><b>Fig. 1.</b> Le FHE protège la dernière étape du cycle de vie de la donnée : le calcul.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span>Calculer sans déchiffrer</h2>
+    <p>Le client garde sa <strong>clé secrète</strong>. Le serveur ne reçoit que des chiffrés et une
+    <strong>clé publique d'évaluation</strong> : il applique le modèle et renvoie un résultat chiffré que seul
+    le client peut ouvrir.</p>
+    <figure>
+      <svg viewBox="0 0 760 300" width="100%">
+        <defs>
+          <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#001B40"/></marker>
+          <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#007E8C"/></marker>
+        </defs>
+        <!-- client -->
+        <rect x="0" y="10" width="230" height="280" rx="16" fill="#EEF3F9" stroke="#001B40" stroke-width="3"/>
+        <text x="115" y="50" text-anchor="middle" font-size="26" font-weight="900" fill="#001B40">CLIENT</text>
+        <text x="115" y="84" text-anchor="middle" font-size="19" fill="#44546E">clé secrète sk</text>
+        <rect x="22" y="104" width="186" height="64" rx="10" fill="#fff" stroke="#C9D5E4" stroke-width="2"/>
+        <text x="115" y="132" text-anchor="middle" font-size="19" fill="#0B1B33">revenu, dette,</text>
+        <text x="115" y="156" text-anchor="middle" font-size="19" fill="#0B1B33">incidents = x</text>
+        <rect x="22" y="200" width="186" height="64" rx="10" fill="#FFDE00"/>
+        <text x="115" y="241" text-anchor="middle" font-size="22" font-weight="700" fill="#001B40">score f(x)</text>
+        <!-- serveur -->
+        <rect x="530" y="10" width="230" height="280" rx="16" fill="#001B40"/>
+        <text x="645" y="50" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">SERVEUR</text>
+        <text x="645" y="84" text-anchor="middle" font-size="19" fill="#B9C7DA">clé d'évaluation</text>
+        <rect x="552" y="120" width="186" height="80" rx="10" fill="#0A2D5E" stroke="#00EAFF" stroke-width="2"/>
+        <text x="645" y="155" text-anchor="middle" font-size="21" font-weight="700" fill="#00EAFF">Eval(f, ·)</text>
+        <text x="645" y="184" text-anchor="middle" font-size="17" fill="#DCE6F2">ne voit jamais x</text>
+        <text x="645" y="250" text-anchor="middle" font-size="17" fill="#B9C7DA">poids du modèle</text>
+        <text x="645" y="272" text-anchor="middle" font-size="17" fill="#B9C7DA">(publics)</text>
+        <!-- flèches -->
+        <line x1="210" y1="136" x2="545" y2="136" stroke="#001B40" stroke-width="4" marker-end="url(#ar2)"/>
+        <rect x="300" y="108" width="160" height="40" rx="8" fill="#fff" stroke="#001B40" stroke-width="2"/>
+        <text x="380" y="135" text-anchor="middle" font-size="21" font-weight="700" fill="#001B40">Enc(x)</text>
+        <line x1="545" y1="232" x2="215" y2="232" stroke="#007E8C" stroke-width="4" marker-end="url(#ar3)"/>
+        <rect x="290" y="204" width="180" height="40" rx="8" fill="#fff" stroke="#007E8C" stroke-width="2"/>
+        <text x="380" y="231" text-anchor="middle" font-size="21" font-weight="700" fill="#007E8C">Enc(f(x))</text>
+        <text x="380" y="282" text-anchor="middle" font-size="18" fill="#44546E">Dec côté client uniquement</text>
+      </svg>
+      <figcaption><b>Fig. 2.</b> Protocole de scoring confidentiel mis en œuvre dans le prototype.</figcaption>
+    </figure>
+    <div class="eq"><b>Dec</b>( <b>Eval</b>( f, Enc(x<sub>1</sub>), …, Enc(x<sub>n</sub>) ) ) = f(x<sub>1</sub>, …, x<sub>n</sub>)</div>
+  </section>
+
+  <section>
+    <h2><span class="n">3</span>Le bruit et le bootstrapping</h2>
+    <p>Les schémas modernes reposent sur le problème <strong>LWE / Ring-LWE</strong> (réputé résistant aux
+    ordinateurs quantiques) : chaque chiffré contient un <strong>bruit</strong> aléatoire. Chaque opération
+    l'augmente, la multiplication surtout. Au-delà d'un seuil, le déchiffrement devient faux.</p>
+    <figure>
+      <svg viewBox="0 0 760 230" width="100%">
+        <line x1="60" y1="190" x2="750" y2="190" stroke="#001B40" stroke-width="3"/>
+        <line x1="60" y1="190" x2="60" y2="15" stroke="#001B40" stroke-width="3"/>
+        <text x="30" y="110" font-size="18" fill="#44546E" transform="rotate(-90 30 110)" text-anchor="middle">bruit</text>
+        <text x="740" y="220" font-size="18" fill="#44546E" text-anchor="end">opérations successives</text>
+        <line x1="60" y1="45" x2="750" y2="45" stroke="#C22A3F" stroke-width="3" stroke-dasharray="10 8"/>
+        <text x="745" y="35" font-size="18" fill="#C22A3F" text-anchor="end" font-weight="700">seuil de déchiffrement</text>
+        <polyline fill="none" stroke="#001B40" stroke-width="5" stroke-linejoin="round"
+          points="60,175 110,168 160,150 210,122 260,80 270,170 320,163 370,145 420,116 470,76 480,170 530,163 580,145 630,116 680,76"/>
+        <g fill="#00EAFF" stroke="#001B40" stroke-width="2">
+          <circle cx="265" cy="125" r="11"/><circle cx="475" cy="123" r="11"/>
+        </g>
+        <text x="370" y="110" font-size="18" font-weight="700" fill="#007E8C" text-anchor="middle"></text>
+        <text x="270" y="210" font-size="17" fill="#007E8C" text-anchor="middle" font-weight="700">bootstrapping</text>
+        <text x="480" y="210" font-size="17" fill="#007E8C" text-anchor="middle" font-weight="700">bootstrapping</text>
+      </svg>
+      <figcaption><b>Fig. 3.</b> Le bootstrapping (Gentry, 2009) évalue homomorphiquement le déchiffrement pour
+      « rafraîchir » le chiffré : il rend le nombre d'opérations illimité, mais reste l'opération la plus coûteuse.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="n">4</span>Quatre familles de schémas</h2>
+    <table>
+      <tr><th>Schéma</th><th>Opérations</th><th>Données</th><th>Rôle pour le scoring</th></tr>
+      <tr><td><strong>Paillier</strong> 1999<br><span class="mono">PHE</span></td><td>+ entre chiffrés, × par un clair</td><td>entiers</td><td>score linéaire à poids publics</td></tr>
+      <tr><td><strong>BGV / BFV</strong> 2012</td><td>+ et ×, nombre limité de niveaux</td><td>entiers exacts</td><td>règles et comptages exacts</td></tr>
+      <tr><td><strong>CKKS</strong> 2017</td><td>+ et × approchés, vecteurs (SIMD)</td><td>réels</td><td>régression, réseaux de neurones</td></tr>
+      <tr><td><strong>TFHE</strong> 2016-2020</td><td>portes logiques, tables de correspondance</td><td>bits, petits entiers</td><td>comparaisons, seuils de décision</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<!-- =================================================== COLONNE 2 -->
+<div class="col">
+
+  <section>
+    <h2><span class="n">5</span>Ce que le scoring doit calculer</h2>
+    <p>Le modèle du prototype est un <strong>score linéaire pondéré</strong>, première brique d'une
+    régression logistique :</p>
+    <div class="formula">S = 50 + <span class="w">0,005</span>·(<span class="x">R</span> − 2500) <span class="w">− 0,9</span>·<span class="x">E</span> <span class="w">− 10</span>·<span class="x">I</span></div>
+    <p class="legend-line"><span class="mono">R</span> revenu mensuel net (€) · <span class="mono">E</span> taux d'endettement (%) · <span class="mono">I</span> incidents de paiement sur 12 mois. Les <span style="color:#A86A00;font-weight:700">poids</span> sont publics, les <span style="color:#007E8C;font-weight:700">données</span> restent chiffrées.</p>
+    <table>
+      <tr><th>Opération nécessaire</th><th class="c">Paillier</th><th class="c">CKKS</th><th class="c">TFHE</th></tr>
+      <tr><td>somme de chiffrés</td><td class="c y">oui</td><td class="c y">oui</td><td class="c y">oui</td></tr>
+      <tr><td>× poids public</td><td class="c y">oui</td><td class="c y">oui</td><td class="c y">oui</td></tr>
+      <tr><td>× entre deux chiffrés</td><td class="c n0">non</td><td class="c y">oui</td><td class="c y">oui</td></tr>
+      <tr><td>sigmoïde σ(z)</td><td class="c n0">non</td><td class="c m">approx.</td><td class="c m">table</td></tr>
+      <tr><td>décision « S &gt; seuil »</td><td class="c n0">non</td><td class="c m">coûteux</td><td class="c y">oui</td></tr>
+    </table>
+    <p style="margin-top:3mm">Une fonction non polynomiale se remplace par un polynôme, par exemple
+    σ(z) ≈ 0,5 + 0,197&nbsp;z − 0,004&nbsp;z<sup>3</sup>. La comparaison au seuil, triviale en clair,
+    est l'opération la plus chère en FHE : le prototype renvoie donc le score chiffré et laisse le
+    client décider.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">6</span>Prototype : trois chiffrements comparés</h2>
+    <p>Application web (FastAPI, Docker) qui fait le même calcul avec trois briques :</p>
+    <ul class="dots">
+      <li><strong>AES / Fernet</strong> : sûr, mais aucun calcul n'est possible sur le chiffré.</li>
+      <li><strong>Paillier</strong>, codé à la main : addition chiffrée et produit par les poids publics suffisent au score.</li>
+      <li><strong>CKKS</strong> (Microsoft SEAL via TenSEAL) : le serveur ne reçoit qu'un contexte public ;
+      sa tentative de déchiffrement <em>échoue</em>, preuve qu'il ne détient pas la clé.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">7</span>Résultats mesurés</h2>
+    <p>Même client (<span id="client-desc">R = 3 200 €, E = 28 %, I = 1</span>) chiffré puis noté par le serveur :</p>
+    <figure>
+      <div id="chart-time"></div>
+      <div id="chart-size" style="margin-top:3mm"></div>
+      <figcaption id="bench-caption"><b>Fig. 4.</b> Médianes de 10 à 20 exécutions, échelle logarithmique.</figcaption>
+    </figure>
+    <div class="tiles">
+      <div class="tile"><div class="big" id="t-time">×8 000</div><div class="lbl">temps serveur CKKS par rapport au calcul en clair</div></div>
+      <div class="tile"><div class="big" id="t-size">×14 000</div><div class="lbl">volume envoyé au serveur (CKKS) par rapport aux données brutes</div></div>
+      <div class="tile"><div class="big yl" id="t-err">6·10⁻⁶</div><div class="lbl">erreur absolue CKKS sur le score (Paillier : exact)</div></div>
+      <div class="tile"><div class="big yl" id="t-keys">35 Mo</div><div class="lbl">de clés publiques d'évaluation CKKS (rotations) à transmettre une fois</div></div>
+    </div>
+    <p style="margin-top:4mm">Le surcoût reste <strong>de l'ordre de la milliseconde par client</strong> pour un
+    score linéaire : acceptable pour un octroi de crédit. Le vrai prix est <strong>la taille</strong> des
+    chiffrés et des clés, et l'expertise nécessaire pour régler les paramètres.</p>
+  </section>
+
+</div>
+
+<!-- =================================================== COLONNE 3 -->
+<div class="col">
+
+  <section>
+    <h2><span class="n">8</span>Le cours sur Moodle</h2>
+    <p>Un parcours complet de niveau Mastère, du rappel de cryptographie au prototype :</p>
+    <div class="course-list">
+      <div class="ci"><b>Livre de cours</b>Paillier pas à pas, LWE, BGV/BFV, CKKS, TFHE, bootstrapping</div>
+      <div class="ci"><b>Leçon interactive</b>le scoring bancaire sur données chiffrées</div>
+      <div class="ci"><b>État de l'art</b>travaux académiques, Zama, SEAL, OpenFHE, HElib</div>
+      <div class="ci"><b>Limites et perspectives</b>coût, normalisation, matériel dédié</div>
+      <div class="ci"><b>Vidéos</b>cours et correction du cas pratique</div>
+      <div class="ci"><b>Glossaire et examen</b>72 termes, QCM final de 40 questions</div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">9</span>Atelier pratique : fhe-cli</h2>
+    <p>Un outil d'exercices en ligne de commande inspiré de <em>rustlings</em> : l'apprenant complète le code
+    dans son éditeur, les tests se relancent à chaque sauvegarde, et la <strong>solution ne se débloque
+    qu'une fois l'exercice réussi</strong>.</p>
+    <div class="term">
+      <div class="bar"><i></i><i></i><i></i><span>terminal</span></div>
+<pre><span class="p">$</span> pip install fhe-cli
+<span class="p">$</span> fhe-cli init &amp;&amp; cd fhe-exercices
+<span class="p">$</span> fhe-cli start        <span class="dim"># atelier guidé</span>
+<span class="p">$</span> fhe-cli list
+  <span class="ok">[x]</span> ex8_paillier_homomorphic
+  <span class="yl">[~]</span> ex9_scoring_paillier
+  <span class="ko">[ ]</span> ex10_ckks_bonus <span class="yl">(bonus)</span>
+Progression : 8/10 exercices résolus.</pre>
+    </div>
+    <div class="track">
+      <div class="mod"><b>1-3</b>César, XOR, Fernet</div>
+      <div class="mod"><b>4-5</b>exponentiation, inverse modulaire</div>
+      <div class="mod"><b>6-7</b>clés et chiffrement Paillier</div>
+      <div class="mod"><b>8-9</b>homomorphie, score chiffré</div>
+      <div class="mod last"><b>10</b>bonus : vrai FHE avec CKKS</div>
+    </div>
+    <p style="margin-top:3mm;font-size:20pt">Publié sur PyPI, testé sous Windows, macOS et Linux, avec des
+    exécutables autonomes (Python et TenSEAL embarqués) pour les postes sans Python.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">10</span>Limites et alternatives</h2>
+    <table>
+      <tr><th>Approche</th><th>Données en clair&nbsp;?</th><th>Coût</th><th>Confiance requise</th></tr>
+      <tr><td><strong>FHE</strong></td><td class="y">jamais</td><td class="n0">très élevé</td><td>mathématique (LWE)</td></tr>
+      <tr><td><strong>MPC</strong></td><td class="y">jamais (partagées)</td><td class="m">réseau élevé</td><td>les parties ne s'entendent pas</td></tr>
+      <tr><td><strong>Enclave TEE</strong></td><td class="m">dans l'enclave</td><td class="y">faible</td><td>fabricant du processeur, canaux auxiliaires</td></tr>
+      <tr><td><strong>Conf. différentielle</strong></td><td class="n0">oui</td><td class="y">faible</td><td>protège les statistiques, pas l'entrée</td></tr>
+    </table>
+    <ul class="dots">
+      <li>Le FHE ne prouve pas que le serveur a appliqué <strong>le bon modèle</strong> : l'intégrité du calcul est un autre problème.</li>
+      <li>Paramétrage expert (degré, modules, échelle, sécurité 128 bits) et gestion des clés côté client.</li>
+      <li>Modèles profonds et décisions non linéaires restent lents sans bootstrapping rapide.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">11</span>Conclusion et perspectives</h2>
+    <p>Pour un <strong>score linéaire</strong> ou une régression simple, le FHE est <strong>déjà
+    exploitable</strong> : quelques millisecondes par client, une erreur négligeable, et un serveur qui ne
+    voit rien. Il reste réservé aux cas ciblés tant que la taille des chiffrés et l'expertise requise
+    pèsent autant.</p>
+    <div class="callout"><b>Ce qui va changer la donne :</b> accélérateurs matériels (GPU, FPGA, ASIC),
+    compilateurs FHE qui masquent les paramètres (Concrete ML, OpenFHE), et normalisation en cours
+    (HomomorphicEncryption.org, ISO/IEC).</div>
+  </section>
+
+</div>
+</main>
+
+<!-- =================================================== PIED DE PAGE -->
+<footer>
+  <div>
+    <h3>Références</h3>
+    <ol class="refs">
+      <li>P. Paillier, <i>Public-key cryptosystems based on composite degree residuosity classes</i>, EUROCRYPT 1999.</li>
+      <li>C. Gentry, <i>Fully homomorphic encryption using ideal lattices</i>, STOC 2009.</li>
+      <li>Z. Brakerski, C. Gentry, V. Vaikuntanathan, <i>(Leveled) fully homomorphic encryption without bootstrapping</i>, ITCS 2012.</li>
+      <li>J. Fan, F. Vercauteren, <i>Somewhat practical fully homomorphic encryption</i>, IACR ePrint 2012/144.</li>
+      <li>J. H. Cheon, A. Kim, M. Kim, Y. Song, <i>Homomorphic encryption for arithmetic of approximate numbers</i>, ASIACRYPT 2017.</li>
+      <li>I. Chillotti, N. Gama, M. Georgieva, M. Izabachène, <i>TFHE: fast fully homomorphic encryption over the torus</i>, J. Cryptology 2020.</li>
+      <li>C. Marcolla et al., <i>Survey on fully homomorphic encryption, theory, and applications</i>, IACR ePrint 2022/1602.</li>
+      <li>A. Al Badawi et al., <i>OpenFHE: open-source fully homomorphic encryption library</i>, IACR ePrint 2022/915.</li>
+      <li>A. Benaissa et al., <i>TenSEAL: a library for encrypted tensor operations using homomorphic encryption</i>, 2021 ; Microsoft SEAL.</li>
+      <li>M. Albrecht et al., <i>Homomorphic Encryption Standard</i>, HomomorphicEncryption.org, 2018.</li>
+    </ol>
+  </div>
+  <div class="qrs">
+    <div class="qr"><img src="assets/qr-moodle.svg" alt="QR code du cours"><b>Le cours</b><span>fyc.esgi.fr</span></div>
+    <div class="qr"><img src="assets/qr-pypi.svg" alt="QR code fhe-cli"><b>L'atelier</b><span>pip install fhe-cli</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- Mesures du prototype : copie de data/mesures.json (build_poster.py la remplace). -->
+<script id="mesures" type="application/json">
+{
+  "client": {
+    "revenu": 3200.0,
+    "ratio_endettement": 28.0,
+    "incidents": 1.0
+  },
+  "machine": "Linux x86_64, Python 3.13.18, TenSEAL 0.3.18",
+  "clear": {
+    "score": 18.3,
+    "server_ms": 0.0005370000053517288,
+    "client_bytes": 24
+  },
+  "paillier": {
+    "key_bits": 2048,
+    "encrypt_ms": 260.19773800000223,
+    "server_ms": 90.41091300000659,
+    "decrypt_ms": 86.33229100000506,
+    "client_bytes": 1536,
+    "score": 18.3,
+    "abs_error": 0.0
+  },
+  "ckks": {
+    "poly_modulus_degree": 8192,
+    "keygen_ms": 172.33689299999355,
+    "encrypt_ms": 4.564600500003735,
+    "server_ms": 4.406533999997464,
+    "decrypt_ms": 1.0976125000041748,
+    "client_bytes": 331545,
+    "public_context_bytes": 35290759,
+    "result_bytes": 235120,
+    "score": 18.29999405756483,
+    "abs_error": 5.942435169714599e-06
+  }
+}
+</script>
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById("mesures").textContent || "{}");
+  if (!data.ckks) return;
+  const fr = (v, d = 0) => v.toLocaleString("fr-FR", { maximumFractionDigits: d, minimumFractionDigits: 0 });
+  const round2 = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
+  const sup = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
+  const sci = v => { const e = Math.floor(Math.log10(v)); const m = Math.round(v / Math.pow(10, e)); return m + "·10" + String(e).split("").map(c => sup[c]).join(""); };
+  const fmtMs = v => v < 0.01 ? fr(v * 1000, 1) + " µs" : v < 10 ? fr(v, 1) + " ms" : fr(v, 0) + " ms";
+  const fmtB = v => v < 1000 ? fr(v) + " o" : v < 1e6 ? fr(v / 1000, v < 1e4 ? 1 : 0) + " Ko" : fr(v / 1e6, 1) + " Mo";
+
+  const c = data.clear, p = data.paillier, k = data.ckks;
+  const cl = data.client;
+  document.getElementById("client-desc").textContent =
+    `R = ${fr(cl.revenu)} €, E = ${fr(cl.ratio_endettement)} %, I = ${fr(cl.incidents)}, score en clair ${fr(c.score, 1)}`;
+  document.getElementById("t-time").textContent = "×" + fr(round2(k.server_ms / c.server_ms));
+  document.getElementById("t-size").textContent = "×" + fr(round2(k.client_bytes / c.client_bytes));
+  document.getElementById("t-err").textContent = sci(k.abs_error);
+  document.getElementById("t-keys").textContent = fmtB(k.public_context_bytes);
+  document.getElementById("bench-caption").innerHTML =
+    `<b>Fig. 4.</b> Médianes de 10 à 20 exécutions, échelle logarithmique. Paillier : clé de ${p.key_bits} bits ; ` +
+    `CKKS : N = ${k.poly_modulus_degree}, échelle 2<sup>40</sup>. ${data.machine}.`;
+
+  function chart(el, title, rows, fmt) {
+    const W = 760, rowH = 50, top = 44, left = 150, right = 120, H = top + rows.length * rowH + 6;
+    const vals = rows.map(r => r.v);
+    const lo = Math.floor(Math.log10(Math.min(...vals))) , hi = Math.ceil(Math.log10(Math.max(...vals)));
+    const x = v => left + (Math.log10(v) - lo) / (hi - lo) * (W - left - right);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    s += `<text x="0" y="26" font-size="23" font-weight="700" fill="#001B40">${title}</text>`;
+    for (let e = lo; e <= hi; e++) s += `<line x1="${x(Math.pow(10, e))}" y1="${top - 6}" x2="${x(Math.pow(10, e))}" y2="${H - 4}" stroke="#C9D5E4" stroke-width="1.5"/>`;
+    rows.forEach((r, i) => {
+      const y = top + i * rowH;
+      s += `<text x="${left - 12}" y="${y + 30}" text-anchor="end" font-size="20" font-weight="500" fill="#0B1B33">${r.label}</text>`;
+      s += `<rect x="${left}" y="${y + 8}" width="${Math.max(6, x(r.v) - left)}" height="32" rx="4" fill="${r.color}"/>`;
+      s += `<text x="${Math.max(left + 6, x(r.v)) + 10}" y="${y + 31}" font-size="20" font-weight="700" fill="#001B40">${fmt(r.v)}</text>`;
+    });
+    el.innerHTML = s + "</svg>";
+  }
+  const col = { clear: "#7F93B3", pai: "#0A2D5E", ckks: "#00C4D6" };
+  chart(document.getElementById("chart-time"), "Temps de calcul côté serveur", [
+    { label: "En clair", v: c.server_ms, color: col.clear },
+    { label: "Paillier", v: p.server_ms, color: col.pai },
+    { label: "CKKS", v: k.server_ms, color: col.ckks },
+  ], fmtMs);
+  chart(document.getElementById("chart-size"), "Données envoyées par le client", [
+    { label: "En clair", v: c.client_bytes, color: col.clear },
+    { label: "Paillier", v: p.client_bytes, color: col.pai },
+    { label: "CKKS", v: k.client_bytes, color: col.ckks },
+  ], fmtB);
+})();
+</script>
+</body>
+</html>
