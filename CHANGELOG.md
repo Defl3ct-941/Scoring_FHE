@@ -30,6 +30,8 @@ Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans
 - Aide (`fhe-cli help`) : `check` figure dans « Pour commencer », l'aide de chaque commande qui
   prend un exercice rappelle les alias, `run` est présenté comme la version détaillée de `check`.
   Les messages parlent de « vérifications » et non plus de « tests ».
+- `03_cas_pratiques/Fiche_Atelier_CLI.docx` réécrite pour la 1.5.0 : installation par PyPI ou exécutable,
+  10 exercices et leurs alias, validation avec `fhe-cli check`, police Roboto et couleurs ESGI.
 - `fhe-cli init` ne crée plus de `pytest.ini` dans l'espace de travail (inutile sans tests dans
   les fichiers) ; lancer `python -m pytest` à la main dans l'espace de travail ne vérifie donc
   plus les exercices, il faut passer par `fhe-cli check`.
