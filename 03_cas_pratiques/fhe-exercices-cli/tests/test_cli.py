@@ -178,7 +178,7 @@ def test_list_initial(ws):
 def test_run_statement_fails(ws):
     result = fhecli("run", NAMES[0], cwd=ws)
     assert result.returncode == 1
-    assert "Des tests échouent encore." in result.stdout
+    assert "Des vérifications échouent encore." in result.stdout
 
 
 @pytest.mark.parametrize("name", NAMES)
@@ -192,7 +192,7 @@ def test_marker_then_done(ws, name):
     solve(ws, name, keep_marker=False)
     result = fhecli("run", name, cwd=ws)
     assert result.returncode == 0
-    assert "Tous les tests passent." in result.stdout
+    assert "Toutes les vérifications passent" in result.stdout
 
 
 def test_all_solved(ws):
@@ -492,7 +492,7 @@ def test_previous(ws):
     solve(ws, NAMES[1])
     result = fhecli("previous", cwd=ws)
     assert result.returncode == 0
-    assert f"{NAMES[1]} - " in result.stdout and "Tous les tests passent." in result.stdout
+    assert f"{NAMES[1]} - " in result.stdout and "Toutes les vérifications passent" in result.stdout
 
 
 def test_help_lists_next_and_previous(tmp_path):
@@ -512,3 +512,14 @@ def test_messages_always_use_fhe_cli(ws, tmp_path):
     for args in (["run", NAMES[0]], ["solution", NAMES[0]], ["init", "ws"]):
         text = fhecli(*args, cwd=ws if args[0] != "init" else ws.parent).stdout
         assert "fhecli " not in text and "fhe-cli " in text, args
+
+
+def test_help_documents_check_and_aliases(tmp_path):
+    out = fhecli("help", cwd=tmp_path).stdout
+    assert "fhe-cli check" in out.split("Commandes :")[0]  # dans « Pour commencer »
+    assert "alias (ex1, exo1, 1)" in out
+    for command in ("check", "run", "hint", "solution", "reset"):
+        detail = fhecli("help", command, cwd=tmp_path).stdout
+        assert "ex1, exo1 ou 1" in detail, command
+    assert "pytest" in fhecli("help", "run", cwd=tmp_path).stdout
+    assert "alias" in fhecli("help", "list", cwd=tmp_path).stdout

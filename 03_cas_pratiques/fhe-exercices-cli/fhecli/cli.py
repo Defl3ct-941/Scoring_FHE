@@ -15,8 +15,8 @@ PROG = "fhe-cli"
 
 # Codes de sortie
 EXIT_OK = 0
-EXIT_ERROR = 1          # tests en échec, exercice inconnu, pas d'espace de travail...
-EXIT_MARKER_LEFT = 2    # tests OK mais « # I AM NOT DONE » encore présent
+EXIT_ERROR = 1          # vérifications en échec, exercice inconnu, pas d'espace de travail...
+EXIT_MARKER_LEFT = 2    # vérifications OK mais « # I AM NOT DONE » encore présent
 EXIT_USAGE = 2          # commande ou arguments invalides
 
 STATUS_ICON = {
@@ -26,6 +26,8 @@ STATUS_ICON = {
 }
 
 # Aide de chaque commande : (syntaxe, résumé en une ligne, explication détaillée).
+EX = "Un exercice se désigne par son nom complet ou son alias : ex1_cesar, ex1, exo1 ou 1."
+
 COMMANDS = {
     "init": (
         "init [dossier]",
@@ -37,57 +39,63 @@ COMMANDS = {
     "start": (
         "start",
         "Lance l'atelier guidé, exercice par exercice",
-        "Affiche l'exercice en cours, relance ses tests à chaque sauvegarde du\n"
-        "fichier et passe au suivant dès qu'il est résolu (tests OK et ligne\n"
-        "« # I AM NOT DONE » retirée). Ctrl+C pour quitter.",
+        "Affiche l'exercice en cours, relance ses vérifications à chaque sauvegarde\n"
+        "du fichier et passe au suivant dès qu'il est résolu (vérifications OK et\n"
+        "ligne « # I AM NOT DONE » retirée). Ctrl+C pour quitter.",
     ),
     "next": (
         "next",
-        "Passe au prochain exercice à résoudre et le teste",
+        "Passe au prochain exercice à résoudre et le vérifie",
         "Choisit automatiquement le premier exercice pas encore résolu (dans\n"
-        "l'ordre de la liste), affiche son nom et son fichier, puis lance ses tests.\n"
-        "Si tout est résolu, affiche un message de félicitations.",
+        "l'ordre de la liste), affiche son nom et son fichier, puis lance ses\n"
+        "vérifications. Si tout est résolu, affiche un message de félicitations.",
     ),
     "previous": (
         "previous",
-        "Revient à l'exercice précédent et le teste",
+        "Revient à l'exercice précédent et le vérifie",
         "Choisit l'exercice qui précède le prochain à résoudre, affiche son nom et\n"
-        "son fichier, puis lance ses tests. Utile pour revoir ce que vous venez de faire.",
+        "son fichier, puis lance ses vérifications. Utile pour revoir ce que vous\n"
+        "venez de faire.",
     ),
     "list": (
         "list",
-        "Affiche tous les exercices et votre progression",
-        "Liste les exercices par catégorie avec leur état : [x] résolu,\n"
-        "[~] tests OK mais ligne « # I AM NOT DONE » à retirer, [ ] pas encore bon.",
+        "Affiche tous les exercices, leur alias et votre progression",
+        "Liste les exercices par catégorie avec leur alias (ex1, ex2...) et leur\n"
+        "état : [x] résolu, [~] vérifications OK mais ligne « # I AM NOT DONE » à\n"
+        "retirer, [ ] pas encore bon.",
     ),
     "check": (
         "check [exercice | --all]",
-        "Vérifie si un exercice est résolu",
+        "Vérifie si un exercice est résolu (résumé)",
         "Lance les vérifications de l'exercice (cachées : elles ne sont pas dans\n"
-        "votre fichier) et affiche, pour chacune, si elle passe ou non.\n"
+        "votre fichier) et affiche, pour chacune, [ok] ou [xx], puis le verdict.\n"
         "Sans argument : vérifie le prochain exercice à résoudre.\n"
         "  --all     vérifie tous les exercices et affiche le bilan\n"
         "Codes de sortie : 0 résolu, 1 vérifications en échec, 2 vérifications OK\n"
         "mais ligne « # I AM NOT DONE » encore présente.\n"
-        f"Exemples : {PROG} check ex1    {PROG} check --all",
+        f"{EX}\n"
+        f"Exemples : {PROG} check ex1    {PROG} check    {PROG} check --all",
     ),
     "run": (
         "run <exercice>",
-        "Teste un exercice et affiche le résultat",
-        "Lance les tests d'un seul exercice. Codes de sortie : 0 résolu, 1 tests en\n"
-        "échec, 2 tests OK mais ligne « # I AM NOT DONE » encore présente.\n"
+        "Vérifie un exercice avec la sortie détaillée de pytest",
+        f"Comme {PROG} check, mais affiche la sortie complète de pytest (utile pour\n"
+        "comprendre un échec). Codes de sortie : 0 résolu, 1 vérifications en\n"
+        "échec, 2 vérifications OK mais ligne « # I AM NOT DONE » encore présente.\n"
+        f"{EX}\n"
         f"Exemple : {PROG} run ex1",
     ),
     "hint": (
         "hint <exercice>",
         "Affiche un indice pour un exercice",
-        f"Exemple : {PROG} hint ex1",
+        f"{EX}\nExemple : {PROG} hint ex1",
     ),
     "solution": (
         "solution <exercice>",
         "Affiche la solution (une fois l'exercice résolu)",
         "La solution de référence est verrouillée tant que l'exercice n'est pas\n"
-        "résolu (tests OK et ligne « # I AM NOT DONE » retirée).",
+        "résolu (vérifications OK et ligne « # I AM NOT DONE » retirée).\n"
+        f"{EX}\nExemple : {PROG} solution ex1",
     ),
     "reset": (
         "reset <exercice> | --all [-y]",
@@ -95,12 +103,13 @@ COMMANDS = {
         "Demande confirmation avant d'effacer votre code.\n"
         "  --all     réinitialise tous les exercices\n"
         "  -y        ne pas demander de confirmation\n"
+        f"{EX}\n"
         f"Exemples : {PROG} reset ex1    {PROG} reset --all",
     ),
     "help": (
         "help [commande]",
         "Affiche cette aide, ou le détail d'une commande",
-        f"Exemple : {PROG} help run",
+        f"Exemple : {PROG} help check",
     ),
 }
 ALIASES = {"watch": "start"}  # ancien nom, toujours accepté
@@ -117,6 +126,7 @@ def general_help() -> str:
         f"  {PROG} init          crée le dossier {DEFAULT_DIR} avec les exercices",
         f"  cd {DEFAULT_DIR}",
         f"  {PROG} start         lance l'atelier guidé",
+        f"  {PROG} check         vérifie l'exercice en cours (ou : {PROG} check ex1)",
         "",
         ui.bold("Commandes :"),
     ]
@@ -129,8 +139,7 @@ def general_help() -> str:
         "",
         f"Détail d'une commande : {PROG} help <commande>   (ou {PROG} <commande> --help)",
         "",
-        "Un exercice se désigne par son nom complet (ex1_cesar) ou son alias :",
-        "ex1, exo1 ou simplement 1.",
+        "Exercices : nom complet (ex1_cesar) ou alias (ex1, exo1, 1) ; voir " + PROG + " list.",
         "",
         ui.DIM + f"Alias disponibles : fhecli (ancien nom de {PROG}), {PROG} watch (= {PROG} start)." + ui.RESET,
     ]
@@ -221,7 +230,7 @@ def cmd_list(args) -> int:
         print(f"  {STATUS_ICON[st]} {ex.alias:<5} {ex.name:<24} {ex.title}{bonus_tag}")
     print()
     print(f"Progression : {done_count}/{len(exercises)} exercices résolus.")
-    print(ui.DIM + "[x] résolu   [~] tests OK, marqueur à retirer   [ ] pas encore bon" + ui.RESET)
+    print(ui.DIM + "[x] résolu   [~] vérifications OK, marqueur à retirer   [ ] pas encore bon" + ui.RESET)
     return EXIT_OK
 
 
@@ -238,14 +247,14 @@ def _run_exercise(ex) -> int:
     print()
     if passed and has_marker(ex.path):
         print(ui.warn(
-            "Tests OK, mais le fichier contient encore « # I AM NOT DONE ». "
+            "Vérifications OK, mais le fichier contient encore « # I AM NOT DONE ». "
             "Retirez cette ligne une fois satisfait de votre solution."
         ))
         return EXIT_MARKER_LEFT
     if passed:
-        print(ui.success("Tous les tests passent."))
+        print(ui.success("Toutes les vérifications passent : exercice résolu."))
         return EXIT_OK
-    print(ui.failure("Des tests échouent encore."))
+    print(ui.failure("Des vérifications échouent encore."))
     print(f"Besoin d'un coup de pouce ? {ui.bold(PROG + ' hint ' + ex.alias)}")
     return EXIT_ERROR
 
@@ -367,7 +376,7 @@ def cmd_solution(args) -> int:
         return EXIT_ERROR
     if status(ex.path) != "done":
         print(ui.warn(f"La solution de {ex.name} est verrouillée."))
-        print("Elle se débloque quand l'exercice est résolu : les tests passent ET la")
+        print("Elle se débloque quand l'exercice est résolu : les vérifications passent ET la")
         print("ligne « # I AM NOT DONE » a été retirée du fichier.")
         print(f"Vérifiez où vous en êtes avec {ui.bold(PROG + ' check ' + ex.alias)}, "
               f"ou demandez un indice avec {ui.bold(PROG + ' hint ' + ex.alias)}.")
