@@ -4,6 +4,33 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-11 — fhe-cli 1.5.0 : commande check, alias et vérifications cachées
+
+### Ajouté
+
+- Commande `fhe-cli check [exercice]` : vérifie si un exercice est résolu et affiche, pour
+  chaque vérification, si elle passe (`[ok]`) ou non (`[xx]`), sans montrer son code. Sans
+  argument, elle vérifie le prochain exercice à résoudre ; `fhe-cli check --all` vérifie tous
+  les exercices et affiche le bilan. Codes de sortie : 0 résolu, 1 échec, 2 ligne
+  `# I AM NOT DONE` encore présente.
+- Alias d'exercices, acceptés par toutes les commandes : `ex1`, `exo1` ou `1` pour `ex1_cesar`
+  (et ainsi de suite jusqu'à `ex10`). `fhe-cli list` affiche l'alias de chaque exercice.
+- Dossier `10_livrables/` pour les versions finales des livrables.
+
+### Modifié
+
+- Les tests ne sont plus dans le fichier que l'élève édite. Ils sont sortis dans des
+  vérifications à part (`checks_src/`, en clair dans le dépôt uniquement), embarquées encodées
+  dans le paquet et les exécutables (`fhecli/data/checks/*.chk`, comme les solutions). `check`,
+  `run` et `start` les décodent dans un dossier temporaire, le temps de les exécuter sur le
+  fichier de l'élève, puis les effacent.
+- Un fichier qui ne se charge pas (erreur de syntaxe, import manquant) est signalé par un
+  message court pointant la ligne fautive, au lieu de la trace complète de pytest.
+- Les énoncés indiquent `Vérifiez avec : fhe-cli check exN`.
+- `fhe-cli init` ne crée plus de `pytest.ini` dans l'espace de travail (inutile sans tests dans
+  les fichiers) ; lancer `python -m pytest` à la main dans l'espace de travail ne vérifie donc
+  plus les exercices, il faut passer par `fhe-cli check`.
+
 ## 2026-11-10 — Poster scientifique
 
 ### Ajouté
