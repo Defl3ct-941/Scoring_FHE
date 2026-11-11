@@ -26,7 +26,7 @@ du client sans jamais les voir en clair. CKKS étant approximatif, le résultat
 est très proche de la valeur attendue, pas exactement égal (d'où le abs(...) <
 1e-3 dans les tests).
 
-Testez avec : fhe-cli run ex10_ckks_bonus
+Vérifiez avec : fhe-cli check ex10
 """
 
 # I AM NOT DONE
@@ -53,32 +53,3 @@ def encrypted_dot_product(context, values, weights):
     """Chiffre `values`, calcule le produit scalaire chiffré avec `weights`, déchiffre."""
     # TODO: implémentez les 3 étapes décrites dans l'énoncé
     raise NotImplementedError
-
-
-# ---------------------------------------------------------------------------
-# Tests : ne modifiez pas cette section, elle valide votre implémentation.
-# ---------------------------------------------------------------------------
-
-import pytest
-
-
-def test_matches_plaintext_dot_product():
-    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15, Mac Intel ou macOS < 14)")
-    context = make_context()
-    values = [1500.0, 30.0, 1.0]
-    weights = [0.005, -0.9, -10.0]
-
-    result = encrypted_dot_product(context, values, weights)
-    expected = sum(v * w for v, w in zip(values, weights))
-    assert abs(result - expected) < 1e-3
-
-
-def test_matches_plaintext_dot_product_other_values():
-    pytest.importorskip("tenseal", reason="TenSEAL indisponible sur cette plateforme (Python 3.15, Mac Intel ou macOS < 14)")
-    context = make_context()
-    values = [-1500.0, 55.0, 4.0]
-    weights = [0.005, -0.9, -10.0]
-
-    result = encrypted_dot_product(context, values, weights)
-    expected = sum(v * w for v, w in zip(values, weights))
-    assert abs(result - expected) < 1e-3

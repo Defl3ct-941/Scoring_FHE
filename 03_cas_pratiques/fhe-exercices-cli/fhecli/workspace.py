@@ -1,8 +1,8 @@
 """Espace de travail de l'étudiant.
 
 Un espace de travail est un dossier qui contient le fichier marqueur
-`fhecli.toml`, un `pytest.ini` et le dossier `exercises/` où l'étudiant écrit
-son code. Il est créé par `fhe-cli init` ; toutes les autres commandes le
+`fhecli.toml` et le dossier `exercises/` où l'étudiant écrit son code. Les
+vérifications ne sont pas copiées : elles restent encodées dans le paquet. Il est créé par `fhe-cli init` ; toutes les autres commandes le
 retrouvent en remontant depuis le dossier courant jusqu'au marqueur.
 """
 
@@ -20,16 +20,6 @@ MARKER_CONTENT = f"""\
 [workspace]
 created_with = "{__version__}"
 """
-
-PYTEST_INI = """\
-[pytest]
-# Les exercices contiennent leurs propres tests : on collecte donc tous les
-# fichiers .py du dossier exercises/ (pas seulement test_*.py).
-python_files = *.py
-testpaths = exercises
-addopts = -p no:cacheprovider
-"""
-
 
 class WorkspaceNotFound(Exception):
     """Aucun espace de travail trouvé depuis le dossier courant."""
@@ -53,6 +43,5 @@ def init_workspace(target: Path, exercise_names: list[str]) -> Path:
     exercises.mkdir(parents=True)
     for name in exercise_names:
         (exercises / f"{name}.py").write_text(resources.original_text(name), encoding="utf-8")
-    (target / "pytest.ini").write_text(PYTEST_INI, encoding="utf-8")
     (target / MARKER_FILE).write_text(MARKER_CONTENT, encoding="utf-8")
     return target

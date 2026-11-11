@@ -6,7 +6,7 @@ cryptography et les données des exercices : l'étudiant n'a besoin d'aucune
 installation de Python.
 
 Le code est embarqué sous forme de bytecode compressé, jamais en source ;
-les solutions restent encodées (.sol). Rien n'est donc lisible en clair dans
+les solutions et les vérifications restent encodées (.sol, .chk). Rien n'est donc lisible en clair dans
 le binaire (vérifié par scripts/check_binary.py). C'est une dissuasion, pas
 une protection contre un rétro-ingénieur déterminé.
 
@@ -60,11 +60,11 @@ if SYSTEM == "windows":
             binaries.append((str(dll), "."))
 hiddenimports += collect_submodules("fhecli")
 
-# Données des exercices : liste, énoncés d'origine, solutions ENCODÉES.
+# Données des exercices : liste, énoncés d'origine, solutions et vérifications ENCODÉES.
 # On n'ajoute PAS le dossier fhecli/ entier, pour ne jamais embarquer de source.
 data_dir = ROOT / "fhecli" / "data"
 for path in data_dir.rglob("*"):
-    if path.is_file() and path.suffix in {".toml", ".py", ".sol"} and "__pycache__" not in path.parts:
+    if path.is_file() and path.suffix in {".toml", ".py", ".sol", ".chk"} and "__pycache__" not in path.parts:
         datas.append((str(path), str(Path("fhecli") / path.parent.relative_to(ROOT / "fhecli"))))
 
 a = Analysis(

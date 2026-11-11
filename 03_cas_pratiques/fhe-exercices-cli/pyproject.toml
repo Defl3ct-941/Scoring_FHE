@@ -64,9 +64,10 @@ packages = ["fhecli"]
 include-package-data = false
 
 [tool.setuptools.package-data]
-# Données embarquées : liste des exercices, énoncés d'origine et solutions
-# ENCODÉES. Les solutions en clair (solutions_src/) ne sont jamais incluses.
-fhecli = ["data/info.toml", "data/originals/*.py", "data/solutions/*.sol"]
+# Données embarquées : liste des exercices, énoncés d'origine, solutions et
+# vérifications ENCODÉES. Les sources en clair (solutions_src/, checks_src/)
+# ne sont jamais incluses.
+fhecli = ["data/info.toml", "data/originals/*.py", "data/solutions/*.sol", "data/checks/*.chk"]
 
 [tool.setuptools.dynamic]
 version = { attr = "fhecli.__version__" }

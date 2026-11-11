@@ -35,7 +35,7 @@ détectée. C'est une excellente propriété de sécurité... mais c'est aussi
 précisément ce qui rend tout calcul sur le chiffré impossible avec ce type
 de schéma.
 
-Testez avec : fhe-cli run ex3_fernet_tamper
+Vérifiez avec : fhe-cli check ex3
 """
 
 from cryptography.fernet import Fernet, InvalidToken
@@ -62,31 +62,3 @@ def tamper_and_check(token: bytes, key: bytes) -> bool:
     """
     # TODO: implémentez cette fonction
     raise NotImplementedError
-
-
-# ---------------------------------------------------------------------------
-# Tests : ne modifiez pas cette section, elle valide votre implémentation.
-# ---------------------------------------------------------------------------
-
-import pytest
-
-
-def test_roundtrip():
-    key = Fernet.generate_key()
-    token = encrypt_value("hello bank", key)
-    assert isinstance(token, bytes)
-    assert decrypt_value(token, key) == "hello bank"
-
-
-def test_different_keys_cannot_decrypt():
-    key1 = Fernet.generate_key()
-    key2 = Fernet.generate_key()
-    token = encrypt_value("secret data", key1)
-    with pytest.raises(Exception):
-        decrypt_value(token, key2)
-
-
-def test_tampering_is_detected():
-    key = Fernet.generate_key()
-    token = encrypt_value("revenu=4000", key)
-    assert tamper_and_check(token, key) is True
