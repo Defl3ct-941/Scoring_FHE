@@ -2,9 +2,10 @@
 include README.md LICENSE SYSTEM-REQUIREMENTS.md
 graft fhecli/data
 graft tests
-# Jamais dans les archives publiées : solutions en clair, espace de travail
+# Jamais dans les archives publiées : solutions et vérifications en clair, espace de travail
 # de développement, script d'encodage (inutile sans les solutions en clair).
 prune solutions_src
+prune checks_src
 prune exercises
 prune scripts
 exclude fhecli.toml pytest.ini requirements.txt

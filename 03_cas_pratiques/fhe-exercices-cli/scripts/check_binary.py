@@ -1,5 +1,5 @@
 """Vérifie un exécutable autonome fhe-cli : parcours étudiant complet, puis
-absence de texte lisible (sources, solutions, énoncés) dans le binaire.
+absence de texte lisible (sources, solutions, vérifications, énoncés) dans le binaire.
 
     python scripts/check_binary.py dist/fhe-cli-<version>-<os>-<arch>[.exe]
 
@@ -48,11 +48,9 @@ def run(binary: Path, *args: str, cwd: Path, stdin: str | None = None) -> subpro
 
 def solved_text(name: str, keep_marker: bool = False) -> str:
     original = resources.original_text(name)
-    tests_start = original.rfind("\n# ----", 0, original.index("# Tests"))
     imports = "\n".join(line for line in original.splitlines() if re.match(r"^(import|from) ", line))
     marker = "\n# I AM NOT DONE\n" if keep_marker else "\n"
-    return (f'"""ok"""\n{marker}\n{imports}\n\n{resources.solution_text(name)}\n'
-            f"{original[tests_start:]}")
+    return f'"""ok"""\n{marker}\n{imports}\n\n{resources.solution_text(name)}\n'
 
 
 def scenario(binary: Path) -> None:
@@ -76,6 +74,8 @@ def scenario(binary: Path) -> None:
             path.write_text(solved_text(name), encoding="utf-8")
             result = run(binary, "run", name, cwd=ws)
             check(result.returncode == 0, f"{name} : résolu -> 0")
+            alias = name.split("_")[0]
+            check(run(binary, "check", alias, cwd=ws).returncode == 0, f"check {alias} : résolu -> 0")
             if result.returncode != 0:
                 print(result.stdout[-2000:], result.stderr[-2000:])
         check("10/10" in run(binary, "list", cwd=ws / "exercises").stdout, "list 10/10 (depuis un sous-dossier)")
@@ -91,11 +91,12 @@ def plaintext_scan(binary: Path) -> None:
     print("Recherche de texte lisible dans le binaire :")
     blob = binary.read_bytes()
     needles: dict[str, str] = {}
-    for src in sorted((ROOT / "solutions_src").glob("*.py")):
-        for line in src.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if len(line) >= 24 and not line.startswith(("from ", "import ", '"""')):
-                needles[f"solution {src.stem} : {line[:50]}"] = line
+    for kind, folder in (("solution", "solutions_src"), ("vérification", "checks_src")):
+        for src in sorted((ROOT / folder).glob("*.py")):
+            for line in src.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if len(line) >= 24 and not line.startswith(("from ", "import ", '"""', "pytest.importorskip")):
+                    needles[f"{kind} {src.stem} : {line[:50]}"] = line
     for name in exercise_names():
         first_line = resources.original_text(name).splitlines()[1].strip()
         needles[f"énoncé {name} : {first_line}"] = first_line

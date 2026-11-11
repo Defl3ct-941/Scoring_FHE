@@ -24,7 +24,7 @@ encrypted_score.
         4. Additionner tous les termes à total avec add_encrypted.
         5. Déchiffrer total à la toute fin et le renvoyer.
 
-Testez avec : fhe-cli run ex9_scoring_paillier
+Vérifiez avec : fhe-cli check ex9
 """
 
 import math
@@ -100,44 +100,3 @@ def encrypted_score(pub: dict, priv: dict, features: list[int], weights: list[in
     """
     # TODO: suivez les 5 étapes décrites dans l'énoncé
     raise NotImplementedError
-
-
-# ---------------------------------------------------------------------------
-# Tests : ne modifiez pas cette section, elle valide votre implémentation.
-# ---------------------------------------------------------------------------
-
-P, Q = 1009, 1013
-
-
-def test_matches_plaintext_computation():
-    pub, priv = generate_keypair(P, Q)
-    features = [4000 - 2500, 30, 1]  # revenu centré, ratio, incidents
-    weights = [5, -9, -10]  # poids « en points x 1000 » comme dans la démo
-    bias = 50
-
-    result = encrypted_score(pub, priv, features, weights, bias)
-    expected = bias + sum(w * x for w, x in zip(weights, features))
-    assert result == expected
-
-
-def test_matches_plaintext_computation_other_profile():
-    pub, priv = generate_keypair(P, Q)
-    features = [1000 - 2500, 55, 4]
-    weights = [5, -9, -10]
-    bias = 50
-
-    result = encrypted_score(pub, priv, features, weights, bias)
-    expected = bias + sum(w * x for w, x in zip(weights, features))
-    assert result == expected
-
-
-def test_handles_negative_final_score():
-    pub, priv = generate_keypair(P, Q)
-    features = [1000 - 2500, 60, 5]
-    weights = [5, -9, -10]
-    bias = 50
-
-    result = encrypted_score(pub, priv, features, weights, bias)
-    expected = bias + sum(w * x for w, x in zip(weights, features))
-    assert expected < 0  # vérification du scénario choisi
-    assert result == expected

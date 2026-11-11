@@ -34,6 +34,7 @@ Livrables :
 | `04_demo/` | Application web pédagogique : AES, Paillier, CKKS |
 | `05_poster/` | Poster scientifique (exemples de référence dans `exemples/`) |
 | `06_video/` | Script, support PPT, vidéos et transcriptions |
+| `10_livrables/` | Versions finales des livrables, prêtes à être déposées |
 
 ## Démarrage rapide
 
@@ -44,6 +45,7 @@ pip install fhe-cli
 fhe-cli init          # crée le dossier fhe-exercices avec les 10 exercices
 cd fhe-exercices
 fhe-cli start         # lance l'atelier guidé ; fhe-cli help pour toutes les commandes
+fhe-cli check ex1     # vérifie un exercice (alias : ex1, exo1 ou 1)
 ```
 
 Prérequis système : [03_cas_pratiques/fhe-exercices-cli/SYSTEM-REQUIREMENTS.md](03_cas_pratiques/fhe-exercices-cli/SYSTEM-REQUIREMENTS.md).
