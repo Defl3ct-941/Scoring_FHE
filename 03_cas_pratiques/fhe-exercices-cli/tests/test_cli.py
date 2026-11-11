@@ -40,11 +40,9 @@ def fhecli(*args, cwd, input=None, env_extra=None):
 def solved_text(name: str, keep_marker: bool = False) -> str:
     """Énoncé d'origine dont les fonctions sont remplacées par la solution."""
     original = resources.original_text(name)
-    tests_start = original.rfind("\n# ----", 0, original.index("# Tests"))
     imports = "\n".join(line for line in original.splitlines() if re.match(r"^(import|from) ", line))
     marker = f"\n{MARKER_LINE}\n" if keep_marker else "\n"
-    return (f'"""{name} résolu."""\n{marker}\n{imports}\n\n'
-            f"{resources.solution_text(name)}\n{original[tests_start:]}")
+    return f'"""{name} résolu."""\n{marker}\n{imports}\n\n{resources.solution_text(name)}\n'
 
 
 def solve(ws: Path, name: str, keep_marker: bool = False) -> None:
@@ -83,6 +81,26 @@ def test_encoded_solutions_match_sources():
             f"{name}.sol est périmé : relancez python scripts/encode_solutions.py")
 
 
+def test_checks_are_encoded_and_hidden_from_students():
+    """Les vérifications ne sont jamais dans le fichier que l'étudiant édite."""
+    for name in NAMES:
+        blob = (CLI_ROOT / "fhecli" / "data" / "checks" / f"{name}.chk").read_text(encoding="ascii")
+        assert blob.startswith(solutions.CHECK_HEADER)
+        assert "def test_" not in blob
+        assert "def test_" in resources.check_text(name)
+        original = resources.original_text(name)
+        assert "def test_" not in original and "# Tests" not in original
+
+
+def test_encoded_checks_match_sources():
+    src = CLI_ROOT / "checks_src"
+    if not src.is_dir():
+        pytest.skip("checks_src/ absent (sdist)")
+    for name in NAMES:
+        assert resources.check_text(name) == (src / f"{name}.py").read_text(encoding="utf-8"), (
+            f"{name}.chk est périmé : relancez python scripts/encode_solutions.py")
+
+
 def test_encode_decode_roundtrip():
     text = "def f():\n    return 'éàç €'\n"
     assert solutions.decode(solutions.encode(text)) == text
@@ -98,7 +116,7 @@ def test_hint_ex1_has_accents():
 
 def test_init_creates_workspace(ws):
     assert (ws / "fhecli.toml").is_file()
-    assert "python_files = *.py" in (ws / "pytest.ini").read_text(encoding="utf-8")
+    assert not (ws / "pytest.ini").exists()
     for name in NAMES:
         assert (ws / "exercises" / f"{name}.py").read_text(encoding="utf-8") == resources.original_text(name)
 
@@ -134,7 +152,7 @@ def test_package_data_untouched(ws):
 
 # --- Sans espace de travail -----------------------------------------------
 
-@pytest.mark.parametrize("args", [["list"], ["run", "ex1_cesar"], ["hint", "ex1_cesar"],
+@pytest.mark.parametrize("args", [["list"], ["run", "ex1_cesar"], ["check", "ex1"], ["check"], ["hint", "ex1_cesar"],
                                   ["solution", "ex1_cesar"], ["reset", "--all", "-y"], ["watch"]])
 def test_commands_need_workspace(tmp_path, args):
     result = fhecli(*args, cwd=tmp_path)
@@ -260,7 +278,7 @@ def test_reset_without_name(ws):
 
 # --- erreurs ----------------------------------------------------------------
 
-@pytest.mark.parametrize("command", ["run", "hint", "solution", "reset"])
+@pytest.mark.parametrize("command", ["run", "check", "hint", "solution", "reset"])
 def test_unknown_exercise(ws, command):
     result = fhecli(command, "ex99_inconnu", cwd=ws)
     assert result.returncode == 1
@@ -282,19 +300,85 @@ def test_utf8_output_with_legacy_encoding(ws):
     assert "« é »".encode("utf-8") in result.stdout
 
 
-# --- pytest à la main et watch ----------------------------------------------
+# --- check et alias --------------------------------------------------------
 
-def test_manual_pytest_collects_exercises(ws):
+def test_check_statement_fails_without_revealing_checks(ws):
+    result = fhecli("check", "ex1", cwd=ws)
+    assert result.returncode == 1
+    assert "0/7 vérifications réussies" in result.stdout
+    assert "[xx] known vector" in result.stdout
+    assert "def test_" not in result.stdout
+    assert "fhecli-" not in result.stdout  # dossier temporaire masqué
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_check_marker_then_done(ws, name):
+    alias = name.split("_")[0]
+    solve(ws, name, keep_marker=True)
+    result = fhecli("check", alias, cwd=ws)
+    assert result.returncode == 2, result.stdout
+    assert "I AM NOT DONE" in result.stdout
+    solve(ws, name)
+    result = fhecli("check", alias, cwd=ws)
+    assert result.returncode == 0, result.stdout
+    assert "résolu" in result.stdout and "[xx]" not in result.stdout
+
+
+def test_check_partial_progress(ws):
+    path = ws / "exercises" / "ex1_cesar.py"
+    path.write_text(solved_text("ex1_cesar").replace("% 26", "% 25"), encoding="utf-8")
+    result = fhecli("check", "1", cwd=ws)
+    assert result.returncode == 1
+    assert "[ok]" in result.stdout and "[xx]" in result.stdout
+    assert "AssertionError" in result.stdout
+
+
+def test_check_without_argument_uses_next_exercise(ws):
+    solve(ws, NAMES[0])
+    result = fhecli("check", cwd=ws)
+    assert result.returncode == 1 and f"Vérification de {NAMES[1]}" in result.stdout
     for name in NAMES:
         solve(ws, name)
-    result = subprocess.run([sys.executable, "-m", "pytest", "-q"], cwd=ws,
-                            capture_output=True, text=True, encoding="utf-8", errors="replace")
-    assert result.returncode == 0, result.stdout
-    # 38 tests au total : 36 passent toujours, les 2 du bonus CKKS passent avec
-    # TenSEAL installé, ou sont ignorés (skipped) sans lui.
-    assert "failed" not in result.stdout
-    assert "36 passed" in result.stdout or "38 passed" in result.stdout
+    result = fhecli("check", cwd=ws)
+    assert result.returncode == 0 and "Tous les exercices sont résolus" in result.stdout
 
+
+def test_check_all(ws):
+    solve(ws, NAMES[0])
+    result = fhecli("check", "--all", cwd=ws)
+    assert result.returncode == 1
+    assert "Progression : 1/10 exercices résolus." in result.stdout
+    assert "7/7" in result.stdout
+
+
+def test_check_reports_load_errors_briefly(ws):
+    path = ws / "exercises" / f"{NAMES[0]}.py"
+    path.write_text("def oups(:\n", encoding="utf-8")
+    result = fhecli("check", "ex1", cwd=ws)
+    assert result.returncode == 1
+    assert "SyntaxError" in result.stdout and "ne peut pas être chargé" in result.stdout
+    assert "_pytest" not in result.stdout
+
+
+@pytest.mark.parametrize("alias", ["ex1", "exo1", "1", "EX1", "ex1_cesar.py"])
+def test_exercise_aliases(ws, alias):
+    for command in ("run", "hint", "solution"):
+        result = fhecli(command, alias, cwd=ws)
+        assert "Exercice inconnu" not in result.stdout, (command, alias)
+    assert "César" in fhecli("check", alias, cwd=ws).stdout
+
+
+def test_alias_ex10_is_not_ex1(ws):
+    result = fhecli("check", "ex10", cwd=ws)
+    assert "ex10_ckks_bonus" in result.stdout
+
+
+def test_list_shows_aliases(ws):
+    out = fhecli("list", cwd=ws).stdout
+    assert "ex1   ex1_cesar" in out and "ex10  ex10_ckks_bonus" in out
+
+
+# --- watch --------------------------------------------------------------------
 
 def test_watch_advances_and_finishes(ws):
     env = {**os.environ, "PYTHONPATH": str(CLI_ROOT), "NO_COLOR": "1", "PYTHONUNBUFFERED": "1"}
@@ -331,18 +415,18 @@ def test_pytest_command_normal_and_frozen(monkeypatch, tmp_path):
     assert runner.pytest_command(target)[:2] == [sys.executable, runner.PYTEST_SUBCOMMAND]
 
 
-def test_internal_pytest_subcommand(ws):
+def test_internal_pytest_subcommand(tmp_path):
     """`fhe-cli _run-pytest` exécute pytest : c'est ce qu'utilise le binaire."""
-    solve(ws, NAMES[0])
-    result = fhecli("_run-pytest", f"exercises/{NAMES[0]}.py", "-q", cwd=ws)
+    (tmp_path / "verif_demo.py").write_text("def test_ok():\n    assert True\n", encoding="utf-8")
+    result = fhecli("_run-pytest", "verif_demo.py", "-q", "-p", "no:cacheprovider", cwd=tmp_path)
     assert result.returncode == 0, result.stdout
-    assert "7 passed" in result.stdout
-    assert "_run-pytest" not in fhecli("--help", cwd=ws).stdout
+    assert "1 passed" in result.stdout
+    assert "_run-pytest" not in fhecli("--help", cwd=tmp_path).stdout
 
 
 # --- Aide et noms de commandes ----------------------------------------------
 
-COMMAND_NAMES = ["init", "start", "next", "previous", "list", "run", "hint", "solution", "reset", "help"]
+COMMAND_NAMES = ["init", "start", "next", "previous", "list", "check", "run", "hint", "solution", "reset", "help"]
 
 
 @pytest.mark.parametrize("args", [[], ["help"], ["-h"], ["--help"]])
@@ -355,7 +439,7 @@ def test_general_help_lists_all_commands(tmp_path, args):
     assert "usage:" not in result.stdout  # aide en français, pas celle d'argparse
 
 
-@pytest.mark.parametrize("args", [["help", "run"], ["run", "--help"], ["reset", "-h"], ["help", "watch"]])
+@pytest.mark.parametrize("args", [["help", "run"], ["help", "check"], ["check", "-h"], ["run", "--help"], ["reset", "-h"], ["help", "watch"]])
 def test_command_help(tmp_path, args):
     result = fhecli(*args, cwd=tmp_path)
     assert result.returncode == 0

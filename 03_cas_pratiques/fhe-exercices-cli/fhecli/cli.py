@@ -7,7 +7,7 @@ from pathlib import Path
 
 from fhecli import __version__, resources, ui
 from fhecli.info import exercise_names, find_exercise, load_exercises
-from fhecli.runner import PYTEST_SUBCOMMAND, has_marker, run_tests, status
+from fhecli.runner import PYTEST_SUBCOMMAND, check_exercise, has_marker, run_tests, status
 from fhecli.watch import watch as watch_loop
 from fhecli.workspace import DEFAULT_DIR, WorkspaceNotFound, find_workspace, init_workspace
 
@@ -60,17 +60,28 @@ COMMANDS = {
         "Liste les exercices par catégorie avec leur état : [x] résolu,\n"
         "[~] tests OK mais ligne « # I AM NOT DONE » à retirer, [ ] pas encore bon.",
     ),
+    "check": (
+        "check [exercice | --all]",
+        "Vérifie si un exercice est résolu",
+        "Lance les vérifications de l'exercice (cachées : elles ne sont pas dans\n"
+        "votre fichier) et affiche, pour chacune, si elle passe ou non.\n"
+        "Sans argument : vérifie le prochain exercice à résoudre.\n"
+        "  --all     vérifie tous les exercices et affiche le bilan\n"
+        "Codes de sortie : 0 résolu, 1 vérifications en échec, 2 vérifications OK\n"
+        "mais ligne « # I AM NOT DONE » encore présente.\n"
+        f"Exemples : {PROG} check ex1    {PROG} check --all",
+    ),
     "run": (
         "run <exercice>",
         "Teste un exercice et affiche le résultat",
         "Lance les tests d'un seul exercice. Codes de sortie : 0 résolu, 1 tests en\n"
         "échec, 2 tests OK mais ligne « # I AM NOT DONE » encore présente.\n"
-        f"Exemple : {PROG} run ex1_cesar",
+        f"Exemple : {PROG} run ex1",
     ),
     "hint": (
         "hint <exercice>",
         "Affiche un indice pour un exercice",
-        f"Exemple : {PROG} hint ex1_cesar",
+        f"Exemple : {PROG} hint ex1",
     ),
     "solution": (
         "solution <exercice>",
@@ -84,7 +95,7 @@ COMMANDS = {
         "Demande confirmation avant d'effacer votre code.\n"
         "  --all     réinitialise tous les exercices\n"
         "  -y        ne pas demander de confirmation\n"
-        f"Exemples : {PROG} reset ex1_cesar    {PROG} reset --all",
+        f"Exemples : {PROG} reset ex1    {PROG} reset --all",
     ),
     "help": (
         "help [commande]",
@@ -117,6 +128,9 @@ def general_help() -> str:
         f"  {'--version':<{width}}Affiche la version",
         "",
         f"Détail d'une commande : {PROG} help <commande>   (ou {PROG} <commande> --help)",
+        "",
+        "Un exercice se désigne par son nom complet (ex1_cesar) ou son alias :",
+        "ex1, exo1 ou simplement 1.",
         "",
         ui.DIM + f"Alias disponibles : fhecli (ancien nom de {PROG}), {PROG} watch (= {PROG} start)." + ui.RESET,
     ]
@@ -204,7 +218,7 @@ def cmd_list(args) -> int:
         if st == "done":
             done_count += 1
         bonus_tag = ui.warn(" (bonus)") if ex.bonus else ""
-        print(f"  {STATUS_ICON[st]} {ex.name:<24} {ex.title}{bonus_tag}")
+        print(f"  {STATUS_ICON[st]} {ex.alias:<5} {ex.name:<24} {ex.title}{bonus_tag}")
     print()
     print(f"Progression : {done_count}/{len(exercises)} exercices résolus.")
     print(ui.DIM + "[x] résolu   [~] tests OK, marqueur à retirer   [ ] pas encore bon" + ui.RESET)
@@ -232,8 +246,81 @@ def _run_exercise(ex) -> int:
         print(ui.success("Tous les tests passent."))
         return EXIT_OK
     print(ui.failure("Des tests échouent encore."))
-    print(f"Besoin d'un coup de pouce ? {ui.bold(PROG + ' hint ' + ex.name)}")
+    print(f"Besoin d'un coup de pouce ? {ui.bold(PROG + ' hint ' + ex.alias)}")
     return EXIT_ERROR
+
+
+CHECK_ICON = {"PASSED": ui.success("[ok]"), "SKIPPED": ui.warn("[--]"), "XFAIL": ui.success("[ok]")}
+
+
+def _readable(test_name: str) -> str:
+    return test_name.removeprefix("test_").replace("_", " ")
+
+
+def _check_one(ex, verbose: bool = True) -> int:
+    report = check_exercise(ex.path)
+    marker = has_marker(ex.path)
+    if report.passed and not marker:
+        code, verdict = EXIT_OK, ui.success("résolu")
+    elif report.passed:
+        code, verdict = EXIT_MARKER_LEFT, ui.warn("vérifications OK, ligne « # I AM NOT DONE » à retirer")
+    else:
+        code, verdict = EXIT_ERROR, ui.failure("pas encore résolu")
+    ok = sum(1 for _, outcome in report.results if outcome in {"PASSED", "XFAIL", "SKIPPED"})
+    total = len(report.results)
+    if not verbose:
+        score = f"{ok}/{total}" if total else "-"
+        print(f"  {STATUS_ICON[{EXIT_OK: 'done', EXIT_MARKER_LEFT: 'almost'}.get(code, 'pending')]} "
+              f"{ex.alias:<5} {ex.name:<24} {score:>5}  {verdict}")
+        return code
+    print(ui.bold(f"Vérification de {ex.name} ({ex.alias}) - {ex.title}"))
+    print(f"Fichier : {ex.path}")
+    print()
+    for test, outcome in report.results:
+        icon = CHECK_ICON.get(outcome, ui.failure("[xx]"))
+        print(f"  {icon} {_readable(test)}" + (ui.DIM + " (ignorée)" + ui.RESET if outcome == "SKIPPED" else ""))
+    if not report.results:
+        print(report.output)  # erreur avant toute vérification (syntaxe, import...)
+    elif not report.passed:
+        errors = list(dict.fromkeys(  # sans doublons, dans l'ordre
+            line.strip() for line in report.output.splitlines()
+            if line.startswith("E ") or (line.startswith(str(ex.path)) and re.search(r":\d+: ", line))))
+        if errors:
+            print()
+            print(ui.DIM + "Détail des échecs :" + ui.RESET)
+            for line in errors[:12]:
+                print("  " + line)
+    print()
+    if not report.results:
+        print(ui.failure("Aucune vérification n'a pu être lancée : corrigez l'erreur ci-dessus."))
+        return EXIT_ERROR
+    print(f"{ok}/{total} vérifications réussies : {verdict}.")
+    if code == EXIT_MARKER_LEFT:
+        print("Retirez la ligne « # I AM NOT DONE » du fichier pour valider l'exercice.")
+    elif code == EXIT_ERROR:
+        print(f"Besoin d'un coup de pouce ? {ui.bold(PROG + ' hint ' + ex.alias)}")
+    else:
+        print(f"Comparez avec la solution de référence : {ui.bold(PROG + ' solution ' + ex.alias)}")
+    return code
+
+
+def cmd_check(args) -> int:
+    if args.all:
+        exercises = load_exercises(_workspace())
+        print(ui.bold(f"Vérification des {len(exercises)} exercices :"))
+        codes = [_check_one(ex, verbose=False) for ex in exercises]
+        done = codes.count(EXIT_OK)
+        print()
+        print(f"Progression : {done}/{len(exercises)} exercices résolus.")
+        return EXIT_OK if done == len(exercises) else EXIT_ERROR
+    if args.name:
+        return _check_one(_exercise_or_exit(args.name))
+    exercises = load_exercises(_workspace())
+    index = _first_pending_index(exercises)
+    if index is None:
+        print(ui.success(ui.bold("Tous les exercices sont résolus, bravo !")))
+        return EXIT_OK
+    return _check_one(exercises[index])
 
 
 def _first_pending_index(exercises) -> int | None:
@@ -282,8 +369,8 @@ def cmd_solution(args) -> int:
         print(ui.warn(f"La solution de {ex.name} est verrouillée."))
         print("Elle se débloque quand l'exercice est résolu : les tests passent ET la")
         print("ligne « # I AM NOT DONE » a été retirée du fichier.")
-        print(f"Vérifiez où vous en êtes avec {ui.bold(PROG + ' run ' + ex.name)}, "
-              f"ou demandez un indice avec {ui.bold(PROG + ' hint ' + ex.name)}.")
+        print(f"Vérifiez où vous en êtes avec {ui.bold(PROG + ' check ' + ex.alias)}, "
+              f"ou demandez un indice avec {ui.bold(PROG + ' hint ' + ex.alias)}.")
         return EXIT_ERROR
     print(ui.bold(f"Solution de référence pour {ex.name} :"))
     print(ui.rule())
@@ -303,7 +390,7 @@ def cmd_reset(args) -> int:
         question = f"Remettre {targets[0].name} à son énoncé de départ ? Votre code sera perdu."
     else:
         print(ui.failure("Précisez un nom d'exercice, ou utilisez --all."))
-        print(f"Exemples : {PROG} reset ex1_cesar    {PROG} reset --all")
+        print(f"Exemples : {PROG} reset ex1    {PROG} reset --all")
         return EXIT_ERROR
 
     if not args.yes and not ui.confirm(question):
@@ -356,6 +443,9 @@ def build_parser() -> argparse.ArgumentParser:
     add("next", cmd_next)
     add("previous", cmd_previous)
     add("list", cmd_list)
+    p_check = add("check", cmd_check)
+    p_check.add_argument("name", nargs="?", metavar="exercice")
+    p_check.add_argument("--all", action="store_true")
     add("run", cmd_run).add_argument("name", metavar="exercice")
     add("hint", cmd_hint).add_argument("name", metavar="exercice")
     add("solution", cmd_solution).add_argument("name", metavar="exercice")
