@@ -79,10 +79,10 @@ sont embarqués compressés, jamais en clair.
 | `fhe-cli start` | Lance l'atelier guidé : affiche l'exercice en cours, relance ses tests à chaque sauvegarde et passe au suivant une fois résolu |
 | `fhe-cli next` | Passe au prochain exercice à résoudre (le premier non résolu) et lance ses tests |
 | `fhe-cli previous` | Revient à l'exercice qui précède le prochain à résoudre et lance ses tests |
-| `fhe-cli list` | Affiche tous les exercices et votre progression |
+| `fhe-cli list` | Affiche tous les exercices, leur alias et votre progression |
 | `fhe-cli check [exercice]` | Vérifie si un exercice est résolu (sans argument : le prochain à résoudre) |
 | `fhe-cli check --all` | Vérifie tous les exercices et affiche le bilan |
-| `fhe-cli run <exercice>` | Lance les vérifications d'un exercice et affiche la sortie complète de pytest |
+| `fhe-cli run <exercice>` | Comme `check`, avec la sortie détaillée de pytest (utile pour comprendre un échec) |
 | `fhe-cli hint <exercice>` | Affiche un indice pour un exercice |
 | `fhe-cli solution <exercice>` | Affiche la solution de référence (une fois l'exercice résolu) |
 | `fhe-cli reset <exercice>` | Remet un exercice à son énoncé de départ (avec confirmation) |
