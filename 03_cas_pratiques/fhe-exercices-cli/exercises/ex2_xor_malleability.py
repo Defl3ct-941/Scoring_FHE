@@ -34,7 +34,7 @@ pour les opérations mathématiques choisies par le concepteur du schéma
 C'est toute la différence entre une malléabilité subie (dangereuse) et une
 malléabilité conçue (le FHE).
 
-Testez avec : fhe-cli run ex2_xor_malleability
+Vérifiez avec : fhe-cli check ex2
 """
 
 # I AM NOT DONE
@@ -64,39 +64,3 @@ def reveal_xor_of_plaintexts(c1: bytes, c2: bytes) -> bytes:
     """
     # TODO: implémentez cette fonction
     raise NotImplementedError
-
-
-# ---------------------------------------------------------------------------
-# Tests : ne modifiez pas cette section, elle valide votre implémentation.
-# ---------------------------------------------------------------------------
-
-
-def test_xor_bytes_basic():
-    assert xor_bytes(b"\x00\xff", b"\xff\x00") == b"\xff\xff"
-    assert xor_bytes(b"AB", b"AB") == b"\x00\x00"
-
-
-def test_encrypt_decrypt_roundtrip():
-    key = b"secret"
-    for message in [b"hello world", b"a", b"", b"x" * 50]:
-        enc = xor_encrypt(message, key)
-        assert xor_decrypt(enc, key) == message
-
-
-def test_key_is_repeated():
-    key = b"ab"
-    message = b"1234"
-    enc = xor_encrypt(message, key)
-    assert enc == xor_bytes(message, b"abab")
-
-
-def test_two_time_pad_attack():
-    key = b"supersecretkey!!"
-    p1 = b"TRANSFER 100 EUR"
-    p2 = b"TRANSFER 999 EUR"
-    c1 = xor_encrypt(p1, key)
-    c2 = xor_encrypt(p2, key)
-
-    # sans connaître `key`, on doit retrouver p1 XOR p2
-    revealed = reveal_xor_of_plaintexts(c1, c2)
-    assert revealed == xor_bytes(p1, p2)

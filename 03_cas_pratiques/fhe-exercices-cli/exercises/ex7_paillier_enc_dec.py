@@ -25,7 +25,7 @@ m -= n.
 
 Vous pouvez utiliser le pow(base, exp, mod) intégré ici.
 
-Testez avec : fhe-cli run ex7_paillier_enc_dec
+Vérifiez avec : fhe-cli check ex7
 """
 
 # I AM NOT DONE
@@ -69,50 +69,3 @@ def decrypt(pub: dict, priv: dict, c: int) -> int:
     """Déchiffre c. Gère la représentation symétrique pour les négatifs."""
     # TODO: implémentez la formule de déchiffrement, puis la correction m > n//2
     raise NotImplementedError
-
-
-# ---------------------------------------------------------------------------
-# Tests : ne modifiez pas cette section, elle valide votre implémentation.
-# ---------------------------------------------------------------------------
-
-import math
-import random
-
-P, Q = 1009, 1013
-
-
-def _random_r(n: int, rng: random.Random) -> int:
-    r = rng.randrange(2, n)
-    while math.gcd(r, n) != 1:
-        r = rng.randrange(2, n)
-    return r
-
-
-def test_roundtrip_small_values():
-    pub, priv = generate_keypair(P, Q)
-    rng = random.Random(1)
-    for m in [0, 1, 5, 42, 1000]:
-        r = _random_r(pub["n"], rng)
-        c = encrypt(pub, m, r)
-        assert decrypt(pub, priv, c) == m
-
-
-def test_different_r_give_different_ciphertexts_same_plaintext():
-    pub, priv = generate_keypair(P, Q)
-    rng = random.Random(2)
-    r1, r2 = _random_r(pub["n"], rng), _random_r(pub["n"], rng)
-    c1 = encrypt(pub, 7, r1)
-    c2 = encrypt(pub, 7, r2)
-    assert c1 != c2  # aléatoire -> chiffrés différents...
-    assert decrypt(pub, priv, c1) == 7  # ... mais même message une fois déchiffré
-    assert decrypt(pub, priv, c2) == 7
-
-
-def test_negative_number_via_symmetric_representation():
-    pub, priv = generate_keypair(P, Q)
-    n = pub["n"]
-    rng = random.Random(3)
-    r = _random_r(n, rng)
-    # -5 est représenté comme (n - 5) dans Z_n
-    c = encrypt(pub, n - 5, r)
-    assert decrypt(pub, priv, c) == -5
