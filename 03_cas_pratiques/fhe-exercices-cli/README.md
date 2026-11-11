@@ -61,10 +61,10 @@ dossier du `PATH`, puis utilisez-le comme dans les exemples :
 
 ```bash
 # Windows (PowerShell), sans le renommer
-.\fhe-cli-1.4.0-windows-x86_64.exe init
+.\fhe-cli-1.5.0-windows-x86_64.exe init
 # macOS / Linux
-chmod +x fhe-cli-1.4.0-linux-x86_64
-./fhe-cli-1.4.0-linux-x86_64 init
+chmod +x fhe-cli-1.5.0-linux-x86_64
+./fhe-cli-1.5.0-linux-x86_64 init
 ```
 
 Sous macOS, au premier lancement, autorisez le binaire dans Réglages système >
@@ -80,7 +80,9 @@ sont embarqués compressés, jamais en clair.
 | `fhe-cli next` | Passe au prochain exercice à résoudre (le premier non résolu) et lance ses tests |
 | `fhe-cli previous` | Revient à l'exercice qui précède le prochain à résoudre et lance ses tests |
 | `fhe-cli list` | Affiche tous les exercices et votre progression |
-| `fhe-cli run <exercice>` | Teste un exercice et affiche le résultat |
+| `fhe-cli check [exercice]` | Vérifie si un exercice est résolu (sans argument : le prochain à résoudre) |
+| `fhe-cli check --all` | Vérifie tous les exercices et affiche le bilan |
+| `fhe-cli run <exercice>` | Lance les vérifications d'un exercice et affiche la sortie complète de pytest |
 | `fhe-cli hint <exercice>` | Affiche un indice pour un exercice |
 | `fhe-cli solution <exercice>` | Affiche la solution de référence (une fois l'exercice résolu) |
 | `fhe-cli reset <exercice>` | Remet un exercice à son énoncé de départ (avec confirmation) |
@@ -89,25 +91,26 @@ sont embarqués compressés, jamais en clair.
 | `fhe-cli -h`, `fhe-cli --help` | Affiche la liste des commandes |
 | `fhe-cli --version` | Affiche la version |
 
-Exemples : `fhe-cli run ex1_cesar`, `fhe-cli hint ex1_cesar`,
+Un exercice se désigne par son nom complet ou par son **alias** : `ex1_cesar`,
+`ex1`, `exo1` et `1` désignent le même exercice (`fhe-cli list` affiche les
+alias). Exemples : `fhe-cli check ex1`, `fhe-cli hint ex1`, `fhe-cli run 4`,
 `fhe-cli help reset`. Lancé sans argument, `fhe-cli` affiche l'aide.
 
-Codes de sortie de `fhe-cli run` : `0` exercice résolu, `1` tests en échec
-(ou erreur), `2` tests OK mais ligne `# I AM NOT DONE` encore présente.
+Codes de sortie de `fhe-cli check` et `fhe-cli run` : `0` exercice résolu,
+`1` vérifications en échec (ou erreur), `2` vérifications OK mais ligne
+`# I AM NOT DONE` encore présente.
 
 `fhe-cli init` crée un **espace de travail** : le dossier `exercises/` (vos
-fichiers), un `pytest.ini` et un fichier marqueur `fhecli.toml`. Les commandes
-retrouvent cet espace depuis n'importe quel sous-dossier ; `fhe-cli init`
-refuse d'écraser un espace existant. Vous pouvez aussi lancer les tests
-vous-même avec `python -m pytest` depuis l'espace de travail.
+fichiers) et un fichier marqueur `fhecli.toml`. Les commandes retrouvent cet
+espace depuis n'importe quel sous-dossier ; `fhe-cli init` refuse d'écraser un
+espace existant.
 
 Note : `fhecli` reste accepté comme alias de `fhe-cli`, et `watch` comme alias de
 `start` (le module Python s'appelle `fhecli`).
 
 ## Comment marche un exercice
 
-Chaque exercice est un unique fichier `.py` dans `exercises/`, qui contient
-tout :
+Chaque exercice est un unique fichier `.py` dans `exercises/`, qui contient :
 
 1. Un docstring en haut du fichier avec l'énoncé complet (contexte,
    formules, ce qu'il faut implémenter, indices).
@@ -117,8 +120,23 @@ tout :
    c'est un geste délibérément manuel, pour vous forcer à vraiment valider
    votre travail.
 3. La ou les fonctions à compléter (marquées `raise NotImplementedError`).
-4. Une section de tests en bas du fichier (à ne pas modifier), exécutée à
-   chaque `fhe-cli run` ou pendant `fhe-cli start`.
+
+Les **vérifications** (tests pytest) ne sont pas dans ce fichier : elles sont
+livrées à part, encodées dans le paquet comme les solutions. `fhe-cli check`,
+`run` et `start` les décodent dans un dossier temporaire le temps de les
+exécuter sur votre fichier, puis les effacent. Vous voyez le nom de chaque
+vérification et si elle passe, pas son code.
+
+Exemple de parcours :
+
+```bash
+fhe-cli check ex1      # 0/7 vérifications réussies : pas encore résolu
+# ... vous complétez exercises/ex1_cesar.py ...
+fhe-cli check ex1      # 7/7, mais la ligne « # I AM NOT DONE » est encore là
+# ... vous retirez la ligne ...
+fhe-cli check ex1      # résolu
+fhe-cli solution ex1   # la solution de référence est débloquée
+```
 
 ## Solutions
 
@@ -126,7 +144,7 @@ La solution de référence d'un exercice est **verrouillée** tant que
 l'exercice n'est pas résolu : `fhe-cli solution` ne l'affiche qu'une fois que
 les tests passent **et** que la ligne `# I AM NOT DONE` a été retirée.
 
-Dans le paquet, les solutions ne sont pas stockées en clair : elles sont
+Dans le paquet, les solutions et les vérifications ne sont pas stockées en clair : elles sont
 compressées et encodées (zlib + base64). C'est une **dissuasion**, pour
 éviter de tomber sur la correction par hasard en fouillant le dossier du
 paquet, **pas une protection** : rien n'empêche quelqu'un de déterminé de les
@@ -150,7 +168,7 @@ décoder. Le vrai garde-fou reste pédagogique.
 ## Développement (depuis le dépôt Scoring FHE)
 
 Le dossier `03_cas_pratiques/fhe-exercices-cli` du dépôt est lui-même un
-espace de travail (il contient `fhecli.toml`, `pytest.ini` et `exercises/`) :
+espace de travail (il contient `fhecli.toml` et `exercises/`) :
 
 ```bash
 cd 03_cas_pratiques/fhe-exercices-cli
@@ -169,27 +187,31 @@ fhe-exercices-cli/
 ├── pyproject.toml             # empaquetage (PyPI : fhe-cli), commande fhe-cli
 ├── LICENSE, MANIFEST.in
 ├── fhecli/                    # le module Python
-│   ├── cli.py                 # commandes : init, start, list, run, hint, solution, reset, help
+│   ├── cli.py                 # commandes : init, start, next, previous, list, check, run, hint, solution, reset, help
 │   ├── workspace.py           # création et recherche de l'espace de travail
 │   ├── watch.py               # atelier guidé (surveillance des fichiers)
-│   ├── runner.py              # exécution de pytest en sous-processus isolé
+│   ├── runner.py              # vérifications cachées exécutées par pytest en sous-processus isolé
 │   ├── info.py, resources.py  # liste des exercices, accès aux données du paquet
-│   ├── solutions.py           # encodage / décodage des solutions
+│   ├── solutions.py           # encodage / décodage des solutions et vérifications
 │   ├── ui.py                  # couleurs, UTF-8, confirmations
 │   └── data/                  # embarqué dans le paquet (lecture seule)
 │       ├── info.toml          # métadonnées des exercices (titre, catégorie, indice)
 │       ├── originals/         # énoncés d'origine (fhe-cli init / reset)
-│       └── solutions/         # solutions ENCODÉES (.sol)
+│       ├── solutions/         # solutions ENCODÉES (.sol)
+│       └── checks/            # vérifications ENCODÉES (.chk)
 ├── solutions_src/             # solutions en clair : dans le dépôt, JAMAIS dans la wheel ni le sdist
+├── checks_src/                # vérifications en clair (tests pytest) : idem
 ├── scripts/                   # encode_solutions.py, build_binary.py, check_binary.py
 ├── packaging/                 # spécification PyInstaller (exécutables autonomes)
 ├── tests/                     # tests automatisés de l'outil
 ├── exercises/                 # espace de travail de développement
-├── fhecli.toml, pytest.ini    # marqueur et configuration de cet espace
+├── fhecli.toml                # marqueur de cet espace de travail
+├── pytest.ini                 # configuration des tests de l'outil
 └── requirements.txt
 ```
 
-Après toute modification d'une solution dans `solutions_src/` :
+Après toute modification d'une solution (`solutions_src/`) ou d'une
+vérification (`checks_src/`) :
 
 ```bash
 python scripts/encode_solutions.py
@@ -214,7 +236,7 @@ python scripts/build_binary.py   # dist/fhe-cli-<version>-<os>-<arch>[.exe]
 
 `scripts/build_binary.py` lance ensuite `scripts/check_binary.py`, qui
 rejoue le parcours d'un étudiant avec le binaire seul (sans Python dans le
-`PATH`) et vérifie qu'aucun source, aucune solution ni aucun énoncé n'apparaît
+`PATH`) et vérifie qu'aucun source, aucune solution, aucune vérification ni aucun énoncé n'apparaît
 en clair dans le fichier.
 
 La CI **GitHub Actions** (`.github/workflows/fhecli.yml`) fait tout cela

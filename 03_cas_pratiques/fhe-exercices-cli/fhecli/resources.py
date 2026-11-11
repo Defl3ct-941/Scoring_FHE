@@ -1,6 +1,7 @@
 """Accès aux données embarquées dans le paquet (lecture seule).
 
-Les énoncés d'origine, la liste des exercices et les solutions encodées sont
+Les énoncés d'origine, la liste des exercices, les solutions et les
+vérifications (encodées, jamais en clair) sont
 livrés avec le paquet (dossier fhecli/data). Ils ne sont jamais modifiés :
 l'étudiant travaille sur une copie, dans son espace de travail (`fhe-cli init`).
 """
@@ -26,3 +27,13 @@ def has_solution(name: str) -> bool:
 
 def solution_text(name: str) -> str:
     return solutions.decode((DATA / "solutions" / f"{name}.sol").read_text(encoding="ascii"))
+
+
+def has_check(name: str) -> bool:
+    return (DATA / "checks" / f"{name}.chk").is_file()
+
+
+def check_text(name: str) -> str:
+    """Vérifications (tests pytest) d'un exercice, décodées en mémoire."""
+    blob = (DATA / "checks" / f"{name}.chk").read_text(encoding="ascii")
+    return solutions.decode(blob, solutions.CHECK_HEADER)
