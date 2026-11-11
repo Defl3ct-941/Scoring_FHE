@@ -1,4 +1,4 @@
-"""Mode « watch » : réexécute les tests de l'exercice courant à chaque
+"""Mode « watch » : réexécute les vérifications de l'exercice courant à chaque
 sauvegarde du fichier, et avance automatiquement une fois qu'il est résolu.
 """
 
@@ -26,9 +26,9 @@ def _run_and_report(ex: Exercise) -> bool:
     passed, output = run_tests(ex.path)
     print()
     if passed:
-        print(ui.success("Tests : OK"))
+        print(ui.success("Vérifications : OK"))
     else:
-        print(ui.failure("Tests : ÉCHEC"))
+        print(ui.failure("Vérifications : ÉCHEC"))
         print(output)
     return passed
 
@@ -56,7 +56,7 @@ def _offer_solution(ex: Exercise) -> None:
 def watch(exercises: list[Exercise]) -> None:
     total = len(exercises)
     print(ui.bold("fhe-cli start") + " - atelier guidé")
-    print("Résolvez les exercices dans l'ordre. Dès que les tests d'un")
+    print("Résolvez les exercices dans l'ordre. Dès que les vérifications d'un")
     print("exercice passent, retirez le commentaire « # I AM NOT DONE » en")
     print("haut du fichier : l'outil passera alors au suivant.")
 
@@ -84,7 +84,7 @@ def watch(exercises: list[Exercise]) -> None:
                 continue
             if passed:
                 print(ui.warn(
-                    "Tests OK ! Retirez « # I AM NOT DONE » en haut du fichier "
+                    "Vérifications OK ! Retirez « # I AM NOT DONE » en haut du fichier "
                     "pour passer au suivant."
                 ))
 
@@ -101,7 +101,7 @@ def watch(exercises: list[Exercise]) -> None:
                         break
                     if passed and has_marker(current.path):
                         print(ui.warn(
-                            "Tests OK ! Retirez « # I AM NOT DONE » en haut du "
+                            "Vérifications OK ! Retirez « # I AM NOT DONE » en haut du "
                             "fichier pour passer au suivant."
                         ))
     except KeyboardInterrupt:
