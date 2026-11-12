@@ -1,14 +1,14 @@
 """
 Construit le poster A0 à partir de la source éditable 05_poster/poster.html.
 
-  1. recopie data/mesures.json dans le bloc <script id="mesures"> du poster ;
+  1. recopie data/mesures_v2.json dans le bloc <script id="mesures"> du poster ;
   2. imprime le poster en PDF vectoriel A0 (841 x 1189 mm, polices Roboto embarquées) ;
   3. produit un aperçu PNG basse définition (poster_apercu.png).
 
 Prérequis :
     pip install playwright pypdf && python -m playwright install chromium
 Usage (depuis la racine du dépôt) :
-    python 05_poster/scripts/benchmark.py     # facultatif : refaire les mesures
+    python 05_poster/scripts/benchmark_v2.py  # facultatif : refaire les mesures
     python 05_poster/scripts/build_poster.py
 Variable facultative CHROMIUM_PATH : chemin d'un Chromium déjà installé.
 """
@@ -22,7 +22,7 @@ from playwright.sync_api import sync_playwright
 
 POSTER_DIR = Path(__file__).resolve().parents[1]
 HTML = POSTER_DIR / "poster.html"
-DATA = POSTER_DIR / "data" / "mesures.json"
+DATA = POSTER_DIR / "data" / "mesures_v2.json"
 PDF = POSTER_DIR / "poster_FYC_scoring_FHE_A0.pdf"
 PNG = POSTER_DIR / "poster_apercu.png"
 
