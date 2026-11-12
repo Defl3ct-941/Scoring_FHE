@@ -146,7 +146,7 @@
         <h2>Étape 3 : FHE complet, CKKS (Microsoft SEAL / TenSEAL)</h2>
         <p class="lead">
           CKKS va plus loin que Paillier : addition <em>et</em> multiplication <strong>entre deux chiffrés</strong>,
-          sur des nombres réels approximatifs. On simule ici une vraie séparation client/serveur : le serveur ne
+          sur des nombres réels approximatifs. Cette page <strong>simule</strong> la séparation client/serveur dans un seul programme (qui a reçu vos valeurs en clair) ; la séparation réelle se teste avec le client séparé <code>04_demo/client/client.py</code>. Le « serveur » simulé ne
           reçoit qu'un <strong>contexte public</strong> (sans clé secrète) et ne peut donc pas déchiffrer, même s'il essaie.
         </p>
 

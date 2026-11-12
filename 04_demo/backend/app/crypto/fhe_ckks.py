@@ -1,5 +1,5 @@
 """
-ETAPE 3 - FHE "complet" : le schema CKKS (Cheon-Kim-Kim-Song, 2017) via
+ETAPE 3 - Schema CKKS (Cheon-Kim-Kim-Song, 2017) via
 Microsoft SEAL (bibliotheque TenSEAL). Contrairement a Paillier, CKKS
 supporte addition ET multiplication ENTRE DEUX CHIFFRES, sur des nombres
 REELS (approximatifs) -- ce qui permet en theorie des modeles bien plus
@@ -7,7 +7,14 @@ riches qu'un score lineaire (reseaux de neurones, regressions logistiques
 approchees, etc.), au prix d'un chiffre beaucoup plus gros et d'une
 precision approximative (bruit).
 
-Point cle de la demo : on simule VRAIMENT la separation client/serveur.
+Vocabulaire : CKKS appartient a la famille FHE, mais ce prototype l'utilise en
+mode "nivele" (profondeur fixee, aucun bootstrapping). Le score lineaire ne
+consomme meme aucune multiplication chiffre x chiffre.
+
+Cette etape SIMULE la separation client/serveur DANS UN SEUL PROCESSUS, qui a en
+plus recu les valeurs en clair par l'API : elle montre le mecanisme, pas une
+protection contre l'hebergeur. La separation reelle (deux processus, cle
+secrete chez le client) est dans app/remote.py et 04_demo/client/client.py.
   - Le CLIENT genere un contexte avec la cle secrete, chiffre son vecteur
     de features, et n'envoie au serveur qu'un contexte PUBLIC (sans cle
     secrete) + le vecteur chiffre.
@@ -86,7 +93,7 @@ def run_ckks_demo(values: list[float], weights: list[float], bias: float) -> dic
 
     return {
         "step": "ckks",
-        "title": "FHE complet (CKKS, via Microsoft SEAL / TenSEAL)",
+        "title": "CKKS nivele (via Microsoft SEAL / TenSEAL)",
         "params": {
             "poly_modulus_degree": POLY_MODULUS_DEGREE,
             "coeff_mod_bit_sizes": COEFF_MOD_BIT_SIZES,
@@ -105,15 +112,16 @@ def run_ckks_demo(values: list[float], weights: list[float], bias: float) -> dic
         "absolute_error": abs(round(float(decrypted) - plaintext_check, 8)),
         "timings_ms": {
             "client_context_and_encryption": round((t1 - t0) * 1000, 4),
-            "network_context_transfer_simulated": round((t2 - t1) * 1000, 4),
+            "context_serialization_and_load_no_network": round((t2 - t1) * 1000, 4),
             "server_homomorphic_dot_product": round((t3 - t2) * 1000, 4),
-            "network_result_transfer_simulated": round((t4 - t3) * 1000, 4),
+            "result_serialization_no_network": round((t4 - t3) * 1000, 4),
             "client_decryption": round((t5 - t4) * 1000, 4),
         },
         "conclusion": (
-            "Le serveur a calcule un produit scalaire chiffre (addition ET "
-            "multiplication, sur des reels) sans jamais detenir la cle "
-            "secrete : la tentative de dechiffrement cote serveur echoue. "
+            "Le contexte public suffit a calculer le produit scalaire, et "
+            "sans cle secrete le dechiffrement echoue. Ici client et serveur "
+            "sont simules dans le meme processus : pour une separation "
+            "reelle, voir le client separe (04_demo/client). "
             "Le resultat n'est qu'APPROXIMATIF (bruit CKKS), et le chiffre "
             "est des milliers de fois plus volumineux que la donnee brute."
         ),

@@ -1,0 +1,188 @@
+{
+  "client": {
+    "revenu": 3200.0,
+    "ratio_endettement": 28.0,
+    "incidents": 1
+  },
+  "machine": {
+    "systeme": "Darwin 25.6.0 arm64",
+    "cpu": "Apple M1",
+    "coeurs_logiques": 8,
+    "ram_go": 8.0,
+    "python": "3.13.2",
+    "tenseal": "0.3.18",
+    "commit": "e19078f",
+    "arbre_modifie": true,
+    "date": "2026-11-12 11:22"
+  },
+  "methode": {
+    "repetitions": 30,
+    "repetitions_generation_cles": 10,
+    "echauffement": "1 execution par phase, non comptee",
+    "ordre": "phases alternees a chaque tour",
+    "horloge": "time.perf_counter, un seul processus, sans reseau"
+  },
+  "clair": {
+    "score": 18.3,
+    "par_score_us_mediane": 0.4667137550040934,
+    "taille_lot": 100000,
+    "octets_entree": 24
+  },
+  "paillier": {
+    "cle_bits": 2048,
+    "score": 18.3,
+    "octets_cle_publique": 256,
+    "octets_entree_chiffree": 1536,
+    "octets_resultat_chiffre": 512,
+    "temps": {
+      "generation_cles": {
+        "mediane_ms": 435.46779149983195,
+        "q1_ms": 320.5768647503646,
+        "q3_ms": 668.704739749046,
+        "min_ms": 292.67179099952045,
+        "max_ms": 806.2302910002472,
+        "n": 10
+      },
+      "chiffrement_3_valeurs": {
+        "mediane_ms": 379.27516650051984,
+        "q1_ms": 378.7675102503272,
+        "q3_ms": 380.4691562500011,
+        "min_ms": 376.8988750016433,
+        "max_ms": 435.68254099955084,
+        "n": 30
+      },
+      "serveur": {
+        "mediane_ms": 4.6250625000539,
+        "q1_ms": 4.602593250183418,
+        "q3_ms": 4.694374749760755,
+        "min_ms": 4.5953329990879865,
+        "max_ms": 49.2688750000525,
+        "n": 30
+      },
+      "serveur_avec_rechiffrement_du_biais": {
+        "mediane_ms": 130.98531299965543,
+        "q1_ms": 130.66489649963842,
+        "q3_ms": 131.66944749946197,
+        "min_ms": 130.1150420003978,
+        "max_ms": 268.68820900017454,
+        "n": 30
+      },
+      "dechiffrement": {
+        "mediane_ms": 127.13389550026477,
+        "q1_ms": 126.80866675009383,
+        "q3_ms": 127.67931250027686,
+        "min_ms": 126.61533299979055,
+        "max_ms": 217.49079099936353,
+        "n": 30
+      }
+    }
+  },
+  "ckks": {
+    "poly_modulus_degree": 8192,
+    "coeff_mod_bit_sizes": [
+      60,
+      40,
+      40,
+      60
+    ],
+    "echelle_log2": 40,
+    "score": 18.299995925959543,
+    "octets_entree_chiffree": 331565,
+    "octets_resultat_produit_scalaire": 235098,
+    "octets_resultat_terme_a_terme": 235095,
+    "octets_contexte_public_tel_que_poster": 35289828,
+    "octets_contexte_public_sans_relinearisation": 33894906,
+    "octets_contexte_public_sans_rotations": 464407,
+    "temps": {
+      "generation_cles_avec_rotations": {
+        "mediane_ms": 110.17668749991572,
+        "q1_ms": 108.87227025068569,
+        "q3_ms": 115.3897087506266,
+        "min_ms": 107.62954099845956,
+        "max_ms": 216.6529169990099,
+        "n": 10
+      },
+      "generation_cles_sans_rotations": {
+        "mediane_ms": 12.916499500533973,
+        "q1_ms": 12.703708500339417,
+        "q3_ms": 13.504468500741496,
+        "min_ms": 12.51787500041246,
+        "max_ms": 73.2112080004299,
+        "n": 10
+      },
+      "chiffrement_et_serialisation": {
+        "mediane_ms": 3.407416500522231,
+        "q1_ms": 3.367843749856547,
+        "q3_ms": 3.538135249982588,
+        "min_ms": 3.0300830003398005,
+        "max_ms": 3.6022080003021983,
+        "n": 30
+      },
+      "serveur_produit_scalaire": {
+        "mediane_ms": 2.426979500341986,
+        "q1_ms": 2.410468249763653,
+        "q3_ms": 2.448759998969763,
+        "min_ms": 2.396249999947031,
+        "max_ms": 2.606333000585437,
+        "n": 30
+      },
+      "serveur_terme_a_terme": {
+        "mediane_ms": 0.6940835000932566,
+        "q1_ms": 0.6877917494421126,
+        "q3_ms": 0.7163544996728888,
+        "min_ms": 0.6716250009048963,
+        "max_ms": 0.8065410002018325,
+        "n": 30
+      },
+      "serveur_lecture_du_chiffre": {
+        "mediane_ms": 0.42827049946936313,
+        "q1_ms": 0.41964549927797634,
+        "q3_ms": 0.45473975069398875,
+        "min_ms": 0.4155410006205784,
+        "max_ms": 0.4967919994669501,
+        "n": 30
+      },
+      "dechiffrement_produit_scalaire": {
+        "mediane_ms": 0.7171244997152826,
+        "q1_ms": 0.7079994998093753,
+        "q3_ms": 0.72665650077397,
+        "min_ms": 0.6934579996595858,
+        "max_ms": 0.852624998515239,
+        "n": 30
+      },
+      "dechiffrement_terme_a_terme": {
+        "mediane_ms": 0.6876665001982474,
+        "q1_ms": 0.6798027498007286,
+        "q3_ms": 0.6983124999351276,
+        "min_ms": 0.6713750008202624,
+        "max_ms": 0.7628340008523082,
+        "n": 30
+      }
+    }
+  },
+  "erreurs": {
+    "profils": "synthetiques, graine 2027 : revenu 1000-8000 (centimes), endettement 0-60 (4 decimales), incidents 0-5",
+    "encodage_au_millieme_vs_formule_en_clair": {
+      "mediane": 0.00018000000000739647,
+      "p95": 0.0004500000000007276,
+      "max": 0.000450000000007833,
+      "n": 1000
+    },
+    "paillier_vs_reference_encodee": {
+      "ecarts_non_nuls": 0,
+      "n": 50
+    },
+    "ckks_produit_scalaire_vs_formule_en_clair": {
+      "mediane": 5.487070085408163e-06,
+      "p95": 1.1219243702953463e-05,
+      "max": 1.4041058669533868e-05,
+      "n": 1000
+    },
+    "ckks_terme_a_terme_vs_formule_en_clair": {
+      "mediane": 5.6329752631256724e-06,
+      "p95": 1.1365848408217971e-05,
+      "max": 1.4185878868033797e-05,
+      "n": 1000
+    }
+  }
+}

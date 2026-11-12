@@ -13,6 +13,7 @@ Auteurs : Ravin THILAGARASA et Thomas GRUNDSZTEJN.
 | `assets/` | Logo ESGI, QR codes (cours Moodle, page PyPI de fhe-cli), police Roboto |
 | `data/mesures.json` | Mesures affichées dans l'encadré « Résultats mesurés » |
 | `scripts/benchmark.py` | Refait les mesures (score en clair, Paillier 2048 bits, CKKS) avec le code de `04_demo` |
+| `scripts/benchmark_v2.py` | Mesures alignées (mêmes phases pour Paillier et CKKS, 30 répétitions, échantillons bruts conservés) : écrit `data/mesures_v2.json` et `data/mesures_v2_echantillons.csv`. **Le poster affiche encore `mesures.json`** tant que la mise à jour n'est pas validée |
 | `scripts/build_poster.py` | Injecte les mesures dans le poster et génère le PDF et l'aperçu |
 | `exemples/` | Posters d'exemple fournis |
 
