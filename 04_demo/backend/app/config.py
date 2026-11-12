@@ -58,7 +58,7 @@ WEIGHTS_VECTOR = [WEIGHT_REVENU, WEIGHT_ENDETTEMENT, WEIGHT_INCIDENTS]
 
 def centered_features(revenu: float, ratio_endettement: float, incidents: float):
     """Renvoie le vecteur de features exactement dans l'ordre de WEIGHTS_VECTOR."""
-    return [revenu - 2500.0, ratio_endettement, incidents]
+    return [float(revenu) - 2500.0, float(ratio_endettement), float(incidents)]
 
 
 def plaintext_score(revenu: float, ratio_endettement: float, incidents: float) -> float:

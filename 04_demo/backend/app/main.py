@@ -3,19 +3,25 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from app import config
+from app import config, protocol, remote
 from app.crypto import classic_aes, fhe_ckks, paillier
 
 app = FastAPI(title="FHE Scoring Demo")
 
 STATIC_DIR = "app/static"
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+# Serveur "prestataire" : ne recoit que des chiffres (voir app/remote.py).
+app.include_router(remote.router)
 
 
 class ScoringInput(BaseModel):
-    revenu: float = Field(..., ge=0)
-    ratio_endettement: float = Field(..., ge=0, le=100)
-    incidents: float = Field(..., ge=0)
+    # ATTENTION : ces routes de demonstration pas a pas recoivent les valeurs EN
+    # CLAIR et simulent client et serveur dans le meme processus. Elles servent a
+    # montrer les calculs, pas a proteger les donnees de l'hebergeur. La version
+    # ou le serveur ne voit que des chiffres est /api/v2 + 04_demo/client.
+    revenu: float = Field(..., ge=0, le=protocol.REVENU_MAX, allow_inf_nan=False)
+    ratio_endettement: float = Field(..., ge=0, le=protocol.RATIO_MAX, allow_inf_nan=False)
+    incidents: int = Field(..., ge=0, le=protocol.INCIDENTS_MAX)
 
 
 @app.get("/")
@@ -75,7 +81,7 @@ def compare(inp: ScoringInput):
             "peut_calculer": True,
             "temps_ms": round(sum(pail["timings_ms"].values()), 4),
             "taille_chiffre_octets": sum(pail["ciphertext_sizes_bytes"]),
-            "precision": "exacte",
+            "precision": "exacte sur les entrees arrondies au millieme",
             "resultat": pail["decrypted_result"],
             "operations_supportees": "addition, multiplication par un scalaire clair",
         },
