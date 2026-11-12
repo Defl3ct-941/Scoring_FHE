@@ -298,9 +298,9 @@ footer h3 { color: var(--cyan); font-size: 20pt; text-transform: uppercase; lett
         <text x="380" y="231" text-anchor="middle" font-size="21" font-weight="700" fill="#007E8C">Enc(f(x))</text>
         <text x="380" y="282" text-anchor="middle" font-size="18" fill="#44546E">Dec côté client uniquement</text>
       </svg>
-      <figcaption><b>Fig. 2.</b> Protocole de scoring confidentiel mis en œuvre dans le prototype.</figcaption>
+      <figcaption><b>Fig. 2.</b> Protocole mis en œuvre par le client séparé du prototype, face à un serveur honnête mais curieux.</figcaption>
     </figure>
-    <div class="eq"><b>Dec</b>( <b>Eval</b>( f, Enc(x<sub>1</sub>), …, Enc(x<sub>n</sub>) ) ) = f(x<sub>1</sub>, …, x<sub>n</sub>)</div>
+    <div class="eq"><b>Dec</b>( <b>Eval</b>( f, Enc(x<sub>1</sub>), …, Enc(x<sub>n</sub>) ) ) = f(x<sub>1</sub>, …, x<sub>n</sub>) &nbsp;<span style="font-weight:400">(≈ avec CKKS)</span></div>
   </section>
 
   <section>
@@ -326,7 +326,7 @@ footer h3 { color: var(--cyan); font-size: 20pt; text-transform: uppercase; lett
         <text x="480" y="210" font-size="17" fill="#007E8C" text-anchor="middle" font-weight="700">bootstrapping</text>
       </svg>
       <figcaption><b>Fig. 3.</b> Le bootstrapping (Gentry, 2009) évalue homomorphiquement le déchiffrement pour
-      « rafraîchir » le chiffré : il rend le nombre d'opérations illimité, mais reste l'opération la plus coûteuse.</figcaption>
+      « rafraîchir » le chiffré : il lève la limite de profondeur, mais reste l'opération la plus coûteuse. Le prototype n'en a pas besoin.</figcaption>
     </figure>
   </section>
 
@@ -361,39 +361,38 @@ footer h3 { color: var(--cyan); font-size: 20pt; text-transform: uppercase; lett
       <tr><td>décision « S &gt; seuil »</td><td class="c n0">non</td><td class="c m">coûteux</td><td class="c y">oui</td></tr>
     </table>
     <p style="margin-top:3mm">Une fonction non polynomiale se remplace par un polynôme, par exemple
-    σ(z) ≈ 0,5 + 0,197&nbsp;z − 0,004&nbsp;z<sup>3</sup>. La comparaison au seuil, triviale en clair,
-    est l'opération la plus chère en FHE : le prototype renvoie donc le score chiffré et laisse le
-    client décider.</p>
+    σ(z) ≈ 0,5 + 0,197&nbsp;z − 0,004&nbsp;z<sup>3</sup> (écart ≤ 0,04 pour |z| ≤ 3). La comparaison au seuil est coûteuse sous chiffrement : le prototype
+    renvoie le score chiffré et laisse le client décider.</p>
   </section>
 
   <section>
     <h2><span class="n">6</span>Prototype : trois chiffrements comparés</h2>
-    <p>Application web (FastAPI, Docker) qui fait le même calcul avec trois briques :</p>
+    <p>Une application web (FastAPI, Docker) <strong>simule</strong> le calcul avec trois briques ; un
+    <strong>client séparé</strong>, seul détenteur des clés, n'envoie au serveur que des chiffrés :</p>
     <ul class="dots">
       <li><strong>AES / Fernet</strong> : sûr, mais aucun calcul n'est possible sur le chiffré.</li>
       <li><strong>Paillier</strong>, codé à la main : addition chiffrée et produit par les poids publics suffisent au score.</li>
-      <li><strong>CKKS</strong> (Microsoft SEAL via TenSEAL) : le serveur ne reçoit qu'un contexte public ;
-      sa tentative de déchiffrement <em>échoue</em>, preuve qu'il ne détient pas la clé.</li>
+      <li><strong>CKKS</strong> nivelé (Microsoft SEAL via TenSEAL) : calcul approché sur des réels.</li>
     </ul>
   </section>
 
   <section>
     <h2><span class="n">7</span>Résultats mesurés</h2>
-    <p>Même client (<span id="client-desc">R = 3 200 €, E = 28 %, I = 1</span>) chiffré puis noté par le serveur :</p>
+    <p>Même client (<span id="client-desc">R = 3 200 €, E = 28 %, I = 1</span>) chiffré par le client puis noté par le serveur :</p>
     <figure>
       <div id="chart-time"></div>
       <div id="chart-size" style="margin-top:3mm"></div>
       <figcaption id="bench-caption"><b>Fig. 4.</b> Médianes de 10 à 20 exécutions, échelle logarithmique.</figcaption>
     </figure>
     <div class="tiles">
-      <div class="tile"><div class="big" id="t-time">×8 000</div><div class="lbl">temps serveur CKKS par rapport au calcul en clair</div></div>
+      <div class="tile"><div class="big" id="t-time">380 ms</div><div class="lbl">pour chiffrer côté client avec Paillier (CKKS : <span id="t-enc-ckks">3,4 ms</span>)</div></div>
       <div class="tile"><div class="big" id="t-size">×14 000</div><div class="lbl">volume envoyé au serveur (CKKS) par rapport aux données brutes</div></div>
-      <div class="tile"><div class="big yl" id="t-err">6·10⁻⁶</div><div class="lbl">erreur absolue CKKS sur le score (Paillier : exact)</div></div>
-      <div class="tile"><div class="big yl" id="t-keys">35 Mo</div><div class="lbl">de clés publiques d'évaluation CKKS (rotations) à transmettre une fois</div></div>
+      <div class="tile"><div class="big yl" id="t-err">6·10⁻⁶</div><div class="lbl">erreur max. CKKS sur 1 000 profils (Paillier : exact après arrondi au millième)</div></div>
+      <div class="tile"><div class="big yl" id="t-keys">35 Mo</div><div class="lbl">de clés de rotation CKKS, une fois (<span id="t-keys-min">0,5 Mo</span> sans rotations)</div></div>
     </div>
-    <p style="margin-top:4mm">Le surcoût reste <strong>de l'ordre de la milliseconde par client</strong> pour un
-    score linéaire : acceptable pour un octroi de crédit. Le vrai prix est <strong>la taille</strong> des
-    chiffrés et des clés, et l'expertise nécessaire pour régler les paramètres.</p>
+    <p style="margin-top:4mm">Côté serveur, les deux schémas répondent en <strong>quelques millisecondes</strong>.
+    Paillier fait payer le <strong>client</strong>, CKKS <strong>la taille</strong> des chiffrés et des clés.
+    Mesures sur une seule machine, sans réseau.</p>
   </section>
 
 </div>
@@ -435,7 +434,7 @@ Progression : 8/10 exercices résolus.</pre>
       <div class="mod"><b>4-5</b>exponentiation, inverse modulaire</div>
       <div class="mod"><b>6-7</b>clés et chiffrement Paillier</div>
       <div class="mod"><b>8-9</b>homomorphie, score chiffré</div>
-      <div class="mod last"><b>10</b>bonus : vrai FHE avec CKKS</div>
+      <div class="mod last"><b>10</b>bonus : calcul avec CKKS</div>
     </div>
     <p style="margin-top:3mm;font-size:20pt">Publié sur PyPI, testé sous Windows, macOS et Linux, avec des
     exécutables autonomes (Python et TenSEAL embarqués) pour les postes sans Python.</p>
@@ -445,8 +444,8 @@ Progression : 8/10 exercices résolus.</pre>
     <h2><span class="n">10</span>Limites et alternatives</h2>
     <table>
       <tr><th>Approche</th><th>Données en clair&nbsp;?</th><th>Coût</th><th>Confiance requise</th></tr>
-      <tr><td><strong>FHE</strong></td><td class="y">jamais</td><td class="n0">très élevé</td><td>mathématique (LWE)</td></tr>
-      <tr><td><strong>MPC</strong></td><td class="y">jamais (partagées)</td><td class="m">réseau élevé</td><td>les parties ne s'entendent pas</td></tr>
+      <tr><td><strong>FHE</strong></td><td class="y">non, côté serveur</td><td class="n0">élevé (taille, calcul)</td><td>hypothèse LWE, paramètres, client sain</td></tr>
+      <tr><td><strong>MPC</strong></td><td class="y">non (partagées)</td><td class="m">réseau élevé</td><td>pas de collusion au-delà d'un seuil</td></tr>
       <tr><td><strong>Enclave TEE</strong></td><td class="m">dans l'enclave</td><td class="y">faible</td><td>fabricant du processeur, canaux auxiliaires</td></tr>
       <tr><td><strong>Conf. différentielle</strong></td><td class="n0">oui</td><td class="y">faible</td><td>protège les statistiques, pas l'entrée</td></tr>
     </table>
@@ -459,10 +458,10 @@ Progression : 8/10 exercices résolus.</pre>
 
   <section>
     <h2><span class="n">11</span>Conclusion et perspectives</h2>
-    <p>Pour un <strong>score linéaire</strong> ou une régression simple, le FHE est <strong>déjà
-    exploitable</strong> : quelques millisecondes par client, une erreur négligeable, et un serveur qui ne
-    voit rien. Il reste réservé aux cas ciblés tant que la taille des chiffrés et l'expertise requise
-    pèsent autant.</p>
+    <p>Pour un <strong>score linéaire</strong>, le calcul sur données chiffrées est <strong>faisable dès
+    aujourd'hui</strong> : quelques millisecondes côté serveur, une erreur négligeable, un serveur qui ne
+    reçoit que des chiffrés. Paillier y suffit. Un usage bancaire demande en plus un modèle validé,
+    l'intégrité du calcul et la gestion des clés.</p>
     <div class="callout"><b>Ce qui va changer la donne :</b> accélérateurs matériels (GPU, FPGA, ASIC),
     compilateurs FHE qui masquent les paramètres (Concrete ML, OpenFHE), et normalisation en cours
     (HomomorphicEncryption.org, ISO/IEC).</div>
@@ -502,34 +501,188 @@ Progression : 8/10 exercices résolus.</pre>
   "client": {
     "revenu": 3200.0,
     "ratio_endettement": 28.0,
-    "incidents": 1.0
+    "incidents": 1
   },
-  "machine": "Linux x86_64, Python 3.13.18, TenSEAL 0.3.18",
-  "clear": {
+  "machine": {
+    "systeme": "Darwin 25.6.0 arm64",
+    "cpu": "Apple M1",
+    "coeurs_logiques": 8,
+    "ram_go": 8.0,
+    "python": "3.13.2",
+    "tenseal": "0.3.18",
+    "commit": "e19078f",
+    "arbre_modifie": true,
+    "date": "2026-11-12 11:22"
+  },
+  "methode": {
+    "repetitions": 30,
+    "repetitions_generation_cles": 10,
+    "echauffement": "1 execution par phase, non comptee",
+    "ordre": "phases alternees a chaque tour",
+    "horloge": "time.perf_counter, un seul processus, sans reseau"
+  },
+  "clair": {
     "score": 18.3,
-    "server_ms": 0.0005370000053517288,
-    "client_bytes": 24
+    "par_score_us_mediane": 0.4667137550040934,
+    "taille_lot": 100000,
+    "octets_entree": 24
   },
   "paillier": {
-    "key_bits": 2048,
-    "encrypt_ms": 260.19773800000223,
-    "server_ms": 90.41091300000659,
-    "decrypt_ms": 86.33229100000506,
-    "client_bytes": 1536,
+    "cle_bits": 2048,
     "score": 18.3,
-    "abs_error": 0.0
+    "octets_cle_publique": 256,
+    "octets_entree_chiffree": 1536,
+    "octets_resultat_chiffre": 512,
+    "temps": {
+      "generation_cles": {
+        "mediane_ms": 435.46779149983195,
+        "q1_ms": 320.5768647503646,
+        "q3_ms": 668.704739749046,
+        "min_ms": 292.67179099952045,
+        "max_ms": 806.2302910002472,
+        "n": 10
+      },
+      "chiffrement_3_valeurs": {
+        "mediane_ms": 379.27516650051984,
+        "q1_ms": 378.7675102503272,
+        "q3_ms": 380.4691562500011,
+        "min_ms": 376.8988750016433,
+        "max_ms": 435.68254099955084,
+        "n": 30
+      },
+      "serveur": {
+        "mediane_ms": 4.6250625000539,
+        "q1_ms": 4.602593250183418,
+        "q3_ms": 4.694374749760755,
+        "min_ms": 4.5953329990879865,
+        "max_ms": 49.2688750000525,
+        "n": 30
+      },
+      "serveur_avec_rechiffrement_du_biais": {
+        "mediane_ms": 130.98531299965543,
+        "q1_ms": 130.66489649963842,
+        "q3_ms": 131.66944749946197,
+        "min_ms": 130.1150420003978,
+        "max_ms": 268.68820900017454,
+        "n": 30
+      },
+      "dechiffrement": {
+        "mediane_ms": 127.13389550026477,
+        "q1_ms": 126.80866675009383,
+        "q3_ms": 127.67931250027686,
+        "min_ms": 126.61533299979055,
+        "max_ms": 217.49079099936353,
+        "n": 30
+      }
+    }
   },
   "ckks": {
     "poly_modulus_degree": 8192,
-    "keygen_ms": 172.33689299999355,
-    "encrypt_ms": 4.564600500003735,
-    "server_ms": 4.406533999997464,
-    "decrypt_ms": 1.0976125000041748,
-    "client_bytes": 331545,
-    "public_context_bytes": 35290759,
-    "result_bytes": 235120,
-    "score": 18.29999405756483,
-    "abs_error": 5.942435169714599e-06
+    "coeff_mod_bit_sizes": [
+      60,
+      40,
+      40,
+      60
+    ],
+    "echelle_log2": 40,
+    "score": 18.299995925959543,
+    "octets_entree_chiffree": 331565,
+    "octets_resultat_produit_scalaire": 235098,
+    "octets_resultat_terme_a_terme": 235095,
+    "octets_contexte_public_tel_que_poster": 35289828,
+    "octets_contexte_public_sans_relinearisation": 33894906,
+    "octets_contexte_public_sans_rotations": 464407,
+    "temps": {
+      "generation_cles_avec_rotations": {
+        "mediane_ms": 110.17668749991572,
+        "q1_ms": 108.87227025068569,
+        "q3_ms": 115.3897087506266,
+        "min_ms": 107.62954099845956,
+        "max_ms": 216.6529169990099,
+        "n": 10
+      },
+      "generation_cles_sans_rotations": {
+        "mediane_ms": 12.916499500533973,
+        "q1_ms": 12.703708500339417,
+        "q3_ms": 13.504468500741496,
+        "min_ms": 12.51787500041246,
+        "max_ms": 73.2112080004299,
+        "n": 10
+      },
+      "chiffrement_et_serialisation": {
+        "mediane_ms": 3.407416500522231,
+        "q1_ms": 3.367843749856547,
+        "q3_ms": 3.538135249982588,
+        "min_ms": 3.0300830003398005,
+        "max_ms": 3.6022080003021983,
+        "n": 30
+      },
+      "serveur_produit_scalaire": {
+        "mediane_ms": 2.426979500341986,
+        "q1_ms": 2.410468249763653,
+        "q3_ms": 2.448759998969763,
+        "min_ms": 2.396249999947031,
+        "max_ms": 2.606333000585437,
+        "n": 30
+      },
+      "serveur_terme_a_terme": {
+        "mediane_ms": 0.6940835000932566,
+        "q1_ms": 0.6877917494421126,
+        "q3_ms": 0.7163544996728888,
+        "min_ms": 0.6716250009048963,
+        "max_ms": 0.8065410002018325,
+        "n": 30
+      },
+      "serveur_lecture_du_chiffre": {
+        "mediane_ms": 0.42827049946936313,
+        "q1_ms": 0.41964549927797634,
+        "q3_ms": 0.45473975069398875,
+        "min_ms": 0.4155410006205784,
+        "max_ms": 0.4967919994669501,
+        "n": 30
+      },
+      "dechiffrement_produit_scalaire": {
+        "mediane_ms": 0.7171244997152826,
+        "q1_ms": 0.7079994998093753,
+        "q3_ms": 0.72665650077397,
+        "min_ms": 0.6934579996595858,
+        "max_ms": 0.852624998515239,
+        "n": 30
+      },
+      "dechiffrement_terme_a_terme": {
+        "mediane_ms": 0.6876665001982474,
+        "q1_ms": 0.6798027498007286,
+        "q3_ms": 0.6983124999351276,
+        "min_ms": 0.6713750008202624,
+        "max_ms": 0.7628340008523082,
+        "n": 30
+      }
+    }
+  },
+  "erreurs": {
+    "profils": "synthetiques, graine 2027 : revenu 1000-8000 (centimes), endettement 0-60 (4 decimales), incidents 0-5",
+    "encodage_au_millieme_vs_formule_en_clair": {
+      "mediane": 0.00018000000000739647,
+      "p95": 0.0004500000000007276,
+      "max": 0.000450000000007833,
+      "n": 1000
+    },
+    "paillier_vs_reference_encodee": {
+      "ecarts_non_nuls": 0,
+      "n": 50
+    },
+    "ckks_produit_scalaire_vs_formule_en_clair": {
+      "mediane": 5.487070085408163e-06,
+      "p95": 1.1219243702953463e-05,
+      "max": 1.4041058669533868e-05,
+      "n": 1000
+    },
+    "ckks_terme_a_terme_vs_formule_en_clair": {
+      "mediane": 5.6329752631256724e-06,
+      "p95": 1.1365848408217971e-05,
+      "max": 1.4185878868033797e-05,
+      "n": 1000
+    }
   }
 }
 </script>
@@ -544,17 +697,29 @@ Progression : 8/10 exercices résolus.</pre>
   const fmtMs = v => v < 0.01 ? fr(v * 1000, 1) + " µs" : v < 10 ? fr(v, 1) + " ms" : fr(v, 0) + " ms";
   const fmtB = v => v < 1000 ? fr(v) + " o" : v < 1e6 ? fr(v / 1000, v < 1e4 ? 1 : 0) + " Ko" : fr(v / 1e6, 1) + " Mo";
 
-  const c = data.clear, p = data.paillier, k = data.ckks;
+  // Adaptation du format mesures_v2.json (benchmark_v2.py)
+  const med = (o, key) => o.temps[key].mediane_ms;
+  const m = data.machine, e = data.erreurs;
+  const c = { score: data.clair.score, server_ms: data.clair.par_score_us_mediane / 1000, client_bytes: data.clair.octets_entree };
+  const p = { key_bits: data.paillier.cle_bits, server_ms: med(data.paillier, "serveur"),
+              encrypt_ms: med(data.paillier, "chiffrement_3_valeurs"), client_bytes: data.paillier.octets_entree_chiffree };
+  const k = { poly_modulus_degree: data.ckks.poly_modulus_degree, server_ms: med(data.ckks, "serveur_produit_scalaire"),
+              encrypt_ms: med(data.ckks, "chiffrement_et_serialisation"), client_bytes: data.ckks.octets_entree_chiffree,
+              max_error: e.ckks_produit_scalaire_vs_formule_en_clair.max,
+              galois_bytes: data.ckks.octets_contexte_public_sans_relinearisation - data.ckks.octets_contexte_public_sans_rotations,
+              min_context_bytes: data.ckks.octets_contexte_public_sans_rotations };
   const cl = data.client;
   document.getElementById("client-desc").textContent =
     `R = ${fr(cl.revenu)} €, E = ${fr(cl.ratio_endettement)} %, I = ${fr(cl.incidents)}, score en clair ${fr(c.score, 1)}`;
-  document.getElementById("t-time").textContent = "×" + fr(round2(k.server_ms / c.server_ms));
+  document.getElementById("t-time").textContent = fr(round2(p.encrypt_ms)) + " ms";
+  document.getElementById("t-enc-ckks").textContent = fmtMs(k.encrypt_ms);
   document.getElementById("t-size").textContent = "×" + fr(round2(k.client_bytes / c.client_bytes));
-  document.getElementById("t-err").textContent = sci(k.abs_error);
-  document.getElementById("t-keys").textContent = fmtB(k.public_context_bytes);
+  document.getElementById("t-err").textContent = sci(k.max_error);
+  document.getElementById("t-keys").textContent = fmtB(k.galois_bytes).replace(/,\d/, "");
+  document.getElementById("t-keys-min").textContent = fmtB(k.min_context_bytes);
   document.getElementById("bench-caption").innerHTML =
-    `<b>Fig. 4.</b> Médianes de 10 à 20 exécutions, échelle logarithmique. Paillier : clé de ${p.key_bits} bits ; ` +
-    `CKKS : N = ${k.poly_modulus_degree}, échelle 2<sup>40</sup>. ${data.machine}.`;
+    `<b>Fig. 4.</b> Médianes de ${data.methode.repetitions} exécutions, échelle logarithmique. Paillier : clé de ${p.key_bits} bits ; ` +
+    `CKKS : N = ${k.poly_modulus_degree}, échelle 2<sup>40</sup>. ${m.cpu}, Python ${m.python}, TenSEAL ${m.tenseal}.`;
 
   function chart(el, title, rows, fmt) {
     const W = 760, rowH = 50, top = 44, left = 150, right = 120, H = top + rows.length * rowH + 6;
