@@ -4,6 +4,40 @@ Toutes les évolutions notables du projet sont consignées ici.
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/).
 Chaque entrée est datée ; aucune section « Non publié » n'est laissée dans une version publiée.
 
+## 2026-11-14 — Démo : taille de clé Paillier et tests en CI
+
+### Corrigé
+
+- Démo : la génération de clés Paillier recommence tant que `n` n'a pas exactement la taille
+  demandée. Deux premiers de 1024 bits donnaient parfois un `n` de 2047 bits, et le client
+  séparé affichait alors « Paillier 2047 bits ».
+
+### Ajouté
+
+- Workflow GitHub Actions `demo.yml` : les tests de `04_demo` (protocole séparé, encodage)
+  tournent à chaque modification de la démo. Jusqu'ici seule la CI de fhe-cli existait.
+
+## 2026-11-12 — Démo : client séparé, mesures v2 et poster mis à jour
+
+### Ajouté
+
+- Client séparé `04_demo/client/client.py` : il génère et garde les clés (Paillier 2048 bits,
+  CKKS), n'envoie au serveur que des chiffrés et du matériel public via l'API `/api/v2`, et
+  peut enregistrer les octets échangés (`--trace`). Mode CKKS « terme à terme » (`--mode terms`)
+  sans clés de rotation : contexte public de 0,46 Mo au lieu de 34 Mo.
+- `05_poster/scripts/benchmark_v2.py` : mêmes phases pour Paillier et CKKS, 30 répétitions après
+  échauffement, échantillons bruts conservés (`data/mesures_v2.json`, `mesures_v2_echantillons.csv`).
+- 36 tests du protocole séparé (`04_demo/backend/tests`).
+
+### Modifié
+
+- Le serveur `/api/v2` refuse un contexte CKKS contenant une clé secrète ; l'encodage au millième
+  est isolé dans `protocol.py` ; l'aléa de chiffrement Paillier vient de `secrets`.
+- La démo web se présente comme une simulation (un seul processus, valeurs reçues en clair).
+- Poster : mesures v2 (temps serveur Paillier 4,6 ms au lieu de 90 ms, l'ancienne mesure incluait
+  un rechiffrement du biais), formulations des blocs 2, 3, 5, 6, 10 et 11 nuancées, polynôme de
+  sigmoïde aligné sur la leçon Moodle. PDF A0 et aperçu régénérés.
+
 ## 2026-11-11 — fhe-cli 1.5.0 : commande check, alias et vérifications cachées
 
 ### Ajouté
