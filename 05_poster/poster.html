@@ -387,7 +387,7 @@ footer h3 { color: var(--cyan); font-size: 20pt; text-transform: uppercase; lett
     <div class="tiles">
       <div class="tile"><div class="big" id="t-time">380 ms</div><div class="lbl">pour chiffrer côté client avec Paillier (CKKS : <span id="t-enc-ckks">3,4 ms</span>)</div></div>
       <div class="tile"><div class="big" id="t-size">×14 000</div><div class="lbl">volume envoyé au serveur (CKKS) par rapport aux données brutes</div></div>
-      <div class="tile"><div class="big yl" id="t-err">6·10⁻⁶</div><div class="lbl">erreur max. CKKS sur 1 000 profils (Paillier : exact après arrondi au millième)</div></div>
+      <div class="tile"><div class="big yl" id="t-err">6·10⁻⁶</div><div class="lbl">erreur max. CKKS sur 1 000 profils (Paillier : exact sur les entiers encodés au millième)</div></div>
       <div class="tile"><div class="big yl" id="t-keys">35 Mo</div><div class="lbl">de clés de rotation CKKS, une fois (<span id="t-keys-min">0,5 Mo</span> sans rotations)</div></div>
     </div>
     <p style="margin-top:4mm">Côté serveur, les deux schémas répondent en <strong>quelques millisecondes</strong>.
@@ -693,7 +693,7 @@ Progression : 8/10 exercices résolus.</pre>
   const fr = (v, d = 0) => v.toLocaleString("fr-FR", { maximumFractionDigits: d, minimumFractionDigits: 0 });
   const round2 = v => { const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.round(v / p) * p; };
   const sup = { "-": "⁻", "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
-  const sci = v => { const e = Math.floor(Math.log10(v)); const m = Math.round(v / Math.pow(10, e)); return m + "·10" + String(e).split("").map(c => sup[c]).join(""); };
+  const sci = v => { let e = Math.floor(Math.log10(v)); let m = Math.round(v / Math.pow(10, e) * 10) / 10; if (m >= 10) { m /= 10; e += 1; } return String(m).replace(".", ",") + "·10" + String(e).split("").map(c => sup[c]).join(""); };
   const fmtMs = v => v < 0.01 ? fr(v * 1000, 1) + " µs" : v < 10 ? fr(v, 1) + " ms" : fr(v, 0) + " ms";
   const fmtB = v => v < 1000 ? fr(v) + " o" : v < 1e6 ? fr(v / 1000, v < 1e4 ? 1 : 0) + " Ko" : fr(v / 1e6, 1) + " Mo";
 
