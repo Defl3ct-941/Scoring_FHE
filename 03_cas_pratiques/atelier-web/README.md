@@ -3,8 +3,8 @@
 10 exercices Python progressifs, corrigés automatiquement, qui reprennent
 pas à pas les notions montrées dans `04_demo/` : chiffrement classique,
 Paillier (chiffrement homomorphe partiel) implémenté à la main, puis un
-avant-goût de FHE réel avec CKKS/TenSEAL, jusqu'à un score bancaire chiffré
-de bout en bout.
+avant-goût de FHE réel avec CKKS/TenSEAL, jusqu'à un score bancaire calculé
+sur des données chiffrées.
 
 ## Lancer l'atelier (Docker)
 
@@ -67,7 +67,7 @@ docker run -p 8100:8100 fhe-exercises:latest
 | 6 | Générer une paire de clés Paillier | C. Paillier from scratch |
 | 7 | Chiffrer et déchiffrer avec Paillier | C. Paillier from scratch |
 | 8 | Propriétés homomorphes de Paillier | C. Paillier from scratch |
-| 9 | Score bancaire chiffré de bout en bout | D. Application |
+| 9 | Score bancaire calculé sur des données chiffrées | D. Application |
 | 10 | (Bonus) CKKS avec TenSEAL | E. Bonus : FHE réel |
 
 Chaque exercice est **verrouillé** tant que ses prérequis ne sont pas

@@ -61,10 +61,10 @@ dossier du `PATH`, puis utilisez-le comme dans les exemples :
 
 ```bash
 # Windows (PowerShell), sans le renommer
-.\fhe-cli-1.5.0-windows-x86_64.exe init
+.\fhe-cli-1.5.1-windows-x86_64.exe init
 # macOS / Linux
-chmod +x fhe-cli-1.5.0-linux-x86_64
-./fhe-cli-1.5.0-linux-x86_64 init
+chmod +x fhe-cli-1.5.1-linux-x86_64
+./fhe-cli-1.5.1-linux-x86_64 init
 ```
 
 Sous macOS, au premier lancement, autorisez le binaire dans Réglages système >
