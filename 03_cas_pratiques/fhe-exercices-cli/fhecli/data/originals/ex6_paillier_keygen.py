@@ -18,8 +18,10 @@ de clés.
       avec la variante classique g = n + 1 :
           n   = p * q
           g   = n + 1
-          lam = (p - 1) * (q - 1)          # lambda = indicatrice d'Euler
+          lam = (p - 1) * (q - 1)          # phi(n), indicatrice d'Euler
           mu  = inverse modulaire de lam modulo n
+      (l'article de Paillier prend lambda = ppcm(p - 1, q - 1) ; avec g = n + 1,
+      phi(n) donne le même déchiffrement, d'où ce choix plus simple.)
       puis :
           public_key  = {"n": n, "g": g, "n2": n * n}
           private_key = {"lam": lam, "mu": mu}
