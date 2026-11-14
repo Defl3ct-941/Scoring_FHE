@@ -186,3 +186,9 @@ def test_demo_web_fonctionne_toujours():
     data = rep.json()
     assert data["paillier"]["resultat"] == 18.3
     assert abs(data["ckks"]["resultat"] - 18.3) < 1e-3
+
+
+def test_cle_paillier_a_la_taille_annoncee():
+    for _ in range(5):
+        pub, _priv = paillier.generate_keypair(512)
+        assert pub["n"].bit_length() == 512

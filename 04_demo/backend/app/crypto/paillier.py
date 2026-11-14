@@ -39,10 +39,13 @@ def _modinv(a: int, m: int) -> int:
 
 
 def generate_keypair(bits: int = KEY_BITS):
-    p = number.getPrime(bits // 2)
-    q = number.getPrime(bits // 2)
-    while p == q:
+    # Deux premiers de bits/2 bits donnent parfois un n de bits-1 bits : on
+    # recommence jusqu'a obtenir exactement la taille annoncee (2048 -> 2048).
+    while True:
+        p = number.getPrime(bits // 2)
         q = number.getPrime(bits // 2)
+        if p != q and (p * q).bit_length() == bits:
+            break
     n = p * q
     n2 = n * n
     g = n + 1

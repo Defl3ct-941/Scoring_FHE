@@ -30,7 +30,8 @@ Ici, réutiliser la clé permet de retrouver de l'information sur les
 messages en clair sans jamais les déchiffrer. Le FHE renverse ce principe :
 il rend le chiffré délibérément et strictement malléable, mais uniquement
 pour les opérations mathématiques choisies par le concepteur du schéma
-(addition, multiplication...), avec des garanties de sécurité prouvées.
+(addition, multiplication...), avec une sécurité ramenée à des problèmes
+mathématiques réputés difficiles.
 C'est toute la différence entre une malléabilité subie (dangereuse) et une
 malléabilité conçue (le FHE).
 

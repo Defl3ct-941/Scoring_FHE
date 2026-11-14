@@ -14,7 +14,7 @@ simplifie beaucoup l'implémentation sans rien retirer à la sécurité).
 ```
 n   = p * q
 g   = n + 1
-lam = (p - 1) * (q - 1)          (lambda, souvent appelé phi(n) ici)
+lam = (p - 1) * (q - 1)          (phi(n) ; Paillier prend ppcm(p-1, q-1), équivalent avec g = n + 1)
 mu  = inverse_modulaire(lam, n)
 ```
 

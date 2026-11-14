@@ -1,4 +1,4 @@
-# Ex9: Score bancaire chiffré de bout en bout
+# Ex9: Score bancaire calculé sur des données chiffrées
 
 C'est l'exercice de synthèse : vous allez reproduire, avec vos propres
 briques (ex6, ex7, ex8), exactement ce que fait la démo web
@@ -32,6 +32,9 @@ score = bias + sum(weight_i * feature_i pour chaque i)
 3. Ajouter le biais : chiffrez `bias` avec `r = 1` (`encrypt(pub, bias, 1)`)
    puis additionnez-le au total avec `add_encrypted`.
 4. **Côté client** : déchiffrer le résultat final et le renvoyer.
+
+Ici, une seule fonction joue les deux rôles pour rester simple. Dans un vrai
+déploiement, le serveur ne recevrait que la clé publique et les chiffrés.
 
 ## Vérification
 

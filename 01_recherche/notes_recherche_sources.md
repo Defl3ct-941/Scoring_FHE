@@ -286,16 +286,16 @@ x
 …
 S=a 
 1
-​
+
  x 
 1
-​
+
  +a 
 2
-​
+
  x 
 2
-​
+
  +… directement sur les chiffrés, puis renvoie le score chiffré.
 
 Le client déchiffre le score et voit uniquement le résultat, sans avoir exposé les données.

@@ -2,7 +2,7 @@
   "id": "ex9_scoring_paillier",
   "order": 9,
   "module": "D. Application : scoring bancaire chiffré",
-  "title": "Score bancaire chiffré de bout en bout",
+  "title": "Score bancaire calculé sur des données chiffrées",
   "difficulty": "difficile",
   "depends_on": ["ex8_paillier_homomorphic"]
 }

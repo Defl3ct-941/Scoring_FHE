@@ -207,8 +207,8 @@ données")*
 > « Ils sont organisés en 5 modules : chiffrement classique, arithmétique
 > modulaire (les bases mathématiques de tout schéma de chiffrement), puis
 > Paillier reconstruit de zéro étape par étape, une application de
-> synthèse : le score bancaire chiffré de bout en bout, et enfin un bonus
-> avec du vrai FHE, CKKS via TenSEAL.
+> synthèse : le score bancaire calculé sur des données chiffrées, et enfin
+> un bonus avec CKKS via TenSEAL, en mode nivelé.
 >
 > Ce qui est important : chaque exercice est **verrouillé** tant que le
 > précédent n'est pas réussi, impossible de sauter les étapes. »
@@ -257,11 +257,12 @@ passent », montrer qu'un exercice suivant se déverrouille dans la sidebar]*
 *[Avancer sur PPT diapo 8 : « Ce que la démo mesure concrètement »]*
 
 > « Pour donner des chiffres concrets, mesurés directement dans ma démo :
-> Paillier renvoie un résultat **exact**, identique au score en clair. CKKS
-> multiplie la taille des données par environ treize mille neuf cents. Et le
-> calcul CKKS complet, chiffrement, calcul serveur, déchiffrement, prend
-> environ trois cent quatre-vingts millisecondes, contre un temps quasi nul
-> en clair. »
+> Paillier renvoie un résultat **exact sur les entiers encodés au millième**.
+> CKKS multiplie la taille des données envoyées par environ quatorze mille.
+> Côté serveur, les deux schémas répondent en quelques millisecondes ; le
+> coût de Paillier est surtout chez le client dans notre implémentation
+> Python, celui de CKKS est le volume. Ces chiffres valent pour une machine,
+> sans réseau. »
 
 ---
 
@@ -269,8 +270,8 @@ passent », montrer qu'un exercice suivant se déverrouille dans la sidebar]*
 
 *[PPT diapo 9 : « Conclusion & perspectives »]*
 
-> « Pour conclure : le FHE fonctionne, je l'ai démontré avec un vrai
-> prototype fonctionnel, pas juste sur le papier. Paillier donne un
+> « Pour conclure : pour un score linéaire, le calcul sur données chiffrées
+> fonctionne, le prototype le montre. Paillier donne un
 > résultat exact, CKKS un résultat approché mais avec des calculs bien plus
 > riches possibles. Mais il reste aujourd'hui coûteux et complexe à mettre
 > en œuvre pour un vrai système bancaire en production. Les pistes

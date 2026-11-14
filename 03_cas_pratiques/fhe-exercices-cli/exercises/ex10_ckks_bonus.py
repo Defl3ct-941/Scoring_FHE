@@ -21,8 +21,10 @@ produit scalaire chiffré.
         2. Produit scalaire avec les poids CLAIRS :  enc_vector.dot(weights)
         3. Déchiffrer et renvoyer le premier élément :  .decrypt()[0]
 
-Ce que ça démontre : le serveur calcule une combinaison pondérée des données
-du client sans jamais les voir en clair. CKKS étant approximatif, le résultat
+Ce que ça démontre : la combinaison pondérée est calculée sur le vecteur
+chiffré, sans déchiffrer les données. Ici, une seule fonction joue client et
+serveur, et le contexte contient la clé secrète ; dans la démo, le client
+garde la clé secrète et n'envoie au serveur qu'un contexte public. CKKS étant approximatif, le résultat
 est très proche de la valeur attendue, pas exactement égal (d'où le abs(...) <
 1e-3 dans les tests).
 

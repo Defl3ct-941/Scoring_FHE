@@ -1,5 +1,5 @@
 """
-Ex9 - Score bancaire chiffre de bout en bout (synthese).
+Ex9 - Score bancaire calcule sur des donnees chiffrees (synthese).
 
 Voir README.md pour l'enonce complet.
 """
