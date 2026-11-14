@@ -237,6 +237,7 @@ def main():
     }
 
     data = ROOT / "05_poster" / "data"
+    data.mkdir(parents=True, exist_ok=True)
     (data / "mesures_v2.json").write_text(
         json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     with (data / "mesures_v2_echantillons.csv").open("w", newline="", encoding="utf-8") as f:

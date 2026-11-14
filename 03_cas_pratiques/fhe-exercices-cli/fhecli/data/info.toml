@@ -2,7 +2,7 @@
 #
 # Parcours : du chiffrement classique (où tout calcul sur le chiffré est
 # impossible) jusqu'au chiffrement homomorphe, en reconstruisant Paillier à la
-# main, puis un score bancaire chiffré de bout en bout, et enfin un vrai calcul
+# main, puis un score bancaire calculé sur des données chiffrées, et enfin un vrai calcul
 # FHE avec CKKS (bonus).
 
 [[exercises]]
@@ -64,7 +64,7 @@ hint = "add_encrypted : (c1 * c2) % n2 (multiplier les chiffrés = additionner l
 [[exercises]]
 name = "ex9_scoring_paillier"
 category = "D. Scoring chiffré"
-title = "Un score bancaire chiffré de bout en bout"
+title = "Un score bancaire calculé sur des données chiffrées"
 difficulty = "difficile"
 hint = "Chiffrez chaque feature avec encrypt(pub, x, _random_r(pub[\"n\"])), multipliez chaque chiffré par son poids avec mul_by_scalar, partez de total = encrypt(pub, bias, 1), additionnez tous les termes avec add_encrypted, et ne déchiffrez qu'à la toute fin."
 

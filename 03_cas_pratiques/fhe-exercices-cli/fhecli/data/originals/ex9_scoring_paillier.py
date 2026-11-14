@@ -1,15 +1,19 @@
 """
-Ex9 : Un score bancaire chiffré de bout en bout
-================================================
+Ex9 : Un score bancaire calculé sur des données chiffrées
+=========================================================
 
 Synthèse de tout le module Paillier. On calcule un score de crédit
     score = bias + Σ wᵢ · featureᵢ
 où les features (revenu, ratio d'endettement, incidents...) sont chiffrées
-par le client. Le serveur calcule le score SANS jamais voir une seule feature
-en clair : il ne manipule que des chiffrés. Seul le score final est déchiffré.
+par le client. Le calcul ne manipule que des chiffrés : aucune feature n'est
+déchiffrée, seul le score final l'est.
 
-C'est précisément le scénario du mémoire : les données restent chiffrées
-pendant le calcul (le troisième état, « en cours d'utilisation »).
+C'est le scénario du mémoire : les données restent chiffrées pendant le
+calcul (le troisième état, « en cours d'utilisation »). Pour rester simple,
+une seule fonction joue ici les deux rôles : client (chiffrement, déchiffrement)
+et serveur (calcul). Dans un vrai déploiement, le serveur ne recevrait que la
+clé publique et les chiffrés ; la clé privée resterait chez le client. Les
+clés de l'exercice sont minuscules : en pratique, n fait au moins 2048 bits.
 
 Tout l'outillage est fourni (clés, chiffrement, déchiffrement, add_encrypted,
 mul_by_scalar, et _random_r pour tirer un aléa valide). Vous implémentez
@@ -20,7 +24,9 @@ encrypted_score.
       Étapes :
         1. Chiffrer chaque feature : encrypt(pub, x, _random_r(pub["n"])).
         2. Pour chaque chiffré et son poids : mul_by_scalar(pub, c, w).
-        3. Partir d'un chiffré du biais : total = encrypt(pub, bias, 1).
+        3. Partir d'un chiffré du biais : total = encrypt(pub, bias, 1)
+           (aléa r = 1 : chiffrement déterministe, sans risque ici car le
+           biais est public).
         4. Additionner tous les termes à total avec add_encrypted.
         5. Déchiffrer total à la toute fin et le renvoyer.
 

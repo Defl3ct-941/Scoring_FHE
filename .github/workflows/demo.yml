@@ -1,0 +1,33 @@
+# CI de la démo (04_demo) : tests du protocole client/serveur séparé.
+# Linux seul : la démo tourne en Docker, une seule plateforme suffit.
+name: demo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "04_demo/**"
+      - ".github/workflows/demo.yml"
+  pull_request:
+    paths:
+      - "04_demo/**"
+      - ".github/workflows/demo.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Tests démo / Python 3.13
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04_demo/backend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - run: python -m pytest tests -q
