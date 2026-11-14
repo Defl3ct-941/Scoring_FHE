@@ -11,9 +11,10 @@ Auteurs : Ravin THILAGARASA et Thomas GRUNDSZTEJN.
 | `poster_apercu.png` | Aperçu basse définition |
 | `poster.html` | **Source éditable** (texte, mise en page, figures SVG) |
 | `assets/` | Logo ESGI, QR codes (cours Moodle, page PyPI de fhe-cli), police Roboto |
-| `data/mesures.json` | Mesures affichées dans l'encadré « Résultats mesurés » |
-| `scripts/benchmark.py` | Refait les mesures (score en clair, Paillier 2048 bits, CKKS) avec le code de `04_demo` |
-| `scripts/benchmark_v2.py` | Mesures alignées (mêmes phases pour Paillier et CKKS, 30 répétitions, échantillons bruts conservés) : écrit `data/mesures_v2.json` et `data/mesures_v2_echantillons.csv`. **Le poster affiche encore `mesures.json`** tant que la mise à jour n'est pas validée |
+| `data/mesures_v2.json` | Mesures affichées dans l'encadré « Résultats mesurés » (échantillons bruts dans `mesures_v2_echantillons.csv`) |
+| `data/mesures.json` | Anciennes mesures, conservées pour l'historique : le temps serveur Paillier y inclut un rechiffrement du biais |
+| `scripts/benchmark.py` | Ancienne méthode de mesure, conservée pour l'historique |
+| `scripts/benchmark_v2.py` | Refait les mesures (mêmes phases pour Paillier et CKKS, 30 répétitions) avec le code de `04_demo` |
 | `scripts/build_poster.py` | Injecte les mesures dans le poster et génère le PDF et l'aperçu |
 | `exemples/` | Posters d'exemple fournis |
 
@@ -27,7 +28,7 @@ Auteurs : Ravin THILAGARASA et Thomas GRUNDSZTEJN.
 ```bash
 pip install playwright pypdf tenseal pycryptodome
 python -m playwright install chromium
-python 05_poster/scripts/benchmark.py      # facultatif : nouvelles mesures
+python 05_poster/scripts/benchmark_v2.py   # facultatif : nouvelles mesures
 python 05_poster/scripts/build_poster.py   # PDF + aperçu
 ```
 
