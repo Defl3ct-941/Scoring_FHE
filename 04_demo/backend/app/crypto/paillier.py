@@ -13,12 +13,15 @@ lineaire pondere S = somme(w_i * x_i) car les poids w_i sont publics :
 Variante utilisee : g = n + 1 (cas standard qui simplifie l'implementation
 sans rien retirer a la propriete homomorphe).
 
-ATTENTION pedagogique : les tailles de cles sont reduites (512 bits) pour
-que la demo reste instantanee dans un navigateur. Des cles Paillier reelles
-utilisent generalement 2048+ bits.
+ATTENTION pedagogique : dans la demo web pas a pas, les cles sont reduites
+(512 bits, AUCUNE securite) pour que l'affichage reste instantane. Le client
+separe (04_demo/client) et les mesures utilisent 2048 bits.
+
+Securite : hypothese de residuosite composite decisionnelle (DCR). Factoriser
+n casse le schema, mais l'equivalence des deux problemes n'est pas etablie.
 """
 
-import random
+import secrets
 import time
 
 from Crypto.Util import number
@@ -53,9 +56,11 @@ def generate_keypair(bits: int = KEY_BITS):
 def encrypt(pub: dict, m: int) -> int:
     n, n2 = pub["n"], pub["n2"]
     m = m % n
-    r = random.randrange(1, n)
+    # Alea cryptographique (secrets) : avec le module random, predictible,
+    # un attaquant pourrait retrouver r et donc le message.
+    r = secrets.randbelow(n - 1) + 1
     while number.GCD(r, n) != 1:
-        r = random.randrange(1, n)
+        r = secrets.randbelow(n - 1) + 1
     # (1+n)^m mod n^2 == 1 + m*n mod n^2  -> evite un gros pow(g, m, n2)
     c = ((1 + m * n) % n2) * pow(r, n, n2) % n2
     return c
@@ -149,13 +154,19 @@ def run_paillier_demo(values: list[float], weights: list[float], bias: float) ->
         "decrypted_result": round(result, 4),
         "plaintext_reference": round(plaintext_check, 4),
         "exact_match": abs(result - plaintext_check) < 1e-6,
+        "encoding_note": (
+            "Exact sur les entiers encodes (entrees arrondies au millieme) ; "
+            "un ecart a la formule sur les reels viendrait de cet arrondi, "
+            "pas du chiffrement."
+        ),
         "timings_ms": {
             "client_encryption": round((t1 - t0) * 1000, 4),
             "server_homomorphic_computation": round((t2 - t1) * 1000, 4),
             "client_decryption": round((t3 - t2) * 1000, 4),
         },
         "conclusion": (
-            "Le serveur a calcule le score EXACT sans jamais voir revenu, "
+            "Le calcul homomorphe redonne exactement le score des entrees "
+            "arrondies au millieme, sans dechiffrer revenu, "
             "ratio d'endettement ou incidents en clair : seules des additions "
             "et des multiplications par un scalaire connu sont possibles avec "
             "Paillier, mais c'est deja assez pour un score lineaire."
